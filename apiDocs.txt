@@ -1,0 +1,138 @@
+baseURL = http://192.168.100.22:5000/
+
+                ===========AUTH===========     
+
+                ==CHECK EXISTING EMIAL==
+        URL         :auth/checkExistingEmail.
+        METHOD      :post.
+        BODY        :email,password.
+        RES         : return res.json({success:true , message:'Check email.'}).
+
+                ==SIGNUP==                          
+        URL         :auth/signup.
+        METHOD      :post. 
+        BODY        :name, email, password, profile, gender, age, weight, height, goal, level, trainingDuration. ====all string====
+        RES         :{ success: true, message: 'New user created.', newUser, token }.
+
+                ==SIGNIN==
+        URL         :auth/signin.       
+        METHOD      :post.
+        BODY        :email, password.
+        RES         :{ success: true, message: 'Signin successfully.', userData, token }.
+
+                ==FORGOT PASSWORD OTP ON EMAIL==
+        URL         :auth/forgotPasswordOtp.
+        METHOD      :post.
+        BODY        :email.
+        RES         :{ success: true, message: 'Forgot password email sent.', otp }.  
+        COMMENT     :6 digit OTP.
+
+                ==RESET PASSWORD==
+        URL         :auth/resetPassword.
+        METHOD      :post.
+        BODY        :email, password.
+        RES         :{ success: true, message: 'Password updated.' }.  
+        COMMENT     :Email password required.
+
+                ==CHANGE PASSWORD==
+        URL         :auth/changePassword
+        METHOD      :post
+        HEADERS     :{Authorization : Bearer your token}.
+        BODY        :password, oldPassword
+        RES         :{ success: true, message: 'Password changed.' }.
+
+                ==GET USER DETAILS==
+        URL         :userDetails.
+        METHOD      :get.
+        HEADERS     :{Authorization : Bearer your token}.
+        RES         :{ success: true, message: 'User details.', userData }.
+
+                ==EDIT PROFILE==
+        URL         :editProfile.
+        METHOD      :post.
+        HEADERS     :{Authorization : Bearer your token}.
+        BODY        :name, profile, gender, age, weight, height, goal, level, trainingDuration.
+        RES         :{ success: true, message: 'Profile update successfully.' , updateData }.
+        COMMENT     :In body send only that values want to update.
+
+                ==UPLOAD PROFILE==
+        URL         :uploadProfile.
+        METHOD      :post.
+        HEADERS     :{Authorization : Bearer your token}.
+        BODY        :{image : form data}
+        RES         :{ success: true, message: 'Image uploaded successfully', url: your uploaded image url }.
+
+                ==GET ALL EXERCISE==
+        URL         :allExercise.
+        METHOD      :get.
+        HEADERS     :{Authorization : Bearer your token}.
+        RES         :{ success: true, message: 'All exercise.', beginners, intermediate, advanced }.
+        COMMENT     :Will receive array of each (beginners , intermediate and advanced).
+
+        ===============================================ADMIN=================================================================
+
+                ==SIGN IN== admin@gmail.com admin123
+        URL         :admin/auth/signin.
+        METHOD      :post.
+        BODY        :email, password.
+        RES         :{ success: true, message: 'Signin successfully.', data: adminData, token }
+        COMMENT     :token expire in 6 hours.
+
+                ==UPLOAD EXERCISE IMAGE==
+        URL         :admin/uploadExerciseImage.
+        METHOD      :post.
+        HEADERS     :{Authorization : Bearer your token}.
+        BODY        :{image : form data}.
+        RES         :{ success: true, message: 'Image uploaded successfully', url: your uploaded image url }.
+        COMMENT     :For single image upload.
+
+                ==CREATE EXERCISE==
+        URL         :admin/createExercise.
+        METHOD      :post.
+        HEADERS     :{Authorization : Bearer your token}.
+        BODY        :   {
+                        image: "imageURL",
+                        title: "chest",
+                        level: "Advance",
+                        description: "description",
+                        workoutList: [
+                                        {
+                                        name: "floor press",
+                                        tutorial: "video URL",
+                                        duration: "2:45",
+                                        workoutStatus:false, ==defult==
+                                        equipment: "Equipment name used for this exercise"
+                                        }
+                                        ]
+                        }
+        RES         :{ success: true, message: 'Exercise added successfully.', newExercise }.
+        COMMENT     :Required all fields.
+
+                ==UPDATE EXERCISE==
+        URL         :admin/updateExercise.
+        METHOD      :post.
+        HEADERS     :{Authorization : Bearer your token}.
+        BODY        :_id:document _id. 
+                     exerciseData:{image , title , level , description}, 
+                     objectId:optional if update an exersice inside workoutList. 
+                     updatedWorkout:{name , tutorial , duration , workoutStatus , equipment}
+        RES         :{ success: true, message: 'Exercise updated successfully.', updatedExercise }.
+        COMMENT     :_id need exerciseData for update and objectId need updatedWorkout for update.
+
+                ==DELETE EXERCISE==
+        URL         :admin/deleteExercise.
+        METHOD      :post.
+        HEADERS     :{Authorization : Bearer your token}.
+        BODY        :_id:document _id. 
+                     objectId:optional if delete an exersice inside workoutList. 
+        RES         :{ success: true, message: 'Exercise deleted successfully.', updatedExercise }.
+        COMMENT     :_id required.If only have _id then delete whole document and have objectId then delete a single exercise inside workoutList.
+
+                ==ADD EXERCISE==
+        URL         :admin/addExercise.
+        METHOD      :post.
+        HEADERS     :{Authorization : Bearer your token}.
+        BODY        :_id:document _id. 
+                     newWorkout:{name , tutorial , duration , workoutStatus , equipment}. 
+        RES         :{ success: true, message: 'New workout added successfully.', updatedExercise }.
+        COMMENT     :_id and newWorkout object required.
