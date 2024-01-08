@@ -16,7 +16,7 @@ export default function App() {
 
   const handleCheckServerConnection = async () => {
     try {
-      const response = await apiInstance.get('http://192.168.100.59:5000/getAllProduct')
+      const response = await apiInstance.get('http:`//192.168.100.59:5000/getAllProduct')
       console.log(response);
     } catch (error) {
       console.log(error.message);
