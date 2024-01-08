@@ -164,7 +164,10 @@ export default function PopularrExhaust({navigation}) {
                             {item.price}
                           </Text>
                           <View style={styles.plusImgView}>
-                            <TouchableOpacity onPress={() => navigation.navigate('MyCart', { data: item})}>
+                            <TouchableOpacity
+                              onPress={() =>
+                                navigation.navigate('MyCart', {data: item})
+                              }>
                               <Image
                                 source={item.ImagePlus}
                                 style={styles.plusSignImg}

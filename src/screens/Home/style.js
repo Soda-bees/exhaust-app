@@ -220,6 +220,17 @@ export const styles = StyleSheet.create({
   bg: {
     backgroundColor: 'transparent',
     width: sizes.screenWidth * 0.42,
+    marginTop:sizes.screenHeight * 0.02
+  },
+  productMainView: {
+    flexDirection: 'row',
+    alignItems:'center',
+    flexWrap: 'wrap',
+    justifyContent:'space-between',
+    // backgroundColor:'red',
+    width:sizes.screenWidth * 0.86,
+    marginLeft:sizes.screenWidth * 0.02,
+    // marginTop:sizes.screenWidth * 0.02,
   },
   plusImgView: {
     left: sizes.screenWidth * 0.015,

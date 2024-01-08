@@ -4,7 +4,7 @@ import { styles } from './style'
 import images from '../../services/utilities/images'
 import Header from '../../components/Header'
 
-export default function EditProfile() {
+export default function EditProfile({navigation}) {
   return (
     <SafeAreaView>
          <ImageBackground style={styles.container} source={images.bg}>
@@ -37,7 +37,7 @@ export default function EditProfile() {
             </View>
           </View>
         </View>
-        <TouchableOpacity style={styles.bottomBtn}>
+        <TouchableOpacity style={styles.bottomBtn} onPress={() => navigation.navigate('MyTabs')}>
               <Text style={styles.bottomBtnText}>Save</Text>
             </TouchableOpacity>
         </ImageBackground>

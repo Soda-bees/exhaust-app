@@ -13,7 +13,7 @@ import images from '../../services/utilities/images';
 import Header from '../../components/Header';
 import {colors} from '../../services';
 
-export default function AddShippingAddress() {
+export default function AddShippingAddress({navigation}) {
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
@@ -71,7 +71,7 @@ export default function AddShippingAddress() {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity style={styles.bottomBtn}>
+          <TouchableOpacity style={styles.bottomBtn} onPress={() => navigation.navigate('Checkout')}>
               <Text style={styles.bottomBtnText}>Save Address</Text>
             </TouchableOpacity>
         </View>

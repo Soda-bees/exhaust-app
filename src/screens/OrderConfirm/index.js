@@ -20,7 +20,7 @@ export default function OrderConfirm({navigation}) {
           <TouchableOpacity style={styles.bottomBtn} onPress={() => navigation.navigate('OrderDetails')}>
             <Text style={styles.bottomBtnText}>Your Order Details</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.bottomBtn1}>
+          <TouchableOpacity style={styles.bottomBtn1} onPress={() => navigation.navigate('MyTabs')}>
             <Text style={styles.bottomBtnText}>Back to Home</Text>
           </TouchableOpacity>
         </View>
