@@ -63,6 +63,7 @@ export const styles = StyleSheet.create({
   textFieldStyling: {
     marginTop: sizes.screenWidth * 0.01,
     width: sizes.screenWidth * 0.65,
+    color:colors.black
   },
   filerNameStyling: {
     fontSize: fontSize.small,

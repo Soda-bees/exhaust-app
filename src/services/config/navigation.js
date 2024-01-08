@@ -22,6 +22,7 @@ import EditProfile from '../../screens/EditProfile';
 import TabNavigation from './TabNavigation';
 import ForgotPassword from '../../screens/ForgotPassword';
 import UploadPhoto from '../../screens/UploadPhoto';
+import UploadProfilePhoto from '../../screens/UploadProfilePhoto';
 
 export default function MainNavigator() {
   const Stack = createNativeStackNavigator();
@@ -50,6 +51,7 @@ export default function MainNavigator() {
       <Stack.Screen name="Notification" component={Notification} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="UploadPhoto" component={UploadPhoto} />
+      <Stack.Screen name="UploadProfilePhoto" component={UploadProfilePhoto} />
 
       
     </Stack.Navigator>

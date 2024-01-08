@@ -57,7 +57,7 @@ export default function SignIn({navigation}) {
                   onPress={() => setToggleCheckBox(!toggleCheckBox)}>
                   <Image
                     source={
-                      toggleCheckBox ? images.checkBoxBtn : images.checkboxon
+                      toggleCheckBox ? images.checkboxon : images.checkBoxBtn
                     }
                     style={styles.checkBoxSty}
                   />
