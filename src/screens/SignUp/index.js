@@ -32,7 +32,7 @@ export default function SignUp({navigation}) {
               <Image style={styles.icon} source={images.userIcon} />
               <TextInput
                 placeholder="Name"
-                placeholderTextColor={colors.disabledBg}
+                placeholderTextColor={colors.lightGrey}
                 style={styles.inputText}
               />
             </View>
@@ -41,7 +41,7 @@ export default function SignUp({navigation}) {
               <Image style={styles.icon} source={images.userIcon} />
               <TextInput
                 placeholder="Email"
-                placeholderTextColor={colors.disabledBg}
+                placeholderTextColor={colors.lightGrey}
                 style={styles.inputText}
               />
             </View>
@@ -51,7 +51,7 @@ export default function SignUp({navigation}) {
               <TextInput
                 secureTextEntry
                 placeholder="Phone Number"
-                placeholderTextColor={colors.disabledBg}
+                placeholderTextColor={colors.lightGrey}
                 style={styles.inputText}
               />
             </View>
@@ -61,7 +61,7 @@ export default function SignUp({navigation}) {
               <TextInput
                 secureTextEntry={!eyeIconShow ? true : false}
                 placeholder="Password"
-                placeholderTextColor={colors.disabledBg}
+                placeholderTextColor={colors.lightGrey}
                 style={styles.inputText}
               />
               <TouchableOpacity onPress={() => setEyeIconShow(!eyeIconShow)}>

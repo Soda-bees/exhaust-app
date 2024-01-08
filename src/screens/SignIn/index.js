@@ -17,12 +17,11 @@ export default function SignIn({navigation}) {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [eyeIconShow, setEyeIconShow] = useState(false);
 
-
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
         <View style={styles.logoRow}>
-          <Image source={images.logo} style={styles.logoSizing}/>
+          <Image source={images.logo} style={styles.logoSizing} />
           <Text style={styles.logoText}>CSZ EXHAUST</Text>
         </View>
         <View style={styles.body}>
@@ -32,7 +31,7 @@ export default function SignIn({navigation}) {
               <Image style={styles.icon} source={images.userIcon} />
               <TextInput
                 placeholder="Email"
-                placeholderTextColor={colors.disabledBg}
+                placeholderTextColor={colors.lightGrey}
                 style={styles.inputText}
               />
             </View>
@@ -41,9 +40,8 @@ export default function SignIn({navigation}) {
               <TextInput
                 secureTextEntry={!eyeIconShow ? true : false}
                 placeholder="Password"
-                placeholderTextColor={colors.disabledBg}
+                placeholderTextColor={colors.lightGrey}
                 style={styles.inputText}
-                
               />
               <TouchableOpacity onPress={() => setEyeIconShow(!eyeIconShow)}>
                 <Image
@@ -55,7 +53,16 @@ export default function SignIn({navigation}) {
 
             <View style={styles.rememberMeRow}>
               <View style={styles.checkboxContainer}>
-                <CheckBox
+                <TouchableOpacity
+                  onPress={() => setToggleCheckBox(!toggleCheckBox)}>
+                  <Image
+                    source={
+                      toggleCheckBox ? images.checkBoxBtn : images.checkboxon
+                    }
+                    style={styles.checkBoxSty}
+                  />
+                </TouchableOpacity>
+                {/* <CheckBox
                   // tintColor={'colors.borderGrey'}
                   // tintColors={toggleCheckBox ? colors.btnBlue : colors.white}
                   // onTintColor={colors.btnBlue}
@@ -63,7 +70,7 @@ export default function SignIn({navigation}) {
                   disabled={false}
                   value={toggleCheckBox}
                   onValueChange={newValue => setToggleCheckBox(newValue)}
-                />
+                /> */}
 
                 <Text style={styles.rememberMeText}>Remember me</Text>
               </View>

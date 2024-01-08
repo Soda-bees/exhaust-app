@@ -3,6 +3,7 @@ import React from 'react'
 import { styles } from './style'
 import images from '../../services/utilities/images'
 import Header from '../../components/Header'
+import { colors } from '../../services';
 
 export default function EditProfile({navigation}) {
   return (
@@ -17,7 +18,7 @@ export default function EditProfile({navigation}) {
             <View style={styles.fieldView}>
               <Image source={images.friends} style={styles.iconImgSty} />
               <View style={styles.verticalLine}></View>
-              <TextInput placeholder='Your Name' style={styles.textSty}/>
+              <TextInput placeholder='Your Name' placeholderTextColor={colors.lightGrey} style={styles.textSty}/>
             </View>
           </View>
           <View>
@@ -25,7 +26,7 @@ export default function EditProfile({navigation}) {
             <View style={styles.fieldView}>
               <Image source={images.email} style={styles.iconImgSty} />
               <View style={styles.verticalLine}></View>
-              <TextInput placeholder='Your Email' style={styles.textSty}/>
+              <TextInput placeholder='Your Email' placeholderTextColor={colors.lightGrey} style={styles.textSty}/>
             </View>
           </View>
           <View>
@@ -33,7 +34,7 @@ export default function EditProfile({navigation}) {
             <View style={styles.fieldView}>
               <Image source={images.phone} style={styles.iconImgSty} />
               <View style={styles.verticalLine}></View>
-              <TextInput placeholder='Your Phone Number' keyboardType='numeric' style={styles.textSty}/>
+              <TextInput placeholder='Your Phone Number' placeholderTextColor={colors.lightGrey} keyboardType='numeric' style={styles.textSty}/>
             </View>
           </View>
         </View>

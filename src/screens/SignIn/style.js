@@ -57,13 +57,11 @@ export const styles = StyleSheet.create({
     height: sizes.screenWidth * 0.04,
     width: sizes.screenWidth * 0.05,
     marginRight:sizes.screenWidth * 0.05
-    // backgroundColor:'red'
   },
 
   inputText: {
     color: colors.textGreyDark,
     width: sizes.screenWidth * 0.58,
-    // backgroundColor:'red'
   },
 
   rememberMeRow: {
@@ -79,8 +77,9 @@ export const styles = StyleSheet.create({
   },
 
   rememberMeText: {
-    color: colors.disabledBg,
+    color: colors.lightGrey,
     fontSize: fontSize.small,
+    marginLeft:sizes.screenWidth * 0.01
   },
 
   textUnderline: {
@@ -186,5 +185,11 @@ export const styles = StyleSheet.create({
     color: colors.black,
     fontWeight: '800',
     marginLeft:sizes.screenWidth * 0.01
+  },
+  checkBoxSty:{
+    resizeMode:'contain',
+    width:sizes.screenWidth * 0.04,
+    height:sizes.screenHeight * 0.03,
+    // backgroundColor:'red'
   },
 });

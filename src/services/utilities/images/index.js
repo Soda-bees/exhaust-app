@@ -71,6 +71,7 @@ import logo from '../../../assets/logo.png';
 import profileUpload from '../../../assets/profileUpload.png';
 import soundPlay from '../../../assets/soundPlay.png';
 import soundPause from '../../../assets/soundPause.png';
+import checkBoxBtn from '../../../assets/checkBoxBtn.png';
 
 
 const images = {
@@ -80,6 +81,7 @@ const images = {
   googleIcon,
   lockIcon,
   userIcon,
+  checkBoxBtn,
   astonMartinIcon,
   audiIcon,
   backIcon,
