@@ -55,6 +55,7 @@ export default function AddShippingAddress({navigation}) {
               placeholder="91709"
               placeholderTextColor={colors.black}
               style={styles.inputField}
+              keyboardType='numeric'
             />
           </View>
 

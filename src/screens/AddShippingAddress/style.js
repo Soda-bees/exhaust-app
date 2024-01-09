@@ -25,17 +25,26 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.17,
     shadowRadius: 3.05,
     elevation: 4,
+    // backgroundColor:'blue'
   },
   labelName:{
     fontSize:fontSize.small,
     paddingTop:sizes.screenHeight * 0.01,
     paddingLeft:sizes.screenWidth * 0.01,
+    // backgroundColor:'yellow',
+    color:colors.disabledBg3,
+    position:'absolute',
+    left:sizes.screenWidth * 0.06,
+    top:sizes.screenHeight * 0.008,
 
   },
   inputField:{
     color:colors.black,
     width:sizes.screenWidth * 0.7,
-    height:sizes.screenHeight * 0.045,
+    height:sizes.screenHeight * 0.05,
+    // backgroundColor:'red',
+    marginTop:sizes.screenHeight * 0.03
+    // bottom:sizes.screenHeight * 0.01
   },
   row:{
     flexDirection:'row',
@@ -43,8 +52,9 @@ export const styles = StyleSheet.create({
   },
   arrowSizing:{
     resizeMode:'contain',
-    width:sizes.screenWidth * 0.03,
-    height:sizes.screenWidth * 0.03,
+    width:sizes.screenWidth * 0.04,
+    height:sizes.screenWidth * 0.04,
+    marginTop:sizes.screenHeight * 0.03
   },
   bottomBtn: {
     marginLeft: sizes.screenWidth * 0.01,
