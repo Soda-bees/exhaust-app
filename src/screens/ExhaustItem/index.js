@@ -172,7 +172,7 @@ export default function ExhaustItem({route, navigation}) {
                 <Text style={styles.rowText}>{data.price}</Text>
               </View>
               <View style={styles.verticalLine}></View>
-              <TouchableOpacity style={styles.row3}>
+              <TouchableOpacity style={styles.row3} onPress={() => navigation.navigate('MyCart')}>
                 <Image source={images.cartIconTwo} style={styles.cartImg} />
                 <Text style={styles.btnText}>Add to Cart</Text>
               </TouchableOpacity>
