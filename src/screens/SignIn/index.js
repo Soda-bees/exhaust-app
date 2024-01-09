@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   ImageBackground,
@@ -9,13 +9,55 @@ import {
   View,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import {styles} from './style';
+import { styles } from './style';
 import images from '../../services/utilities/images';
-import {colors} from '../../services';
+import { colors } from '../../services';
+import Loader from '../../components/Loader';
+import { getAllProduct, signin } from '../../services/config/API';
+import { useSelector } from 'react-redux';
+import { selectAuthToken } from '../../store/authToken';
+import { selectUserData } from '../../store/userData';
 
-export default function SignIn({navigation}) {
+export default function SignIn({ navigation }) {
+
+  const authToken = useSelector(selectAuthToken);
+  const userData = useSelector(selectUserData);
+
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [eyeIconShow, setEyeIconShow] = useState(false);
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+  const [loader, setLoader] = useState(false)
+  const [error, setError] = useState('')
+
+
+  const handleSignin = async () => {
+    setLoader(true)
+    try {
+      const loverEmail = email?.toLowerCase()
+      const response = await signin(loverEmail, password)
+      if (response.success) {
+        setError('')
+        setEmail('')
+        setPassword('')
+        setLoader(false)
+        console.log("login resp[onse ==", response);
+        // navigation.navigate('MyTabs')
+        try {
+          const response = await getAllProduct()
+          console.log("get all product =--=", response);
+        } catch (error) {
+          console.log("get all product =--=",error);
+        }
+      } else {
+        setLoader(false)
+        setError(response.message)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
 
   return (
     <SafeAreaView>
@@ -33,6 +75,8 @@ export default function SignIn({navigation}) {
                 placeholder="Email"
                 placeholderTextColor={colors.lightGrey}
                 style={styles.inputText}
+                onChangeText={(text) => setEmail(text)}
+                value={email}
               />
             </View>
             <View style={styles.inputField}>
@@ -42,6 +86,8 @@ export default function SignIn({navigation}) {
                 placeholder="Password"
                 placeholderTextColor={colors.lightGrey}
                 style={styles.inputText}
+                onChangeText={(text) => setPassword(text)}
+                value={password}
               />
               <TouchableOpacity onPress={() => setEyeIconShow(!eyeIconShow)}>
                 <Image
@@ -62,16 +108,6 @@ export default function SignIn({navigation}) {
                     style={styles.checkBoxSty}
                   />
                 </TouchableOpacity>
-                {/* <CheckBox
-                  // tintColor={'colors.borderGrey'}
-                  // tintColors={toggleCheckBox ? colors.btnBlue : colors.white}
-                  // onTintColor={colors.btnBlue}
-                  // onCheckColor={colors.btnBlue}
-                  disabled={false}
-                  value={toggleCheckBox}
-                  onValueChange={newValue => setToggleCheckBox(newValue)}
-                /> */}
-
                 <Text style={styles.rememberMeText}>Remember me</Text>
               </View>
               <TouchableOpacity
@@ -79,13 +115,21 @@ export default function SignIn({navigation}) {
                 <Text style={styles.textUnderline}>Forgot Password?</Text>
               </TouchableOpacity>
             </View>
+            {
+              error &&
+              <Text style={styles.errorText}>{error}</Text>
+            }
           </View>
-
-          <TouchableOpacity onPress={() => navigation.navigate('MyTabs')}>
-            <View style={styles.blueBtn}>
-              <Text style={styles.blueBtnText}>Sign In</Text>
-            </View>
-          </TouchableOpacity>
+          {
+            loader ?
+              <Loader />
+              :
+              <TouchableOpacity onPress={() => handleSignin()}>
+                <View style={styles.blueBtn}>
+                  <Text style={styles.blueBtnText}>Sign In</Text>
+                </View>
+              </TouchableOpacity>
+          }
         </View>
 
         <View style={styles.row}>

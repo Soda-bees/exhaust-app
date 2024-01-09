@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
-import {colors} from '../../services/utilities/colors';
-import {fontSize, sizes} from '../../services';
+import { StyleSheet } from 'react-native';
+import { colors } from '../../services/utilities/colors';
+import { fontSize, sizes } from '../../services';
 
 export const styles = StyleSheet.create({
   bg: {
@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
     alignItems: 'center',
     borderRadius: sizes.screenHeight * 0.03,
-    paddingBottom: sizes.screenHeight * 0.04,
+    paddingBottom: sizes.screenHeight * 0.03,
     marginBottom: sizes.screenHeight * 0.04,
   },
 
@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     height: sizes.screenWidth * 0.04,
     width: sizes.screenWidth * 0.05,
-    marginRight:sizes.screenWidth * 0.05
+    marginRight: sizes.screenWidth * 0.05
   },
 
   inputText: {
@@ -79,7 +79,7 @@ export const styles = StyleSheet.create({
   rememberMeText: {
     color: colors.lightGrey,
     fontSize: fontSize.small,
-    marginLeft:sizes.screenWidth * 0.01
+    marginLeft: sizes.screenWidth * 0.01
   },
 
   textUnderline: {
@@ -169,27 +169,35 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: sizes.screenHeight * 0.02,
   },
-  logoRow:{
-    flexDirection:'row',
-    alignItems:'center',
-    marginBottom:sizes.screenHeight * 0.03
+  logoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: sizes.screenHeight * 0.03
   },
-  logoSizing:{
-    resizeMode:'contain',
-    width:sizes.screenWidth * 0.15,
-    height:sizes.screenHeight * 0.07,
+  logoSizing: {
+    resizeMode: 'contain',
+    width: sizes.screenWidth * 0.15,
+    height: sizes.screenHeight * 0.07,
     // backgroundColor:'red'
   },
-  logoText:{
-    fontSize:fontSize.h4,
+  logoText: {
+    fontSize: fontSize.h4,
     color: colors.black,
     fontWeight: '800',
-    marginLeft:sizes.screenWidth * 0.01
+    marginLeft: sizes.screenWidth * 0.01
   },
-  checkBoxSty:{
-    resizeMode:'contain',
-    width:sizes.screenWidth * 0.04,
-    height:sizes.screenHeight * 0.03,
+  checkBoxSty: {
+    resizeMode: 'contain',
+    width: sizes.screenWidth * 0.04,
+    height: sizes.screenHeight * 0.03,
     // backgroundColor:'red'
   },
+  errorText: {
+    // backgroundColor:'red',
+    width: sizes.screenWidth * 0.75,
+    marginTop: sizes.screenHeight * 0.02,
+    fontSize: fontSize.medium,
+    fontWeight: '500',
+    color: colors.red
+  }
 });

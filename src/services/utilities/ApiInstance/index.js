@@ -8,7 +8,7 @@ const defaultHeaders = {
 const apiInstance = axios.create({
     baseURL,
     timeout,
-    // withCredentials: true,   
+    withCredentials: true,   
     // headers: defaultHeaders,
 });
 
