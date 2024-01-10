@@ -14,14 +14,14 @@ import images from '../../services/utilities/images';
 import { colors } from '../../services';
 import Loader from '../../components/Loader';
 import { getAllProduct, signin } from '../../services/config/API';
-import { useSelector } from 'react-redux';
-import { selectAuthToken } from '../../store/authToken';
-import { selectUserData } from '../../store/userData';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAuthToken, setAuthToken } from '../../store/authToken';
+import { selectUserData, setUserData } from '../../store/userData';
+import { setProducts } from '../../store/products';
 
 export default function SignIn({ navigation }) {
 
-  const authToken = useSelector(selectAuthToken);
-  const userData = useSelector(selectUserData);
+  const dispatch = useDispatch()
 
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [eyeIconShow, setEyeIconShow] = useState(false);
@@ -37,17 +37,23 @@ export default function SignIn({ navigation }) {
       const loverEmail = email?.toLowerCase()
       const response = await signin(loverEmail, password)
       if (response.success) {
-        setError('')
-        setEmail('')
-        setPassword('')
-        setLoader(false)
-        console.log("login resp[onse ==", response);
-        // navigation.navigate('MyTabs')
+        console.log(response.userData);
+        const userData = response.userData
+        dispatch(setUserData(userData))
+        const token = response.token
         try {
-          const response = await getAllProduct()
-          console.log("get all product =--=", response);
+          const allProduct = await getAllProduct(token)
+          const allProducts = allProduct.products
+          setError('')
+          setEmail('')
+          setPassword('')
+          dispatch(setProducts(allProducts))
+          dispatch(setAuthToken(token))
+          setLoader(false)
         } catch (error) {
-          console.log("get all product =--=",error);
+          console.log("get all product =--=", error);
+          setLoader(false)
+          setError(error.message)
         }
       } else {
         setLoader(false)

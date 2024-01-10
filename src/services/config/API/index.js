@@ -29,10 +29,10 @@ export const signin = async (email, password) => {
     return data
 }
 
-export const getAllProduct = async () => {
+export const getAllProduct = async (token) => {
     const headers = {
         'Content-Type': 'application/json',
-        // "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QzQGdtYWlsLmNvbSIsIl9pZCI6IjY1OWJhMzczNzNjYjA2OTlhNzE5ZTEwOSIsImlhdCI6MTcwNDgwODY2M30.SPzXY7LZbOggp90AjzOOokzcCnwqk4QRrJE_B4FXe6I'
+        "Authorization": `Bearer ${token}`
     }
     const { data } = await apiInstance.get('getAllProduct', { headers })
     return data

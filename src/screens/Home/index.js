@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {styles} from './style';
+import React, { useEffect, useState } from 'react';
+import { styles } from './style';
 import {
   View,
   Text,
@@ -8,49 +8,69 @@ import {
   TouchableOpacity,
   TextInput,
   Button,
+  ScrollView
 } from 'react-native';
 import images from '../../services/utilities/images';
-import {colors, sizes} from '../../services';
+import { colors, sizes } from '../../services';
 import Modal from 'react-native-modal';
-import {ScrollView} from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
+import { selectUserData } from '../../store/userData';
+import { selectProducts } from '../../store/products';
+import formatToJSON from '../../services/utilities/JsonLog';
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
+
+  const userData = useSelector(selectUserData)
+  const products = useSelector(selectProducts)
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [brand, setBrand] = useState([
-    {name: 'ASTON MARTIN', selected: false},
-    {name: 'PORSCHE', selected: false},
-    {name: 'FERRARI', selected: false},
-    {name: 'BMW', selected: false},
-    {name: 'LAMBORGHINI', selected: false},
-    {name: 'MCLAREN', selected: false},
-    {name: 'AUDI', selected: false},
-    {name: 'BENZ', selected: false},
+    { name: 'ASTON MARTIN', selected: false },
+    { name: 'PORSCHE', selected: false },
+    { name: 'FERRARI', selected: false },
+    { name: 'BMW', selected: false },
+    { name: 'LAMBORGHINI', selected: false },
+    { name: 'MCLAREN', selected: false },
+    { name: 'AUDI', selected: false },
+    { name: 'BENZ', selected: false },
   ]);
 
   const [productListing, setProductListing] = useState([
-    {
-      Image: images.sparePart2,
-      name: 'Ferrari',
-      label: 'F12 Tail Throat Dwonpipe',
-      price: '$302.00',
-      ImagePlus: images.plusSign,
-      description:
-        'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed qu.',
-    },
-    {
-      Image: images.sparePart3,
-      name: 'BMW',
-      label: 'X3M X4M Titanium...',
-      price: '$302.00',
-      ImagePlus: images.plusSign,
-      description:
-        'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed qu.',
-    },
+    // {
+    //   Image: images.sparePart2,
+    //   name: 'Ferrari',
+    //   label: 'F12 Tail Throat Dwonpipe',
+    //   price: '$302.00',
+    //   ImagePlus: images.plusSign,
+    //   description:
+    //     'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed qu.',
+    // },
+    // {
+    //   Image: images.sparePart3,
+    //   name: 'BMW',
+    //   label: 'X3M X4M Titanium...',
+    //   price: '$302.00',
+    //   ImagePlus: images.plusSign,
+    //   description:
+    //     'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed qu.',
+    // },
+
   ]);
+
+  useEffect(() => {
+    handleSelectInitialProduct()
+  }, [])
+
+  const handleSelectInitialProduct = () => {
+    const array = products.slice(0, 2)
+    // console.log(array[0]);
+    setProductListing(array)
+  }
+
   const handleSelectBrand = index => {
     setBrand(prevBrands => {
       return prevBrands.map((brand, i) =>
-        i === index ? {...brand, selected: !brand.selected} : brand,
+        i === index ? { ...brand, selected: !brand.selected } : brand,
       );
     });
   };
@@ -66,13 +86,13 @@ export default function Home({navigation}) {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
             <Image
-              source={images.headerFaceIcon}
+              source={userData?.profile ? { uri: userData?.profile } : images.headerFaceIcon}
               style={styles.imagesStylingRight}
             />
           </TouchableOpacity>
         </View>
         <Text style={styles.headingTextStyling}>Welcome,</Text>
-        <Text style={styles.subHeadingTextStyling}>CSZ EXHAUST</Text>
+        <Text style={styles.subHeadingTextStyling}>{userData?.name || "CSZ EXHAUST"}</Text>
         <View style={styles.searchFilterView}>
           <View style={styles.inputContainetr}>
             <Image source={images.search} style={styles.searchImgStyling} />
@@ -122,12 +142,16 @@ export default function Home({navigation}) {
         </View>
         {/* <View style={styles.lastMainView}> */}
         <View style={styles.productMainView}>
+          {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}
+          > */}
+
           {productListing.map((item, index) => {
+            // console.log(formatToJSON(item));
             return (
               <View key={index}>
                 <View style={styles.bg}>
                   <View style={styles.lastLeftView}>
-                    <Image source={item.Image} style={styles.lastLeftViewImg} />
+                    <Image source={{uri:item?.images[0]}} style={styles.lastLeftViewImg} />
                     <TouchableOpacity
                       onPress={() =>
                         navigation.navigate('ExhaustItem', {
@@ -135,22 +159,22 @@ export default function Home({navigation}) {
                         })
                       }>
                       <Text style={styles.lastLeftViewTextHeading}>
-                        {item.name}
+                        {item.brand.name}
                       </Text>
-                      <Text style={styles.lastLeftViewTextPara}>
-                        {item.label}
+                      <Text style={styles.lastLeftViewTextPara} numberOfLines={1}>
+                        {item.description}
                       </Text>
                       <View style={styles.priceAndPlusSignView}>
                         <Text style={styles.lastLeftViewTextHeading1}>
-                          {item.price}
+                          {`$${item.price}.00`}
                         </Text>
                         <View style={styles.plusImgView}>
                           <TouchableOpacity
                             onPress={() =>
-                              navigation.navigate('MyCart', {data: item})
+                              navigation.navigate('MyCart', { data: item })
                             }>
                             <Image
-                              source={item.ImagePlus}
+                              source={images.plusSign}
                               style={styles.plusSignImg}
                             />
                           </TouchableOpacity>
@@ -162,65 +186,7 @@ export default function Home({navigation}) {
               </View>
             );
           })}
-          {/* </View> */}
-          {/* <View>
-              <View style={styles.bg}>
-                <View style={styles.lastLeftView}>
-                  <Image
-                    source={images.sparePart2}
-                    style={styles.lastLeftViewImg}
-                  />
-                  <TouchableOpacity>
-                    <Text style={styles.lastLeftViewTextHeading}>Ferrari</Text>
-                    <Text style={styles.lastLeftViewTextPara}>
-                      F12 Tail Throat Downpipe
-                    </Text>
-                    <View style={styles.priceAndPlusSignView}>
-                      <Text style={styles.lastLeftViewTextHeading1}>
-                        $302.00
-                      </Text>
-                      <View style={styles.plusImgView}>
-                        <TouchableOpacity>
-                          <Image
-                            source={images.plusSign}
-                            style={styles.plusSignImg}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-            <View>
-              <View style={styles.bg}>
-                <View style={styles.lastLeftView}>
-                  <Image
-                    source={images.sparePart3}
-                    style={styles.lastLeftViewImg}
-                  />
-                  <TouchableOpacity>
-                    <Text style={styles.lastLeftViewTextHeading}>BMW</Text>
-                    <Text style={styles.lastLeftViewTextPara}>
-                      X3M X4M Titanium...
-                    </Text>
-                    <View style={styles.priceAndPlusSignView}>
-                      <Text style={styles.lastLeftViewTextHeading1}>
-                        $302.00
-                      </Text>
-                      <View style={styles.plusImgView}>
-                        <TouchableOpacity>
-                          <Image
-                            source={images.plusSign}
-                            style={styles.plusSignImg}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View> */}
+
         </View>
       </View>
       <Modal

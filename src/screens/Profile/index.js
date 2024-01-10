@@ -11,9 +11,17 @@ import {styles} from './style';
 import images from '../../services/utilities/images';
 import Header from '../../components/Header';
 import {ScrollView} from 'react-native-gesture-handler';
+import { useDispatch } from 'react-redux';
+import { removeAuthToken } from '../../store/authToken';
 
 export default function Profile({navigation}) {
+  const dispatch = useDispatch()
   const [radioBtn, setRadioBtn] = useState(false);
+
+  const handleLogout = () => {
+    dispatch(removeAuthToken())
+  }
+
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
@@ -56,15 +64,6 @@ export default function Profile({navigation}) {
                 style={styles.bottonIconImgSty}
               />
             </TouchableOpacity>
-            {/* <TouchableOpacity style={styles.bottomView}>
-              <Image source={images.language} style={styles.iconImgStyBottom} />
-              <Text style={styles.textStyling}>Language</Text>
-              <Text style={styles.textStyling2}>English</Text>
-              <Image
-                source={images.brownArrow}
-                style={styles.bottonIconImgSty}
-              />
-            </TouchableOpacity> */}
             <TouchableOpacity style={styles.bottomView}>
               <Image
                 source={images.helpCenter}
@@ -93,7 +92,9 @@ export default function Profile({navigation}) {
             </View>
           </View>
         </View>
-        <TouchableOpacity style={styles.bottomBtn} onPress={() => navigation.navigate('SignIn') }>
+        <TouchableOpacity style={styles.bottomBtn} 
+        onPress={handleLogout}
+        >
           <Image source={images.logout} style={styles.forwardIcon} />
           <Text style={styles.bottomBtnText}>Logout</Text>
         </TouchableOpacity>
