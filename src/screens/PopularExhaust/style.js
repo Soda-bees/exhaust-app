@@ -1,5 +1,5 @@
-import {StyleProp, StyleSheet} from 'react-native';
-import {colors, fontSize, sizes} from '../../services';
+import { StyleProp, StyleSheet } from 'react-native';
+import { colors, fontSize, sizes } from '../../services';
 
 export const styles = StyleSheet.create({
   topMainContainer: {
@@ -19,17 +19,7 @@ export const styles = StyleSheet.create({
     width: sizes.screenWidth * 0.12,
     height: sizes.screenWidth * 0.12,
   },
-  //   headingTextStyling: {
-  //     marginTop: sizes.screenHeight * 0.04,
-  //     fontSize: fontSize.h4,
-  //     fontWeight: 'bold',
-  //     color: colors.black,
-  //   },
-  //   subHeadingTextStyling: {
-  //     fontSize: fontSize.h7,
-  //     fontWeight: 'bold',
-  //     color: colors.textGrey,
-  //   },
+
   searchFilterView: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -42,7 +32,6 @@ export const styles = StyleSheet.create({
   inputContainetr: {
     flexDirection: 'row',
     alignItems: 'center',
-    // borderWidth:1,
     backgroundColor: colors.white,
     width: sizes.screenWidth * 0.77,
     height: sizes.screenHeight * 0.056,
@@ -73,37 +62,18 @@ export const styles = StyleSheet.create({
   textFieldStyling: {
     marginTop: sizes.screenWidth * 0.01,
     width: sizes.screenWidth * 0.65,
-    color:colors.black
+    color: colors.black
   },
-  // filterAfterClick: {
-  //   flexDirection: 'row',
-  //   marginTop: sizes.screenWidth * 0.03,
-  // },
-  // filterCatgyStyling: {
-  //   borderWidth: 1,
-  //   borderRadius: sizes.screenWidth * 0.3,
-  //   marginLeft: sizes.screenWidth * 0.02,
-  //   width: sizes.screenWidth * 0.2,
-  //   height: sizes.screenHeight * 0.03,
-  //   borderColor: colors.black,
-  // },
-  // filerNameStyling: {
-  //   fontSize: fontSize.tiny,
-  //   color: colors.black,
-  //   alignSelf: 'center',
-  //   fontWeight: '500',
-  //   marginTop: sizes.screenWidth * 0.01,
-  // },
   popularheadingLeft: {
     color: colors.black,
     fontWeight: 'bold',
     fontSize: fontSize.large,
     marginTop: sizes.screenWidth * 0.03,
+    paddingBottom: sizes.screenHeight * 0.01
   },
   lastMainView: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    // alignContent:'center',
     width: sizes.screenWidth * 0.9,
     marginTop: sizes.screenHeight * 0.02,
   },
@@ -121,8 +91,8 @@ export const styles = StyleSheet.create({
 
     elevation: 8,
     backgroundColor: colors.white,
-    marginTop:sizes.screenHeight * 0.02,
   },
+  
   lastLeftViewImg: {
     resizeMode: 'contain',
     width: sizes.screenWidth * 0.37,
@@ -259,7 +229,7 @@ export const styles = StyleSheet.create({
     paddingVertical: sizes.screenHeight * 0.004,
     borderColor: colors.black,
     textAlign: 'center',
-    textAlignVertical:'center'
+    textAlignVertical: 'center'
   },
   filterView: {
     flexDirection: 'row',
@@ -276,12 +246,14 @@ export const styles = StyleSheet.create({
   },
   productMainView: {
     flexDirection: 'row',
-    alignItems:'center',
+    alignItems: 'center',
     flexWrap: 'wrap',
-    justifyContent:'space-between',
-    // backgroundColor:'red',
-    width:sizes.screenWidth * 0.86,
-    marginLeft:sizes.screenWidth * 0.02,
-    // marginTop:sizes.screenWidth * 0.02,
+    gap: sizes.screenWidth*0.03,
+    width: sizes.screenWidth * 0.9,
+    // justifyContent: 'center',
   },
+  scrollViewParent: {
+    height: sizes.screenHeight * 0.67,
+    paddingBottom: sizes.screenHeight * 0.02,
+  }
 });

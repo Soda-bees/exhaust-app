@@ -17,58 +17,34 @@ import { useSelector } from 'react-redux';
 import { selectUserData } from '../../store/userData';
 import { selectProducts } from '../../store/products';
 import formatToJSON from '../../services/utilities/JsonLog';
+import { selectBrands } from '../../store/brands';
 
 export default function Home({ navigation }) {
 
   const userData = useSelector(selectUserData)
   const products = useSelector(selectProducts)
+  const brands = useSelector(selectBrands)
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [brand, setBrand] = useState([
-    { name: 'ASTON MARTIN', selected: false },
-    { name: 'PORSCHE', selected: false },
-    { name: 'FERRARI', selected: false },
-    { name: 'BMW', selected: false },
-    { name: 'LAMBORGHINI', selected: false },
-    { name: 'MCLAREN', selected: false },
-    { name: 'AUDI', selected: false },
-    { name: 'BENZ', selected: false },
-  ]);
-
-  const [productListing, setProductListing] = useState([
-    // {
-    //   Image: images.sparePart2,
-    //   name: 'Ferrari',
-    //   label: 'F12 Tail Throat Dwonpipe',
-    //   price: '$302.00',
-    //   ImagePlus: images.plusSign,
-    //   description:
-    //     'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed qu.',
-    // },
-    // {
-    //   Image: images.sparePart3,
-    //   name: 'BMW',
-    //   label: 'X3M X4M Titanium...',
-    //   price: '$302.00',
-    //   ImagePlus: images.plusSign,
-    //   description:
-    //     'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed qu.',
-    // },
-
-  ]);
+  const [productListing, setProductListing] = useState([]);
+  const [selectedBrand, setSelectedBrand] = useState([])
 
   useEffect(() => {
-    handleSelectInitialProduct()
+    if (products) {
+      handleSelectInitialProduct()
+    }
+    if (brands) {
+      setSelectedBrand(brands)
+    }
   }, [])
 
   const handleSelectInitialProduct = () => {
     const array = products.slice(0, 2)
-    // console.log(array[0]);
     setProductListing(array)
   }
 
   const handleSelectBrand = index => {
-    setBrand(prevBrands => {
+    setSelectedBrand(prevBrands => {
       return prevBrands.map((brand, i) =>
         i === index ? { ...brand, selected: !brand.selected } : brand,
       );
@@ -107,7 +83,7 @@ export default function Home({ navigation }) {
           </TouchableOpacity>
         </View>
         <View style={styles.filterView}>
-          {brand
+          {selectedBrand && selectedBrand
             .filter(item => item.selected)
             .map((selectedBrand, index) => {
               return (
@@ -140,18 +116,13 @@ export default function Home({ navigation }) {
             <Text style={styles.popularheadingRight}>View more</Text>
           </TouchableOpacity>
         </View>
-        {/* <View style={styles.lastMainView}> */}
         <View style={styles.productMainView}>
-          {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}
-          > */}
-
           {productListing.map((item, index) => {
-            // console.log(formatToJSON(item));
             return (
               <View key={index}>
                 <View style={styles.bg}>
                   <View style={styles.lastLeftView}>
-                    <Image source={{uri:item?.images[0]}} style={styles.lastLeftViewImg} />
+                    <Image source={{ uri: item?.images[0] }} style={styles.lastLeftViewImg} />
                     <TouchableOpacity
                       onPress={() =>
                         navigation.navigate('ExhaustItem', {
@@ -186,7 +157,6 @@ export default function Home({ navigation }) {
               </View>
             );
           })}
-
         </View>
       </View>
       <Modal
@@ -201,7 +171,7 @@ export default function Home({ navigation }) {
             </TouchableOpacity>
           </View>
           <View style={styles.brandModal}>
-            {brand.map((item, index) => {
+            {selectedBrand && selectedBrand.map((item, index) => {
               return (
                 <TouchableOpacity
                   key={index}

@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectAuthToken, setAuthToken } from '../../store/authToken';
 import { selectUserData, setUserData } from '../../store/userData';
 import { setProducts } from '../../store/products';
+import { setBrands } from '../../store/brands';
 
 export default function SignIn({ navigation }) {
 
@@ -37,34 +38,53 @@ export default function SignIn({ navigation }) {
       const loverEmail = email?.toLowerCase()
       const response = await signin(loverEmail, password)
       if (response.success) {
-        console.log(response.userData);
+        const products = response.products
         const userData = response.userData
-        dispatch(setUserData(userData))
         const token = response.token
-        try {
-          const allProduct = await getAllProduct(token)
-          const allProducts = allProduct.products
-          setError('')
-          setEmail('')
-          setPassword('')
-          dispatch(setProducts(allProducts))
-          dispatch(setAuthToken(token))
-          setLoader(false)
-        } catch (error) {
-          console.log("get all product =--=", error);
-          setLoader(false)
-          setError(error.message)
-        }
+        setError('')
+        setEmail('')
+        setPassword('')
+        handleSetBrand(products)
+        dispatch(setProducts(products))
+        dispatch(setUserData(userData))
+        dispatch(setAuthToken(token))
+        setLoader(false)
       } else {
         setLoader(false)
         setError(response.message)
       }
     } catch (error) {
+      setLoader(false)
       console.log(error);
+      setError(error.message)
     }
-
   }
 
+  const handleSetBrand = (products) => {
+    const brandMap = {};
+
+    // Iterate through each product
+    products.forEach(product => {
+      const { brand, quantity } = product;
+
+      // Check if the brand name is already in the object
+      if (brand.name in brandMap) {
+        // If yes, update the quantity
+        brandMap[brand.name].quantity += quantity;
+      } else {
+        // If not, add the brand to the object with initial quantity
+        brandMap[brand.name] = { ...brand, quantity };
+      }
+    });
+
+    // Convert the object values to an array
+    const uniqueBrandsWithSelectedKey = Object.values(brandMap).map(brand => ({
+      ...brand,
+      selected: false,
+    }));
+
+    dispatch(setBrands(uniqueBrandsWithSelectedKey))
+  };
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>

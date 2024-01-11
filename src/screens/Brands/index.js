@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   ImageBackground,
@@ -10,30 +10,14 @@ import {
   View,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import {styles} from './style';
+import { styles } from './style';
 import images from '../../services/utilities/images';
-import {colors} from '../../services';
+import { colors } from '../../services';
+import { useSelector } from 'react-redux';
+import { selectBrands } from '../../store/brands';
 
-export default function Brands({navigation}) {
-  const [brandData, setBrandData] = useState([
-    {logo: images.lamboIcon, name: 'Lamborgini', quantity: '302'},
-    {logo: images.mclarenIcon, name: 'Mclaren', quantity: '150'},
-    {logo: images.porscheIcon, name: 'Porsche', quantity: '180'},
-    {logo: images.ferrariIcon, name: 'Ferrari', quantity: '210'},
-    {logo: images.bmwIcon, name: 'BMW', quantity: '240'},
-    {logo: images.mercIcon, name: 'Mercedes', quantity: '270'},
-    {logo: images.audiIcon, name: 'Audi', quantity: '300'},
-    {logo: images.astonMartinIcon, name: 'Aston Martin', quantity: '330'},
-    {logo: images.lamboIcon, name: 'Lamborgini', quantity: '302'},
-    {logo: images.mclarenIcon, name: 'Mclaren', quantity: '150'},
-    {logo: images.porscheIcon, name: 'Porsche', quantity: '180'},
-    {logo: images.ferrariIcon, name: 'Ferrari', quantity: '210'},
-    {logo: images.bmwIcon, name: 'BMW', quantity: '240'},
-    {logo: images.mercIcon, name: 'Mercedes', quantity: '270'},
-    {logo: images.audiIcon, name: 'Audi', quantity: '300'},
-    {logo: images.astonMartinIcon, name: 'Aston Martin', quantity: '330'},
-  ]);
-
+export default function Brands({ navigation }) {
+  const brandData = useSelector(selectBrands)
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
@@ -53,10 +37,10 @@ export default function Brands({navigation}) {
               <View style={styles.test} key={index}>
                 <TouchableOpacity style={styles.brandContainer}>
                   <View style={styles.brandIconContainer}>
-                    <Image style={styles.brandIcon} source={item.logo} />
+                    <Image style={styles.brandIcon} source={{ uri: item.logo }} />
                   </View>
                   <View style={styles.separator}></View>
-                  <Text style={styles.brandName}>{item.name}</Text>
+                  <Text style={styles.brandName}>{item.name.toUpperCase()}</Text>
                   <View style={styles.quantityContainer}>
                     <Text style={styles.quantity}>{item.quantity}</Text>
                     <Text style={styles.quantity}> Exhaust</Text>

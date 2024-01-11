@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {styles} from './style';
+import React, { useEffect, useState } from 'react';
+import { styles } from './style';
 import {
   View,
   Text,
@@ -9,217 +9,282 @@ import {
   TextInput,
   Button,
   ScrollView,
+  RefreshControl,
 } from 'react-native';
 import images from '../../services/utilities/images';
-import {colors, sizes} from '../../services';
+import { colors, sizes } from '../../services';
 import Modal from 'react-native-modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectProducts, setProducts } from '../../store/products';
+import { getAllProduct } from '../../services/config/API';
+import { selectAuthToken } from '../../store/authToken';
+import { selectBrands, setBrands } from '../../store/brands';
+import formatToJSON from '../../services/utilities/JsonLog';
+import { selectUserData } from '../../store/userData';
 
-export default function PopularrExhaust({navigation}) {
+export default function PopularrExhaust({ navigation }) {
+
+  const dispatch = useDispatch()
+
+  const products = useSelector(selectProducts)
+  const authToken = useSelector(selectAuthToken)
+  const allBrands = useSelector(selectBrands)
+  const userData = useSelector(selectUserData)
+
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [brand, setBrand] = useState([
-    {name: 'ASTON MARTIN', selected: false},
-    {name: 'PORSCHE', selected: false},
-    {name: 'FERRARI', selected: false},
-    {name: 'BMW', selected: false},
-    {name: 'LAMBORGHINI', selected: false},
-    {name: 'MCLAREN', selected: false},
-    {name: 'AUDI', selected: false},
-    {name: 'BENZ', selected: false},
-  ]);
+  const [brand, setBrand] = useState([]);
+  const [productListing, setProductListing] = useState([]);
+  const [loader, setLoader] = useState(false)
+  const [search, setSearch] = useState('')
 
-  const [productListing, setProductListing] = useState([
-    {
-      Image: images.sparePart2,
-      name: 'Ferrari',
-      label: 'F12 Tail Throat Dwonpipe',
-      price: '$302.00',
-      ImagePlus: images.plusSign,
-      description:
-        'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed qu.',
-    },
-    {
-      Image: images.sparePart3,
-      name: 'BMW',
-      label: 'X3M X4M Titanium...',
-      price: '$302.00',
-      ImagePlus: images.plusSign,
-      description:
-        'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed qu.',
-    },
-    {
-      Image: images.sparePart4,
-      name: 'Benz',
-      label: ' G500 G55 G63 Titanium...',
-      price: '$302.00',
-      ImagePlus: images.plusSign,
-      description:
-        'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed qu.',
-    },
-    {
-      Image: images.sparePart5,
-      name: 'Lamborghini',
-      label: 'LP700 Titanium Alloy...',
-      price: '$302.00',
-      ImagePlus: images.plusSign,
-      description:
-        'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed qu.',
-    },
-    {
-      Image: images.sparePart6,
-      name: 'Ferrari',
-      label: 'F12 Tail Throat Dwonpipe',
-      price: '$302.00',
-      ImagePlus: images.plusSign,
-      description:
-        'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed qu.',
-    },
-    {
-      Image: images.sparePart7,
-      name: 'BMW',
-      label: 'X3M X4M Titanium...',
-      price: '$302.00',
-      ImagePlus: images.plusSign,
-      description:
-        'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed qu.',
-    },
-  ]);
 
-  const handleSelectBrand = index => {
-    setBrand(prevBrands => {
-      return prevBrands.map((brand, i) =>
-        i === index ? {...brand, selected: !brand.selected} : brand,
+  useEffect(() => {
+    if (products) {
+      setProductListing(products)
+    }
+    if (allBrands) {
+      setBrand(allBrands)
+    }
+  }, [])
+
+  // const handleSelectBrand = index => {
+  //   setBrand(prevBrands => {
+  //     return prevBrands.map((brand, i) =>
+  //       i === index ? { ...brand, selected: !brand.selected } : brand,
+  //     );
+  //   });
+  // };
+
+  const handleSelectBrand = (index) => {
+    setBrand((prevBrands) => {
+      const updatedBrands = prevBrands.map((brand, i) =>
+        i === index ? { ...brand, selected: !brand.selected } : brand
       );
+
+      // Get the selected brand names
+      const selectedBrandNames = updatedBrands
+        .filter((brand) => brand.selected)
+        .map((brand) => brand.name);
+
+      // If no brand is selected, show all products
+      if (selectedBrandNames.length === 0) {
+        setProductListing(products); // Set allProducts here (replace 'allProducts' with your actual array)
+      } else {
+        // Filter the products based on the selected brands
+        const filteredProducts = products.filter((product) =>
+          selectedBrandNames.includes(product.brand.name)
+        );
+
+        // Set the filtered products in the state
+        setProductListing(filteredProducts);
+      }
+
+      return updatedBrands;
     });
+  };
+
+
+
+  const handleGetAllProducts = async () => {
+    setLoader(true)
+    try {
+      const response = await getAllProduct(authToken)
+      if (response.success) {
+        const allProducts = response.products
+        handleSetBrand(allProducts)
+        dispatch(setProducts(allProducts))
+        setProductListing(allProducts)
+        setLoader(false)
+      } else {
+        console.log(response.message);
+        setLoader(false)
+      }
+    } catch (error) {
+      setLoader(false)
+      console.log(error);
+    }
+  }
+
+  const handleSetBrand = (allProducts) => {
+    const brandMap = {};
+
+    // Iterate through each product
+    allProducts.forEach(product => {
+      const { brand, quantity } = product;
+
+      // Check if the brand name is already in the object
+      if (brand.name in brandMap) {
+        // If yes, update the quantity
+        brandMap[brand.name].quantity += quantity;
+      } else {
+        // If not, add the brand to the object with initial quantity
+        brandMap[brand.name] = { ...brand, quantity };
+      }
+    });
+
+    // Convert the object values to an array
+    const uniqueBrandsWithSelectedKey = Object.values(brandMap).map(brand => ({
+      ...brand,
+      selected: false,
+    }));
+
+    dispatch(setBrands(uniqueBrandsWithSelectedKey))
+    setBrand(uniqueBrandsWithSelectedKey)
   };
   return (
     <SafeAreaView>
-      <ScrollView>
-        <View style={styles.topMainContainer}>
-          <View style={styles.headerView}>
-            <TouchableOpacity onPress={() => navigation.navigate('Brands')}>
-              <Image
-                source={images.headerMenu}
-                style={styles.imagesStylingLeft}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-              <Image
-                source={images.headerFaceIcon}
-                style={styles.imagesStylingRight}
-              />
-            </TouchableOpacity>
+      <View style={styles.topMainContainer}>
+        <View style={styles.headerView}>
+          <TouchableOpacity onPress={() => navigation.navigate('Brands')}>
+            <Image
+              source={images.headerMenu}
+              style={styles.imagesStylingLeft}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            <Image
+              source={userData?.profile ? { uri: userData?.profile } : images.headerFaceIcon}
+              style={styles.imagesStylingRight}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.headingTextStyling}>Welcome,</Text>
+        <Text style={styles.subHeadingTextStyling}>{userData?.name || "CSZ EXHAUST"}</Text>
+        <View style={styles.searchFilterView}>
+          <View style={styles.inputContainetr}>
+            <Image source={images.search} style={styles.searchImgStyling} />
+            <TextInput
+              placeholder="Search..."
+              style={styles.textFieldStyling}
+              placeholderTextColor={colors.lightGrey1}
+              onChangeText={(text) => setSearch(text)}
+            />
           </View>
-          <Text style={styles.headingTextStyling}>Welcome,</Text>
-          <Text style={styles.subHeadingTextStyling}>CSZ EXHAUST</Text>
-          <View style={styles.searchFilterView}>
-            <View style={styles.inputContainetr}>
-              <Image source={images.search} style={styles.searchImgStyling} />
-              <TextInput
-                placeholder="Search..."
-                style={styles.textFieldStyling}
-                placeholderTextColor={colors.lightGrey1}
-              />
-            </View>
-            <TouchableOpacity
-              onPress={() => setIsModalVisible(!isModalVisible)}>
-              <Image source={images.filter} style={styles.filterImgStyling} />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.filterView}>
-            {brand
-              .filter(item => item.selected)
-              .map((selectedBrand, index) => {
-                return (
-                  <Text style={styles.filerNameStyling} key={index}>
-                    {selectedBrand.name}
-                  </Text>
-                );
-              })}
-          </View>
-          <Text style={styles.popularheadingLeft}>Popular Exhaust</Text>
-          <View style={styles.productMainView}>
-            {productListing.map((item, index) => {
+          <TouchableOpacity
+            onPress={() => setIsModalVisible(!isModalVisible)}>
+            <Image source={images.filter} style={styles.filterImgStyling} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.filterView}>
+          {brand && brand
+            .filter(item => item.selected)
+            .map((selectedBrand, index) => {
               return (
-                <View key={index}>
-                  <View style={styles.bg}>
-                    <View style={styles.lastLeftView}>
-                      <Image
-                        source={item.Image}
-                        style={styles.lastLeftViewImg}
-                      />
-                      <TouchableOpacity
-                        onPress={() =>
-                          navigation.navigate('ExhaustItem', {
-                            data: item,
-                          })
-                        }>
-                        <Text style={styles.lastLeftViewTextHeading}>
-                          {item.name}
-                        </Text>
-                        <Text style={styles.lastLeftViewTextPara}>
-                          {item.label}
-                        </Text>
-                        <View style={styles.priceAndPlusSignView}>
-                          <Text style={styles.lastLeftViewTextHeading1}>
-                            {item.price}
-                          </Text>
-                          <View style={styles.plusImgView}>
-                            <TouchableOpacity
-                              onPress={() =>
-                                navigation.navigate('MyCart', {data: item})
-                              }>
-                              <Image
-                                source={item.ImagePlus}
-                                style={styles.plusSignImg}
-                              />
-                            </TouchableOpacity>
+                <Text style={styles.filerNameStyling} key={index}>
+                  {selectedBrand.name}
+                </Text>
+              );
+            })
+          }
+        </View>
+        <Text style={styles.popularheadingLeft}>Popular Exhaust</Text>
+        <View style={styles.scrollViewParent}>
+          <ScrollView showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl
+                refreshing={loader}
+                onRefresh={() => { handleGetAllProducts() }}
+                colors={[colors.btnBlue]}
+                progressBackgroundColor="white"
+              />
+            }
+          >
+            <View style={styles.productMainView}>
+              {productListing &&
+                productListing
+                  .filter((item) =>
+                    item.brand.name.toLowerCase().includes(search.toLowerCase())
+                  )
+                  .map((item, index) => {
+                    return (
+                      <View key={index}
+                      >
+    
+                          <View style={{backgroundColor: colors.white,borderRadius: sizes.screenWidth * 0.03,
+                          }}>
+
+                          <TouchableOpacity 
+                          onPress={() =>
+                            navigation.navigate('ExhaustItem', {
+                              data: item,
+                            })
+                          }
+                          style={styles.lastLeftView}>
+                            <Image
+                              source={{ uri: item?.images[0] }}
+                              style={styles.lastLeftViewImg}
+                            />
+                            <View
+                              >
+                              <Text style={styles.lastLeftViewTextHeading}>
+                                {item.brand.name}
+                              </Text>
+                              <Text style={styles.lastLeftViewTextPara} numberOfLines={1}>
+                                {item.description}
+                              </Text>
+                              <View style={styles.priceAndPlusSignView}>
+                                <Text style={styles.lastLeftViewTextHeading1}>
+                                  {`$${item.price}.00`}
+                                </Text>
+                                <View style={styles.plusImgView}>
+                                  <TouchableOpacity
+                                    onPress={() =>
+                                      navigation.navigate('MyCart', { data: item })
+                                    }>
+                                    <Image
+                                      source={images.plusSign}
+                                      style={styles.plusSignImg}
+                                    />
+                                  </TouchableOpacity>
+                                </View>
+                              </View>
+                            </View>
+                          </TouchableOpacity>
                           </View>
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
+                      </View>
+                    );
+                  }).reverse()
+              }
+            </View>
+          </ScrollView>
+        </View>
+      </View>
+      <Modal
+        isVisible={isModalVisible}
+        onBackdropPress={() => setIsModalVisible(false)}>
+        <View style={styles.modalMainView}>
+          <View style={styles.horizontalLine}></View>
+          <View style={styles.modalRow}>
+            <Text style={styles.modalText}>Filter</Text>
+            <TouchableOpacity onPress={() => setIsModalVisible(false)}>
+              <Image source={images.cross} style={styles.crossImg} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.brandModal}>
+            {brand.map((item, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    handleSelectBrand(index);
+                  }}>
+                  <Text
+                    style={
+                      item.selected ? styles.carNameSelected : styles.carName
+                    }>
+                    {item.name}
+                  </Text>
+                </TouchableOpacity>
               );
             })}
           </View>
+          <TouchableOpacity
+            style={styles.btnView}
+            onPress={() => setIsModalVisible(false)}>
+            <Text style={styles.btnText}>Done</Text>
+          </TouchableOpacity>
         </View>
-        <Modal
-          isVisible={isModalVisible}
-          onBackdropPress={() => setIsModalVisible(false)}>
-          <View style={styles.modalMainView}>
-            <View style={styles.horizontalLine}></View>
-            <View style={styles.modalRow}>
-              <Text style={styles.modalText}>Filter</Text>
-              <TouchableOpacity onPress={() => setIsModalVisible(false)}>
-                <Image source={images.cross} style={styles.crossImg} />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.brandModal}>
-              {brand.map((item, index) => {
-                return (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() => {
-                      handleSelectBrand(index);
-                    }}>
-                    <Text
-                      style={
-                        item.selected ? styles.carNameSelected : styles.carName
-                      }>
-                      {item.name}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-            <TouchableOpacity
-              style={styles.btnView}
-              onPress={() => setIsModalVisible(false)}>
-              <Text style={styles.btnText}>Done</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
-      </ScrollView>
+      </Modal>
     </SafeAreaView>
   );
 }
