@@ -37,3 +37,17 @@ export const getAllProduct = async (token) => {
     const { data } = await apiInstance.get('getAllProduct', { headers })
     return data
 }
+
+export const addToCart = async (token, productId, qty) => {
+    console.log(token);
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+    const body = {
+        productId,
+        qty
+    }
+    const { data } = await apiInstance.post('addToCart', body, { headers })
+    return data
+}

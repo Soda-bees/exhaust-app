@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
   },
   bottomContainer: {
     backgroundColor: colors.white,
-    marginTop: sizes.screenHeight * 0.05,
+    marginTop: sizes.screenHeight * 0.02,
     height: sizes.screenHeight,
     width: sizes.screenHeight * 0.5,
     borderRadius: sizes.screenWidth * 0.06,
@@ -137,6 +137,16 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.btnBlue,
     justifyContent: 'center',
   },
+  btnDis: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // marginTop: sizes.screenHeight * 0.01,
+    borderRadius: sizes.screenWidth * 0.2,
+    width: sizes.screenWidth * 0.49,
+    height: sizes.screenHeight * 0.06,
+    backgroundColor: colors.gray,
+    justifyContent: 'center',
+  },
   btnText: {
     color: colors.white,
     fontSize: fontSize.smallM,
@@ -168,5 +178,15 @@ export const styles = StyleSheet.create({
   //   borderRadius: 10, // Make it a circle
   //   backgroundColor: colors.btnBlue, // Adjust the color as needed
   // },
+  imageSlider:{
+    // backgroundColor:'red',
+    width:sizes.screenWidth,
+    height:sizes.screenHeight * 0.2
+  },
+  sliderImg:{
+    width:sizes.screenWidth ,
+    height:sizes.screenHeight * 0.2,
+    // backgroundColor:'green'
+  }
 
 });

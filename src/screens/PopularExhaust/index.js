@@ -108,11 +108,11 @@ export default function PopularrExhaust({ navigation }) {
 
   const handleSetBrand = (allProducts) => {
     const brandMap = {};
-  
+
     // Iterate through each product
     allProducts.forEach((product) => {
       const { brand } = product;
-  
+
       // Check if the brand name is already in the object
       if (brand.name in brandMap) {
         // If yes, increment the quantity count
@@ -122,18 +122,18 @@ export default function PopularrExhaust({ navigation }) {
         brandMap[brand.name] = { ...brand, quantity: 1, selected: false };
       }
     });
-  
+
     // Convert the object values to an array
     const uniqueBrandsWithSelectedKey = Object.values(brandMap);
-  
+
     dispatch(setBrands(uniqueBrandsWithSelectedKey));
     setBrand(uniqueBrandsWithSelectedKey);
   };
-  
-  
-  
-  
-  
+
+
+
+
+
   return (
     <SafeAreaView>
       <View style={styles.topMainContainer}>
@@ -202,23 +202,23 @@ export default function PopularrExhaust({ navigation }) {
                     return (
                       <View key={index}
                       >
-    
-                          <View style={{backgroundColor: colors.white,borderRadius: sizes.screenWidth * 0.03,
-                          }}>
+                        <View style={{
+                          backgroundColor: colors.white, borderRadius: sizes.screenWidth * 0.03,
+                        }}>
 
-                          <TouchableOpacity 
-                          onPress={() =>
-                            navigation.navigate('ExhaustItem', {
-                              data: item,
-                            })
-                          }
-                          style={styles.lastLeftView}>
+                          <TouchableOpacity
+                            onPress={() =>
+                              navigation.navigate('ExhaustItem', {
+                                data: item,
+                              })
+                            }
+                            style={styles.lastLeftView}>
                             <Image
                               source={{ uri: item?.images[0] }}
                               style={styles.lastLeftViewImg}
                             />
                             <View
-                              >
+                            >
                               <Text style={styles.lastLeftViewTextHeading}>
                                 {item.brand.name}
                               </Text>
@@ -243,7 +243,7 @@ export default function PopularrExhaust({ navigation }) {
                               </View>
                             </View>
                           </TouchableOpacity>
-                          </View>
+                        </View>
                       </View>
                     );
                   }).reverse()
