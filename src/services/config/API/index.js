@@ -49,5 +49,5 @@ export const addToCart = async (token, productId, qty) => {
         qty
     }
     const { data } = await apiInstance.post('addToCart', body, { headers })
-    return data
+    // return data
 }
