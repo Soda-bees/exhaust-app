@@ -92,7 +92,7 @@ export const styles = StyleSheet.create({
     elevation: 8,
     backgroundColor: colors.white,
   },
-  
+
   lastLeftViewImg: {
     resizeMode: 'contain',
     width: sizes.screenWidth * 0.37,
@@ -248,12 +248,13 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
-    gap: sizes.screenWidth*0.03,
+    gap: sizes.screenWidth * 0.03,
     width: sizes.screenWidth * 0.9,
-    // justifyContent: 'center',
+    marginLeft: sizes.screenWidth * 0.025,
+    paddingTop: sizes.screenHeight * 0.01
   },
   scrollViewParent: {
-    height: sizes.screenHeight * 0.67,
-    paddingBottom: sizes.screenHeight * 0.02,
+    height: sizes.screenHeight * 0.66,
+    paddingBottom:sizes.screenHeight * 0.01
   }
 });

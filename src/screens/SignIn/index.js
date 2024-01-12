@@ -60,31 +60,29 @@ export default function SignIn({ navigation }) {
     }
   }
 
-  const handleSetBrand = (products) => {
+  const handleSetBrand = (allProducts) => {
     const brandMap = {};
-
+  
     // Iterate through each product
-    products.forEach(product => {
-      const { brand, quantity } = product;
-
+    allProducts.forEach((product) => {
+      const { brand } = product;
+  
       // Check if the brand name is already in the object
       if (brand.name in brandMap) {
-        // If yes, update the quantity
-        brandMap[brand.name].quantity += quantity;
+        // If yes, increment the quantity count
+        brandMap[brand.name].quantity += 1;
       } else {
-        // If not, add the brand to the object with initial quantity
-        brandMap[brand.name] = { ...brand, quantity };
+        // If not, add the brand to the object with initial quantity of 1
+        brandMap[brand.name] = { ...brand, quantity: 1, selected: false };
       }
     });
-
+  
     // Convert the object values to an array
-    const uniqueBrandsWithSelectedKey = Object.values(brandMap).map(brand => ({
-      ...brand,
-      selected: false,
-    }));
-
+    const uniqueBrandsWithSelectedKey = Object.values(brandMap);
+  
     dispatch(setBrands(uniqueBrandsWithSelectedKey))
   };
+  
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>

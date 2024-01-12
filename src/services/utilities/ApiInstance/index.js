@@ -9,7 +9,6 @@ const apiInstance = axios.create({
     baseURL,
     timeout,
     withCredentials: true,   
-    // headers: defaultHeaders,
 });
 
 

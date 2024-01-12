@@ -50,6 +50,17 @@ export const styles = StyleSheet.create({
     marginBottom: sizes.screenHeight * 0.024,
   },
 
+  passwordInputField: {
+    width: sizes.screenWidth * 0.8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: sizes.screenHeight * 0.08,
+    borderColor: colors.borderGrey,
+    paddingLeft: sizes.screenWidth * 0.05,
+    marginBottom: sizes.screenHeight * 0.01,
+  },
+
   icon: {
     resizeMode: 'contain',
     height: sizes.screenWidth * 0.05,
@@ -179,4 +190,12 @@ export const styles = StyleSheet.create({
     fontWeight: '800',
     marginLeft:sizes.screenWidth * 0.01
   },
+  errorText: {
+    // backgroundColor:'red',
+    width: sizes.screenWidth * 0.75,
+    marginBottom: sizes.screenHeight * 0.01,
+    fontSize: fontSize.medium,
+    fontWeight: '500',
+    color: colors.red
+  }
 });

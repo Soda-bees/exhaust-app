@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
 import {styles} from './style';
 import images from '../../services/utilities/images';
 import {colors} from '../../services';
@@ -16,6 +15,7 @@ import {colors} from '../../services';
 export default function SignUp({navigation}) {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [eyeIconShow, setEyeIconShow] = useState(false);
+  const [error , setError] = useState('')
 
   return (
     <SafeAreaView>
@@ -55,8 +55,16 @@ export default function SignUp({navigation}) {
                 style={styles.inputText}
               />
             </View>
-
             <View style={styles.inputField}>
+              <Image style={styles.icon} source={images.location2} />
+              <TextInput
+                secureTextEntry={!eyeIconShow ? true : false}
+                placeholder="Location"
+                placeholderTextColor={colors.lightGrey}
+                style={styles.inputText}
+              />
+            </View>
+            <View style={styles.passwordInputField}>
               <Image style={styles.icon} source={images.lockIcon} />
               <TextInput
                 secureTextEntry={!eyeIconShow ? true : false}
@@ -71,6 +79,10 @@ export default function SignUp({navigation}) {
                 />
               </TouchableOpacity>
             </View>
+            {
+              error &&
+              <Text style={styles.errorText}>{error}</Text>
+            }
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('UploadPhoto')}>
             <View style={styles.blueBtn}>
