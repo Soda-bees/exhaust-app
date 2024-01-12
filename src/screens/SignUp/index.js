@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   Image,
   ImageBackground,
@@ -10,12 +10,17 @@ import {
 } from 'react-native';
 import {styles} from './style';
 import images from '../../services/utilities/images';
-import {colors} from '../../services';
+import {colors, sizes} from '../../services';
+import PhoneInput from 'react-native-phone-number-input';
 
 export default function SignUp({navigation}) {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [eyeIconShow, setEyeIconShow] = useState(false);
-  const [error , setError] = useState('')
+  const [error, setError] = useState('');
+  const [contactNo, setContactNo] = useState('');
+  const [value, setValue] = useState('');
+  const [formattedValue, setFormattedValue] = useState('');
+  const phoneInput = useRef(null);
 
   return (
     <SafeAreaView>
@@ -47,12 +52,40 @@ export default function SignUp({navigation}) {
             </View>
 
             <View style={styles.inputField}>
-              <Image style={styles.icon} source={images.lockIcon} />
-              <TextInput
-                secureTextEntry
-                placeholder="Phone Number"
-                placeholderTextColor={colors.lightGrey}
-                style={styles.inputText}
+              {/* <Image style={styles.icon} source={images.lockIcon} /> */}
+              <PhoneInput
+                ref={phoneInput}
+                defaultValue={value}
+                defaultCode="US"
+                layout="first"
+                withShadow={false}
+                autoFocus={false}
+                disableArrowIcon={true}
+                textContainerStyle={styles.inputFieldBackground}
+                onChangeFormattedText={text => {
+                  setFormattedValue(text);
+                }}
+                withDarkTheme={false}
+                flagButtonStyle={{
+                  backgroundColor: colors.bgLight,
+                  height: sizes.screenHeight * 0.04,
+                  width: sizes.screenHeight * 0.04,
+                  alignSelf:'center',
+                }}
+                containerStyle={{
+                  height: sizes.screenHeight * 0.07,
+                  width: sizes.screenHeight * 0.346,
+                }}
+                textInputStyle={{
+                  height: sizes.screenHeight * 0.07,
+                  color: colors.black,
+                }}
+                textInputProps={{
+                  placeholderTextColor: colors.disabledBg2,
+                }}
+                onChangeText={text => {
+                  setContactNo(text);
+                }}
               />
             </View>
             <View style={styles.inputField}>
@@ -79,10 +112,7 @@ export default function SignUp({navigation}) {
                 />
               </TouchableOpacity>
             </View>
-            {
-              error &&
-              <Text style={styles.errorText}>{error}</Text>
-            }
+            {error && <Text style={styles.errorText}>{error}</Text>}
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('UploadPhoto')}>
             <View style={styles.blueBtn}>
