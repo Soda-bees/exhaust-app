@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Image,
   ImageBackground,
@@ -8,12 +8,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {styles} from './style';
+import { styles } from './style';
 import images from '../../services/utilities/images';
-import {colors, sizes} from '../../services';
+import { colors, sizes } from '../../services';
 import PhoneInput from 'react-native-phone-number-input';
+import formatToJSON from '../../services/utilities/JsonLog';
+import Loader from '../../components/Loader';
 
-export default function SignUp({navigation}) {
+export default function SignUp({ navigation }) {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [eyeIconShow, setEyeIconShow] = useState(false);
   const [error, setError] = useState('');
@@ -21,6 +23,23 @@ export default function SignUp({navigation}) {
   const [value, setValue] = useState('');
   const [formattedValue, setFormattedValue] = useState('');
   const phoneInput = useRef(null);
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [location, setLocation] = useState('')
+  const [loader, setLoader] = useState(false)
+
+  const handleSignup = async () => {
+    // navigation.navigate('UploadPhoto')
+    const obj = {
+      name,
+      email,
+      phone: formattedValue,
+      location,
+      password
+    }
+    console.log(formatToJSON(obj));
+  }
 
   return (
     <SafeAreaView>
@@ -39,6 +58,8 @@ export default function SignUp({navigation}) {
                 placeholder="Name"
                 placeholderTextColor={colors.lightGrey}
                 style={styles.inputText}
+                onChangeText={(text) => setName(text)}
+                value={name}
               />
             </View>
 
@@ -48,6 +69,8 @@ export default function SignUp({navigation}) {
                 placeholder="Email"
                 placeholderTextColor={colors.lightGrey}
                 style={styles.inputText}
+                onChangeText={(text) => setEmail(text)}
+                value={email}
               />
             </View>
 
@@ -70,7 +93,7 @@ export default function SignUp({navigation}) {
                   backgroundColor: colors.bgLight,
                   height: sizes.screenHeight * 0.04,
                   width: sizes.screenHeight * 0.04,
-                  alignSelf:'center',
+                  alignSelf: 'center',
                 }}
                 containerStyle={{
                   height: sizes.screenHeight * 0.07,
@@ -91,10 +114,12 @@ export default function SignUp({navigation}) {
             <View style={styles.inputField}>
               <Image style={styles.icon} source={images.location2} />
               <TextInput
-                secureTextEntry={!eyeIconShow ? true : false}
+                // secureTextEntry={!eyeIconShow ? true : false}
                 placeholder="Location"
                 placeholderTextColor={colors.lightGrey}
                 style={styles.inputText}
+                onChangeText={(text) => setLocation(text)}
+                value={location}
               />
             </View>
             <View style={styles.passwordInputField}>
@@ -104,6 +129,8 @@ export default function SignUp({navigation}) {
                 placeholder="Password"
                 placeholderTextColor={colors.lightGrey}
                 style={styles.inputText}
+                onChangeText={(text) => setPassword(text)}
+                value={password}
               />
               <TouchableOpacity onPress={() => setEyeIconShow(!eyeIconShow)}>
                 <Image
@@ -114,15 +141,22 @@ export default function SignUp({navigation}) {
             </View>
             {error && <Text style={styles.errorText}>{error}</Text>}
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate('UploadPhoto')}>
-            <View style={styles.blueBtn}>
-              <Text style={styles.blueBtnText}>Sign Up</Text>
-            </View>
-          </TouchableOpacity>
+          {
+            loader ?
+              <Loader />
+              :
+              <TouchableOpacity onPress={() => handleSignup()}>
+                <View style={styles.blueBtn}>
+                  <Text style={styles.blueBtnText}>Sign Up</Text>
+                </View>
+              </TouchableOpacity>
+          }
+
         </View>
         <View style={styles.row}>
           <Text style={styles.signUpText}> Already have an account?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('SignIn')}>
             <Text style={styles.blueText}> Sign In</Text>
           </TouchableOpacity>
         </View>
