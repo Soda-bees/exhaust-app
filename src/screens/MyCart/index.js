@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageBackground,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   Text,
@@ -10,15 +12,116 @@ import {
   View,
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import {styles} from './style';
+import { styles } from './style';
 import images from '../../services/utilities/images';
-import {colors} from '../../services';
+import { colors } from '../../services';
+import { useDispatch, useSelector } from 'react-redux';
+import { decreaseQtyByOneRedux, deleteCartRedux, increaseQtyByOneRedux, selectUserData } from '../../store/userData';
+import formatToJSON from '../../services/utilities/JsonLog';
+import { decCartByOne, deleteToCart, incCartByOne } from '../../services/config/API';
+import { selectAuthToken } from '../../store/authToken';
 
-export default function MyCart({navigation, route}) {
+export default function MyCart({ navigation, route }) {
+
+  const dispatch = useDispatch()
+
+  const userData = useSelector(selectUserData)
+  const authToken = useSelector(selectAuthToken)
+  // console.log("-=-=", formatToJSON(userData.cart));
+
   const [quantity, setQuantity] = useState(0);
   const [quantityTwo, setQuantityTwo] = useState(0);
   const [quantityThree, setQuantityThree] = useState(0);
-  // const {data} = route?.params;
+  const [totalAmount, setTotalAmount] = useState(0)
+  const [subTotalAmount, setSubTotalAmount] = useState(0)
+  const [shipping, setShipping] = useState(34)
+  // const [deleteLoader, setDeleteLoader] = useState(false)
+  const [loadingItems, setLoadingItems] = useState([]);
+  const [cartIncDecLoader, setCartIncDecLoader] = useState([]);
+  const [refreshLoader , setRefreshLoader] = useState(false)
+
+  useEffect(() => {
+    const cart = userData.cart
+    const totalAmount = calculateTotalAmount(cart)
+    setTotalAmount(totalAmount)
+    setSubTotalAmount(totalAmount + shipping)
+  }, [userData])
+
+  const calculateTotalAmount = (cart) => {
+    // Use reduce to iterate through the cart and accumulate the total amount
+    const totalAmount = cart.reduce((accumulator, cartItem) => {
+      // Ensure cartItem.product and cartItem.qty exist
+      if (cartItem.product && cartItem.qty) {
+        // Multiply the product price by the quantity and add to the accumulator
+        return accumulator + cartItem.product.price * cartItem.qty;
+      } else {
+        // If any necessary information is missing, return the accumulator unchanged
+        return accumulator;
+      }
+    }, 0); // Initialize accumulator to 0
+
+    return totalAmount;
+  };
+
+  const handleDeleteCart = async (_id) => {
+    setLoadingItems([...loadingItems, _id]);
+    try {
+      const response = await deleteToCart(authToken, _id)
+      if (response.success) {
+        dispatch(deleteCartRedux({ _id }))
+        setLoadingItems(loadingItems.filter((id) => id !== _id));
+      } else {
+        console.log(response.message);
+        setLoadingItems(loadingItems.filter((id) => id !== _id));
+      }
+    } catch (error) {
+      console.log(error);
+      setLoadingItems(loadingItems.filter((id) => id !== _id));
+    }
+  };
+
+  const handleIncCartByOne = async (_id) => {
+    setCartIncDecLoader([...cartIncDecLoader, _id]);
+    try {
+      const response = await incCartByOne(authToken, _id)
+      if (response.success) {
+        dispatch(increaseQtyByOneRedux({ _id }))
+        setCartIncDecLoader(cartIncDecLoader.filter((id) => id !== _id))
+      } else {
+        console.log(response.message);
+        setCartIncDecLoader(cartIncDecLoader.filter((id) => id !== _id))
+      }
+    } catch (error) {
+      console.log(error.message);
+      setCartIncDecLoader(cartIncDecLoader.filter((id) => id !== _id))
+    }
+  }
+
+  const handleDecCartByOne = async (_id) => {
+    try {
+      setCartIncDecLoader([...cartIncDecLoader, _id]);
+      const response = await decCartByOne(authToken, _id)
+      console.log(response);
+      if (response.success) {
+        dispatch(decreaseQtyByOneRedux({ _id }))
+        setCartIncDecLoader(cartIncDecLoader.filter((id) => id !== _id))
+      } else {
+        console.log(response.message);
+        setCartIncDecLoader(cartIncDecLoader.filter((id) => id !== _id))
+      }
+    } catch (error) {
+      console.log(error.message);
+      setCartIncDecLoader(cartIncDecLoader.filter((id) => id !== _id))
+    }
+  }
+
+  const scrollViewFunction = async () => {
+    setRefreshLoader(true)
+    setTimeout(() => {
+      setRefreshLoader(false)
+    }, 200)
+  }
+
 
   return (
     <SafeAreaView>
@@ -28,107 +131,75 @@ export default function MyCart({navigation, route}) {
             <Image style={styles.headerBackIcon} source={images.backIcon} />
           </TouchableOpacity>
           <Text style={styles.heading}>My Cart</Text>
-          {/* <TouchableOpacity>
-            <Image style={styles.headerIcon} source={images.cartIcon} />
-          </TouchableOpacity> */}
         </View>
         <View style={styles.scrollBody}>
-          {/* <ScrollView showsVerticalScrollIndicator={false}> */}
-          <View style={styles.itemContainer}>
-            <TouchableOpacity style={styles.itemDetails}>
-              <View style={styles.ferrariF12ExhaustContainer}>
-                <Image
-                  style={styles.ferrariF12Exhaust}
-                  source={images.ferrariExhaust}
+          <View style={styles.scrollViewParent}>
+            <ScrollView
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshLoader}
+                  onRefresh={() => { scrollViewFunction() }}
+                  colors={[colors.btnBlue]}
+                  progressBackgroundColor="white"
                 />
-              </View>
-              <View>
-                <Text style={styles.brandName}>Ferrari</Text>
-                <Text style={styles.exhaustType}>F12 Tail Throat Downpipe</Text>
-                <Text style={styles.exhaustPrice}>$302.00</Text>
-              </View>
-            </TouchableOpacity>
-            <View style={styles.deleteAndQuantityContainer}>
-              <TouchableOpacity>
-                <Image style={styles.deleteIcon} source={images.deleteIcon} />
-              </TouchableOpacity>
-              <View style={styles.quantityContainer}>
-                <TouchableOpacity
-                  onPress={() => quantity > 0 && setQuantity(quantity - 1)}>
-                  <Text style={styles.textQuantityMinus}>_</Text>
-                </TouchableOpacity>
-                <Text style={styles.textQuantity}>{quantity}</Text>
-                <TouchableOpacity onPress={() => setQuantity(quantity + 1)}>
-                  <Text style={styles.textQuantityPlus}>+</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-          <View style={styles.itemContainer}>
-            <TouchableOpacity style={styles.itemDetails}>
-              <View style={styles.ferrariF12ExhaustContainer}>
-                <Image
-                  style={styles.ferrariF12Exhaust}
-                  source={images.ferrariExhaust}
-                />
-              </View>
-              <View>
-                <Text style={styles.brandName}>Ferrari</Text>
-                <Text style={styles.exhaustType}>F12 Tail Throat Downpipe</Text>
-                <Text style={styles.exhaustPrice}>$302.00</Text>
-              </View>
-            </TouchableOpacity>
-            <View style={styles.deleteAndQuantityContainer}>
-              <TouchableOpacity>
-                <Image style={styles.deleteIcon} source={images.deleteIcon} />
-              </TouchableOpacity>
-              <View style={styles.quantityContainer}>
-                <TouchableOpacity
-                  onPress={() =>
-                    quantityTwo > 0 && setQuantityTwo(quantityTwo - 1)
-                  }>
-                  <Text style={styles.textQuantityMinus}>_</Text>
-                </TouchableOpacity>
-                <Text style={styles.textQuantity}>{quantityTwo}</Text>
-                <TouchableOpacity
-                  onPress={() => setQuantityTwo(quantityTwo + 1)}>
-                  <Text style={styles.textQuantityPlus}>+</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
-          <View style={styles.itemContainer}>
-            <TouchableOpacity style={styles.itemDetails}>
-              <View style={styles.ferrariF12ExhaustContainer}>
-                <Image
-                  style={styles.ferrariF12Exhaust}
-                  source={images.ferrariExhaust}
-                />
-              </View>
-              <View>
-                <Text style={styles.brandName}>Ferrari</Text>
-                <Text style={styles.exhaustType}>F12 Tail Throat Downpipe</Text>
-                <Text style={styles.exhaustPrice}>$302.00</Text>
-              </View>
-            </TouchableOpacity>
-            <View style={styles.deleteAndQuantityContainer}>
-              <TouchableOpacity>
-                <Image style={styles.deleteIcon} source={images.deleteIcon} />
-              </TouchableOpacity>
-              <View style={styles.quantityContainer}>
-                <TouchableOpacity
-                  onPress={() =>
-                    quantityThree > 0 && setQuantityThree(quantityThree - 1)
-                  }>
-                  <Text style={styles.textQuantityMinus}>_</Text>
-                </TouchableOpacity>
-                <Text style={styles.textQuantity}>{quantityThree}</Text>
-                <TouchableOpacity
-                  onPress={() => setQuantityThree(quantityThree + 1)}>
-                  <Text style={styles.textQuantityPlus}>+</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+              }
+              showsVerticalScrollIndicator={false}>
+              {
+                userData?.cart && userData?.cart.map((item, index) => {
+                  return (
+                    <View key={index} style={styles.itemContainer}>
+                      <TouchableOpacity style={styles.itemDetails} onPress={() => { console.log(item._id) }}>
+                        <View style={styles.ferrariF12ExhaustContainer}>
+                          <Image
+                            style={styles.ferrariF12Exhaust}
+                            source={{ uri: item?.product?.images[0] }}
+                          />
+                        </View>
+                        <View>
+                          <Text style={styles.brandName}>{item?.product?.brand?.name}</Text>
+                          <Text style={styles.exhaustType}>{item?.product?.name}</Text>
+                          <Text style={styles.exhaustPrice}>{`$${item?.product?.price}.00`}</Text>
+                        </View>
+                      </TouchableOpacity>
+                      <View style={styles.deleteAndQuantityContainer}>
+                        {
+                          loadingItems.includes(item._id) ?
+                            <View>
+                              <ActivityIndicator color={colors.btnBlue} size={22} />
+                            </View>
+                            :
+                            <TouchableOpacity onPress={() => handleDeleteCart(item._id)}>
+                              <Image style={styles.deleteIcon} source={images.deleteIcon} />
+                            </TouchableOpacity>
+                        }
+                        {
+                          cartIncDecLoader.includes(item._id) ?
+                            <View style={styles.quantityContainer2}>
+                              <ActivityIndicator color={colors.btnBlue} size={20} />
+                            </View>
+                            :
+                            <View style={loadingItems.includes(item._id) ? styles.quantityContainer2 : styles.quantityContainer}>
+                              <TouchableOpacity
+                                onPress={() => { item.qty > 1 && handleDecCartByOne(item._id) }}
+                              >
+                                <Text style={styles.textQuantityMinus}>_</Text>
+                              </TouchableOpacity>
+                              <Text style={styles.textQuantity}>{item?.qty}</Text>
+                              <TouchableOpacity
+                                onPress={() => { handleIncCartByOne(item._id) }}
+                              >
+                                <Text style={styles.textQuantityPlus}>+</Text>
+                              </TouchableOpacity>
+                            </View>
+
+                        }
+
+                      </View>
+                    </View>
+                  )
+                }).reverse()
+              }
+            </ScrollView>
           </View>
           <View style={styles.promoSty}>
             <TextInput
@@ -142,15 +213,15 @@ export default function MyCart({navigation, route}) {
           <View>
             <View style={styles.pricesStyling}>
               <Text style={styles.priceText1}>Shipping:</Text>
-              <Text style={styles.priceNumber1}>$34.0</Text>
+              <Text style={styles.priceNumber1}>{`$${shipping}.0`}</Text>
             </View>
             <View style={styles.pricesStyling}>
               <Text style={styles.priceText1}>Sub Total:</Text>
-              <Text style={styles.priceNumber1}>$960.0</Text>
+              <Text style={styles.priceNumber1}>{`$${totalAmount}.0`}</Text>
             </View>
             <View style={styles.pricesStyling2}>
-              <Text style={styles.priceText2}>Total(3 items):</Text>
-              <Text style={styles.priceNumber2}>$1003.0</Text>
+              <Text style={styles.priceText2}>{`Total(${userData?.cart?.length} items):`}</Text>
+              <Text style={styles.priceNumber2}>{`$${subTotalAmount}.0`}</Text>
             </View>
           </View>
           <TouchableOpacity

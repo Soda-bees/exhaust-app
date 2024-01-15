@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {colors, fontSize, sizes} from '../../services';
+import { StyleSheet } from 'react-native';
+import { colors, fontSize, sizes } from '../../services';
 
 export const styles = StyleSheet.create({
   container: {
@@ -15,6 +15,11 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.h5,
     color: colors.black,
     fontWeight: 'bold',
+  },
+  rowText4: {
+    fontSize: fontSize.medium,
+    color: colors.gray,
+    fontWeight: '500',
   },
   rowText2: {
     fontSize: fontSize.small,
@@ -122,7 +127,7 @@ export const styles = StyleSheet.create({
   bottomRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems:'center',
+    alignItems: 'center',
     marginTop: sizes.screenHeight * 0.04,
     paddingHorizontal: sizes.screenWidth * 0.01,
     // backgroundColor:'red'
@@ -178,14 +183,14 @@ export const styles = StyleSheet.create({
   //   borderRadius: 10, // Make it a circle
   //   backgroundColor: colors.btnBlue, // Adjust the color as needed
   // },
-  imageSlider:{
+  imageSlider: {
     // backgroundColor:'red',
-    width:sizes.screenWidth,
-    height:sizes.screenHeight * 0.2
+    width: sizes.screenWidth,
+    height: sizes.screenHeight * 0.2
   },
-  sliderImg:{
-    width:sizes.screenWidth ,
-    height:sizes.screenHeight * 0.2,
+  sliderImg: {
+    width: sizes.screenWidth,
+    height: sizes.screenHeight * 0.2,
     // backgroundColor:'green'
   }
 

@@ -17,12 +17,14 @@ import { ProgressBar } from 'react-native-paper';
 import { colors } from '../../services';
 import formatToJSON from '../../services/utilities/JsonLog';
 import ImageSLider from '../../components/ExhaustItemImageSlider';
-import { useSelector } from 'react-redux';
-import { selectUserData } from '../../store/userData';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCartrRedux, increasPreviousQty, selectUserData } from '../../store/userData';
 import { addToCart } from '../../services/config/API';
 import { selectAuthToken } from '../../store/authToken';
 
 export default function ExhaustItem({ route, navigation }) {
+
+  const dispatch = useDispatch()
 
   const userData = useSelector(selectUserData)
   const authToken = useSelector(selectAuthToken)
@@ -40,7 +42,7 @@ export default function ExhaustItem({ route, navigation }) {
   const [loader, setLoader] = useState(false)
 
   const { data } = route?.params;
-
+  // console.log(userData.cart.length);
 
   useEffect(() => {
     setSound(data?.sound)
@@ -52,7 +54,6 @@ export default function ExhaustItem({ route, navigation }) {
 
   useEffect(() => {
     if (Math.ceil(progress.buffered) == Math.ceil(progress.position)) {
-      console.log('barabaaaaaaar');
       setSoundPlayBtn(!true);
     }
   }, [progress]);
@@ -149,24 +150,41 @@ export default function ExhaustItem({ route, navigation }) {
       }
       const response = await addToCart(authToken, productId, qty)
       console.log(response);
-      setLoader(false)
+      if (response.success) {
+        if (response.message === 'Add product in cart successfully.') {
+          const cartItem = response.cartItem
+          dispatch(addToCartrRedux(cartItem))
+          setLoader(false)
+        } else {
+          console.log(response.message);
+          dispatch(increasPreviousQty({ _id: productId, qty }))
+          setLoader(false)
+        }
+      } else {
+        console.log(response.message);
+        setLoader(false)
+      }
     } catch (error) {
       console.log(error.message);
       setLoader(false)
     }
     // Add product in cart successfully.
     // Quantity has been increased.
+    // cartItem
   }
 
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
-        <Header backImage={images.backIcon} addToCartImage={images.cartIcon} />
+        <Header backImage={images.backIcon} addToCartImage={images.cartIcon} navigate={'MyCart'} />
         <ImageSLider productImages={productImages} />
         <View style={styles.bottomContainer}>
           <View style={styles.mainContainer}>
             <View style={styles.row}>
-              <Text style={styles.rowText}>{data.name}</Text>
+              <View>
+                <Text style={styles.rowText}>{data?.brand?.name}</Text>
+                <Text style={styles.rowText4}>{data?.name}</Text>
+              </View>
               <View style={styles.quantityContainer}>
                 <TouchableOpacity
                   onPress={() => quantity > 0 && !loader && setQuantity(quantity - 1)}

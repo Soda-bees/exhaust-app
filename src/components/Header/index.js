@@ -4,7 +4,7 @@ import {styles} from './style';
 import images from '../../services/utilities/images';
 import {useNavigation} from '@react-navigation/native';
 
-export default function Header({backImage, title, addToCartImage}) {
+export default function Header({backImage, title, addToCartImage , navigate}) {
   const navigation = useNavigation();
 
   return (
@@ -12,9 +12,9 @@ export default function Header({backImage, title, addToCartImage}) {
       <View style={styles.headerView}>
         <TouchableOpacity  onPress={() => navigation.goBack()}>
           <Image source={backImage} style={styles.imgSty} />
-        </TouchableOpacity>
+        </TouchableOpacity >
         <Text style={styles.headerText}>{title}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=> navigation.navigate(navigate)}>
           <Image source={addToCartImage} style={styles.cartImgSty} />
         </TouchableOpacity>
       </View>

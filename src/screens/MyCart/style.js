@@ -109,6 +109,18 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: sizes.screenHeight * 0.05,
   },
+  quantityContainer2: {
+    height: sizes.screenHeight * 0.04,
+    backgroundColor: colors.borderColor,
+    width: sizes.screenWidth * 0.2,
+    justifyContent: 'space-between',
+    paddingLeft: sizes.screenWidth * 0.03,
+    paddingRight: sizes.screenWidth * 0.03,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: sizes.screenHeight * 0.05,
+    justifyContent:'center'
+  },
 
   textQuantityMinus: {
     color: colors.black,
@@ -250,7 +262,6 @@ export const styles = StyleSheet.create({
     marginLeft: sizes.screenWidth * 0.04,
     paddingHorizontal: sizes.screenWidth * 0.03,
     marginTop: sizes.screenHeight * 0.02,
-    // borderWidth: 1,
     borderRadius:sizes.screenWidth * 0.1,    
     height: sizes.screenHeight * 0.06,
     backgroundColor:colors.btnBlue,
@@ -258,11 +269,8 @@ export const styles = StyleSheet.create({
   },
   forwardIcon: {
     resizeMode: 'contain',
-    // backgroundColor: 'red',
     height: sizes.screenHeight * 0.04,
     width: sizes.screenHeight * 0.04,
-    // marginTop: sizes.screenHeight * 0.01,
-    // marginRight: sizes.screenHeight * 0.01,
   },
   bottomBtnText:{
     color:colors.white,
@@ -270,4 +278,9 @@ export const styles = StyleSheet.create({
     fontWeight:'500',
     marginLeft:sizes.screenWidth * 0.02
   },
+  scrollViewParent:{
+    width:sizes.screenWidth,
+    height:sizes.screenHeight * 0.58,
+    paddingBottom:sizes.screenHeight * 0.01
+  }
 });

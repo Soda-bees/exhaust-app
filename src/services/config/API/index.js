@@ -39,7 +39,6 @@ export const getAllProduct = async (token) => {
 }
 
 export const addToCart = async (token, productId, qty) => {
-    console.log(token);
     const headers = {
         'Content-Type': 'application/json',
         "Authorization": `Bearer ${token}`
@@ -49,5 +48,35 @@ export const addToCart = async (token, productId, qty) => {
         qty
     }
     const { data } = await apiInstance.post('addToCart', body, { headers })
-    // return data
+    return data
+}
+
+export const deleteToCart = async (token, cartId) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+
+    const { data } = await apiInstance.post('deleteFromCart', { cartId }, { headers })
+    return data
+}
+
+export const incCartByOne = async (token, cartId) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+
+    const { data } = await apiInstance.post('cartIncrement', { cartId }, { headers })
+    return data
+}
+
+export const decCartByOne = async (token, cartId) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+
+    const { data } = await apiInstance.post('cartDecrement', { cartId }, { headers })
+    return data
 }
