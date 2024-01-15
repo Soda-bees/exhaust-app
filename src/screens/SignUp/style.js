@@ -35,8 +35,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     height: sizes.screenWidth * 0.04,
     width: sizes.screenWidth * 0.05,
-    marginRight:sizes.screenWidth * 0.05
-    // backgroundColor:'red'
+    marginRight:sizes.screenWidth * 0.05,
   },
 
   inputField: {
@@ -48,6 +47,13 @@ export const styles = StyleSheet.create({
     borderColor: colors.borderGrey,
     paddingLeft: sizes.screenWidth * 0.05,
     marginBottom: sizes.screenHeight * 0.024,
+  },
+
+  inputFieldBackground:{
+    borderTopRightRadius:sizes.screenWidth * 0.08,
+    borderBottomRightRadius:sizes.screenWidth * 0.08,
+    backgroundColor:colors.white,
+
   },
 
   passwordInputField: {
