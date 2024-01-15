@@ -30,7 +30,6 @@ export default function SignUp({ navigation }) {
   const [loader, setLoader] = useState(false)
 
   const handleSignup = async () => {
-    // navigation.navigate('UploadPhoto')
     const obj = {
       name,
       email,
@@ -39,6 +38,7 @@ export default function SignUp({ navigation }) {
       password
     }
     console.log(formatToJSON(obj));
+    navigation.navigate('UploadPhoto')
   }
 
   return (
