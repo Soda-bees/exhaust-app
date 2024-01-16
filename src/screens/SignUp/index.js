@@ -38,7 +38,7 @@ export default function SignUp({ navigation }) {
       password
     }
     console.log(formatToJSON(obj));
-    navigation.navigate('UploadPhoto')
+    // navigation.navigate('UploadPhoto')
   }
 
   return (
