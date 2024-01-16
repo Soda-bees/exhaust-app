@@ -7,19 +7,56 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import React, {useState} from 'react';
-import {styles} from './style';
+import React, { useEffect, useState } from 'react';
+import { styles } from './style';
 import images from '../../services/utilities/images';
 import Header from '../../components/Header';
 import Modal from 'react-native-modal';
-import {colors} from '../../services';
+import { colors, sizes } from '../../services';
+import { useSelector } from 'react-redux';
+import { selectUserData } from '../../store/userData';
 
-export default function Checkout({navigation}) {
+export default function Checkout({ navigation }) {
+
+  const userData = useSelector(selectUserData)
+
   const [isModalVisisble, setIsModalVisisble] = useState(false);
+  const [totalAmount, setTotalAmount] = useState(0)
+  const [subTotalAmount, setSubTotalAmount] = useState(0)
+  const [shipping, setShipping] = useState(34)
+
+  useEffect(() => {
+    const cart = userData.cart
+    const totalAmount = calculateTotalAmount(cart)
+    console.log(totalAmount , "checkout");
+    setTotalAmount(totalAmount)
+    setSubTotalAmount(totalAmount + shipping)
+  }, [userData])
+
+  const calculateTotalAmount = (cart) => {
+    // Use reduce to iterate through the cart and accumulate the total amount
+    const totalAmount = cart.reduce((accumulator, cartItem) => {
+      // Ensure cartItem.product and cartItem.qty exist
+      if (cartItem.product && cartItem.qty) {
+        // Multiply the product price by the quantity and add to the accumulator
+        return accumulator + cartItem.product.price * cartItem.qty;
+      } else {
+        // If any necessary information is missing, return the accumulator unchanged
+        return accumulator;
+      }
+    }, 0); // Initialize accumulator to 0
+
+    return totalAmount;
+  };
+
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
-        <Header title={'Checkout'} backImage={images.backIcon} />
+        <Header title={'Checkout'} backImage={images.backIcon} navigate={'MyCart'} addToCartImage={images.cartIcon} />
+      <View style={{ height:sizes.screenHeight* 0.9 , flexDirection:'column',
+    justifyContent:'space-between'
+    }}>
+
         <View style={styles.mainContainer}>
           <View style={styles.topTextView}>
             <Text style={styles.topTextSty1}>Shipping address</Text>
@@ -28,7 +65,7 @@ export default function Checkout({navigation}) {
               <Text style={styles.topTextSty2}>Add new Address</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.MainCartView}>
+          {/* <View style={styles.MainCartView}>
             <View style={styles.firstCart}>
               <Text style={styles.firstCartText}>Jane Doe</Text>
               <TouchableOpacity
@@ -40,7 +77,7 @@ export default function Checkout({navigation}) {
             <Text style={styles.firstCartText}>
               Chino Hills, CA 91709, United States
             </Text>
-          </View>
+          </View> */}
           <View style={styles.topTextView}>
             <Text style={styles.topTextSty1}>Payment</Text>
             <TouchableOpacity
@@ -48,7 +85,7 @@ export default function Checkout({navigation}) {
               <Text style={styles.topTextSty2}>Add Card</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.MainCartView2}>
+          {/* <View style={styles.MainCartView2}>
             <View style={styles.row}>
               <Image source={images.mastercard} style={styles.cardIcon} />
               <Text style={styles.firstCartText}>**** **** **** 3947</Text>
@@ -57,19 +94,21 @@ export default function Checkout({navigation}) {
               onPress={() => navigation.navigate('PaymentMethod')}>
               <Text style={styles.firstCartText1}>Change</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
+
+        <View >
         <View style={styles.pricesStyling}>
           <Text style={styles.priceText1}>Shipping:</Text>
-          <Text style={styles.priceNumber1}>$34.0</Text>
+          <Text style={styles.priceNumber1}>{`$${shipping}.0`}</Text>
         </View>
         <View style={styles.pricesStyling}>
           <Text style={styles.priceText1}>Sub Total:</Text>
-          <Text style={styles.priceNumber1}>$960.0</Text>
+          <Text style={styles.priceNumber1}>{`$${totalAmount}.0`}</Text>
         </View>
         <View style={styles.pricesStyling2}>
-          <Text style={styles.priceText2}>Total(3 items):</Text>
-          <Text style={styles.priceNumber2}>$1003.0</Text>
+          <Text style={styles.priceText2}>{`Total(${userData?.cart?.length} items):`}</Text>
+          <Text style={styles.priceNumber2}>{`$${subTotalAmount}.0`}</Text>
         </View>
         <TouchableOpacity
           style={styles.bottomBtn}
@@ -77,6 +116,9 @@ export default function Checkout({navigation}) {
           <Text style={styles.bottomBtnText}>Submit Order</Text>
           <Image source={images.forwardIcon} style={styles.forwardIcon} />
         </TouchableOpacity>
+        </View>
+        </View>
+
         <Modal
           // visible={isModalVisisble}
           isVisible={isModalVisisble}

@@ -25,6 +25,7 @@ import UploadPhoto from '../../screens/UploadPhoto';
 import UploadProfilePhoto from '../../screens/UploadProfilePhoto';
 import { useSelector } from 'react-redux';
 import { selectAuthToken } from '../../store/authToken';
+import Congratulations from '../../screens/Congratulations';
 
 const Stack = createNativeStackNavigator();
 
@@ -78,6 +79,7 @@ const MyAuthStack = () => {
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} />
+      <Stack.Screen name="Congratulations" component={Congratulations} />
       <Stack.Screen name="MyTabs" component={MyTabs} />
       <Stack.Screen name="EmailOTP" component={EmailOTP} />
       <Stack.Screen name="Home" component={Home} />

@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {colors, fontSize, sizes} from '../../services';
+import { StyleSheet } from 'react-native';
+import { colors, fontSize, sizes } from '../../services';
 
 export const styles = StyleSheet.create({
   mainContainer: {
@@ -15,8 +15,9 @@ export const styles = StyleSheet.create({
   },
   profileImgSiz: {
     resizeMode: 'contain',
-    width: sizes.screenWidth * 0.25,
-    height: sizes.screenWidth * 0.25,
+    width: sizes.screenWidth * 0.30,
+    height: sizes.screenWidth * 0.30,
+    borderRadius: sizes.screenWidth * 0.15
   },
   profileHeading: {
     color: colors.black,
@@ -34,7 +35,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: 'center',
     borderRadius: sizes.screenWidth * 0.3,
-    marginTop: sizes.screenHeight * 0.25,
+    // marginTop: sizes.screenHeight * 0.25,
   },
   bottomBtn2: {
     width: sizes.screenWidth * 0.9,
@@ -54,5 +55,17 @@ export const styles = StyleSheet.create({
     color: colors.white,
     fontWeight: '500',
   },
-//   roundedBorder: {borderRadius: sizes.screenWidth * 0.5},
+  loaderContainer: {
+    marginTop: sizes.screenHeight * 0.02
+  },
+  error:{
+    color:colors.red,
+    alignSelf:'flex-start',
+    marginLeft:sizes.screenWidth * 0.06,
+    marginTop: sizes.screenHeight * 0.23,
+    marginBottom:sizes.screenHeight * 0.02,
+    fontSize:fontSize.medium
+    // marginTop:sizes.screenHeight * 0.
+  }
+  //   roundedBorder: {borderRadius: sizes.screenWidth * 0.5},
 });

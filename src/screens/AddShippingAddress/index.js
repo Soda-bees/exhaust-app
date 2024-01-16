@@ -7,13 +7,20 @@ import {
   SafeAreaView,
   TextInput,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import {styles} from './style';
 import images from '../../services/utilities/images';
 import Header from '../../components/Header';
 import {colors} from '../../services';
 
 export default function AddShippingAddress({navigation}) {
+  const [address , setAddress] = useState('')
+  const [city , setCity] = useState('')
+  const [state , setState] = useState('')
+  const [zipCode , setZipCode] = useState() //number
+  const [country , setCountry] = useState('')
+  const [phone , setPhone] = useState() //number
+
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
@@ -23,11 +30,16 @@ export default function AddShippingAddress({navigation}) {
         />
         <View style={styles.mainContainer}>
           <View style={styles.MainCartView}>
+            {
+              address &&
             <Text style={styles.labelName}>Address</Text>
+            }
             <TextInput
-              placeholder="3 Newbrifge Court"
+              placeholder="Address"
               placeholderTextColor={colors.black}
               style={styles.inputField}
+              onChangeText={(text) => setAddress(text)}
+              value={address}
             />
           </View>
 

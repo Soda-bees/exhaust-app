@@ -10,5 +10,6 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: sizes.screenHeight * 0.015,
+        width:sizes.screenWidth * 0.9
       },
 });

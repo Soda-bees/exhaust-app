@@ -13,8 +13,9 @@ export const styles = StyleSheet.create({
   },
   MainCartView: {
     paddingHorizontal: sizes.screenWidth * 0.06,
+    // paddingVertical: sizes.screenWidth * 0.02,
     marginTop: sizes.screenHeight * 0.02,
-    height: sizes.screenHeight * 0.08,
+    // height: sizes.screenHeight * 0.09,
     borderRadius: sizes.screenWidth * 0.2,
     backgroundColor: colors.white,
     shadowColor: '#000000',
@@ -33,17 +34,19 @@ export const styles = StyleSheet.create({
     paddingLeft:sizes.screenWidth * 0.01,
     // backgroundColor:'yellow',
     color:colors.disabledBg3,
-    position:'absolute',
-    left:sizes.screenWidth * 0.06,
-    top:sizes.screenHeight * 0.008,
-
+    // position:'absolute',
+    // left:sizes.screenWidth * 0.06,
+    // top:sizes.screenHeight * 0.008,
+    
   },
   inputField:{
     color:colors.black,
     width:sizes.screenWidth * 0.7,
     height:sizes.screenHeight * 0.05,
+    // marginVertical:5
     // backgroundColor:'red',
-    marginTop:sizes.screenHeight * 0.03
+    // marginTop:sizes.screenHeight * 0.01,
+    // marginBottom:sizes.screenHeight * 0.01
     // bottom:sizes.screenHeight * 0.01
   },
   row:{

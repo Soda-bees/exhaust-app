@@ -14,6 +14,7 @@ import { colors, sizes } from '../../services';
 import PhoneInput from 'react-native-phone-number-input';
 import formatToJSON from '../../services/utilities/JsonLog';
 import Loader from '../../components/Loader';
+import { checkExistingEmail } from '../../services/config/API';
 
 export default function SignUp({ navigation }) {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
@@ -30,15 +31,29 @@ export default function SignUp({ navigation }) {
   const [loader, setLoader] = useState(false)
 
   const handleSignup = async () => {
-    const obj = {
-      name,
-      email,
-      phone: formattedValue,
-      location,
-      password
+    setLoader(true)
+    try {
+      const obj = {
+        name,
+        email: email.toLowerCase(),
+        phone: value,
+        location,
+        password
+      }
+      const response = await checkExistingEmail(obj) 
+      if (response.success) {
+        setError('')
+        setLoader(false)
+        navigation.navigate('UploadPhoto', { userData: obj })
+      } else {
+        setError(response.message)
+        setLoader(false)
+      }
+    } catch (error) {
+      console.log(error);
+      setLoader(false)
+      setError(error.message)
     }
-    console.log(formatToJSON(obj));
-    // navigation.navigate('UploadPhoto')
   }
 
   return (
@@ -86,8 +101,9 @@ export default function SignUp({ navigation }) {
                 disableArrowIcon={true}
                 textContainerStyle={styles.inputFieldBackground}
                 onChangeFormattedText={text => {
-                  setFormattedValue(text);
+                  setValue(text);
                 }}
+                value={formattedValue}
                 withDarkTheme={false}
                 flagButtonStyle={{
                   backgroundColor: colors.bgLight,

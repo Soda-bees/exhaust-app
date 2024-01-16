@@ -1,16 +1,5 @@
+import axios from "axios"
 import apiInstance from "../../utilities/ApiInstance"
-
-
-const headersWithoutToken = {
-    ...apiInstance.defaults.headers
-};
-
-const headersWithToken = {
-    ...apiInstance.defaults.headers,
-    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsIl9pZCI6IjY1OWJhYWE4MmEwNmE4NmFiNTU4OTMwOSIsImlhdCI6MTcwNDgwMzAyOCwiZXhwIjoxNzA0ODI0NjI4fQ.wElABb2rzWOZLKNAYkZb7xlhZek_KotbeUbhXJw8QAM', // Replace with your actual token
-};
-
-
 
 export const checkServerConnection = async () => {
     const headers = {
@@ -78,5 +67,36 @@ export const decCartByOne = async (token, cartId) => {
     }
 
     const { data } = await apiInstance.post('cartDecrement', { cartId }, { headers })
+    return data
+}
+
+export const checkExistingEmail = async (body) => {
+    const headers = {
+        'Content-Type': 'application/json',
+    }
+
+    const { data } = await apiInstance.post('auth/checkExistingEmail', body, { headers })
+    return data
+}
+
+export const uploadProfile = async (formData) => {
+    const axiosConfig = {
+        method: 'post',
+        url: 'http://192.168.100.59:5000/uploadProfile',
+        data: formData,
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    };
+    const { data } = await axios(axiosConfig);
+    return data;
+}
+
+export const signup = async (body) => {
+    const headers = {
+        'Content-Type': 'application/json',
+    }
+
+    const { data } = await apiInstance.post('auth/signup', body, { headers })
     return data
 }

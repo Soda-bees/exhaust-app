@@ -73,6 +73,7 @@ import soundPlay from '../../../assets/soundPlay.png';
 import soundPause from '../../../assets/soundPause.png';
 import checkBoxBtn from '../../../assets/checkBoxBtn.png';
 import location2 from "../../../assets/location2.png"
+import congratulation from "../../../assets/congratulation.png"
 
 
 const images = {
@@ -150,7 +151,8 @@ const images = {
   eyeHide,
   logo,
   profileUpload,
-  location2
+  location2,
+  congratulation
 };
 
 
