@@ -15,10 +15,12 @@ import Modal from 'react-native-modal';
 import { colors, sizes } from '../../services';
 import { useSelector } from 'react-redux';
 import { selectUserData } from '../../store/userData';
+import formatToJSON from '../../services/utilities/JsonLog';
 
 export default function Checkout({ navigation }) {
 
   const userData = useSelector(selectUserData)
+  // console.log(userData.shippingAddress.length);
 
   const [isModalVisisble, setIsModalVisisble] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0)
@@ -27,11 +29,19 @@ export default function Checkout({ navigation }) {
 
   useEffect(() => {
     const cart = userData.cart
+    const shippingAddress = userData.shippingAddress
     const totalAmount = calculateTotalAmount(cart)
-    console.log(totalAmount , "checkout");
+    const selectedAddress = getSelectedShippingAddress(shippingAddress)
+      const selecteddd = userData.shippingAddress.filter((address) => address.selected)
+      console.log(selecteddd[0]);
+    
+   
     setTotalAmount(totalAmount)
     setSubTotalAmount(totalAmount + shipping)
   }, [userData])
+
+
+  
 
   const calculateTotalAmount = (cart) => {
     // Use reduce to iterate through the cart and accumulate the total amount
@@ -49,23 +59,36 @@ export default function Checkout({ navigation }) {
     return totalAmount;
   };
 
+  const getSelectedShippingAddress = async (shippingAddress) => {
+    return shippingAddress.find((address) => address.selected)
+  }
+  const cleanObject = (obj) => {
+    const cleanedObject = JSON.parse(JSON.stringify(obj));
+    return cleanedObject;
+  };
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
         <Header title={'Checkout'} backImage={images.backIcon} navigate={'MyCart'} addToCartImage={images.cartIcon} />
-      <View style={{ height:sizes.screenHeight* 0.9 , flexDirection:'column',
-    justifyContent:'space-between'
-    }}>
+        <View style={{
+          height: sizes.screenHeight * 0.9, flexDirection: 'column',
+          justifyContent: 'space-between'
+        }}>
 
-        <View style={styles.mainContainer}>
-          <View style={styles.topTextView}>
-            <Text style={styles.topTextSty1}>Shipping address</Text>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('AddShippingAddress')}>
-              <Text style={styles.topTextSty2}>Add new Address</Text>
-            </TouchableOpacity>
-          </View>
-          {/* <View style={styles.MainCartView}>
+          <View style={styles.mainContainer}>
+            <View style={styles.topTextView}>
+              <Text style={styles.topTextSty1}>Shipping address</Text>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('ShippingAddresses')
+                  // navigation.navigate('AddShippingAddress')
+                }
+              >
+                <Text style={styles.topTextSty2}>Select address</Text>
+              </TouchableOpacity>
+
+            </View>
+            {/* <View style={styles.MainCartView}>
             <View style={styles.firstCart}>
               <Text style={styles.firstCartText}>Jane Doe</Text>
               <TouchableOpacity
@@ -78,14 +101,14 @@ export default function Checkout({ navigation }) {
               Chino Hills, CA 91709, United States
             </Text>
           </View> */}
-          <View style={styles.topTextView}>
-            <Text style={styles.topTextSty1}>Payment</Text>
-            <TouchableOpacity
-              onPress={() => setIsModalVisisble(!isModalVisisble)}>
-              <Text style={styles.topTextSty2}>Add Card</Text>
-            </TouchableOpacity>
-          </View>
-          {/* <View style={styles.MainCartView2}>
+            <View style={styles.topTextView}>
+              <Text style={styles.topTextSty1}>Payment</Text>
+              <TouchableOpacity
+                onPress={() => setIsModalVisisble(!isModalVisisble)}>
+                <Text style={styles.topTextSty2}>Add Card</Text>
+              </TouchableOpacity>
+            </View>
+            {/* <View style={styles.MainCartView2}>
             <View style={styles.row}>
               <Image source={images.mastercard} style={styles.cardIcon} />
               <Text style={styles.firstCartText}>**** **** **** 3947</Text>
@@ -95,28 +118,28 @@ export default function Checkout({ navigation }) {
               <Text style={styles.firstCartText1}>Change</Text>
             </TouchableOpacity>
           </View> */}
-        </View>
+          </View>
 
-        <View >
-        <View style={styles.pricesStyling}>
-          <Text style={styles.priceText1}>Shipping:</Text>
-          <Text style={styles.priceNumber1}>{`$${shipping}.0`}</Text>
-        </View>
-        <View style={styles.pricesStyling}>
-          <Text style={styles.priceText1}>Sub Total:</Text>
-          <Text style={styles.priceNumber1}>{`$${totalAmount}.0`}</Text>
-        </View>
-        <View style={styles.pricesStyling2}>
-          <Text style={styles.priceText2}>{`Total(${userData?.cart?.length} items):`}</Text>
-          <Text style={styles.priceNumber2}>{`$${subTotalAmount}.0`}</Text>
-        </View>
-        <TouchableOpacity
-          style={styles.bottomBtn}
-          onPress={() => navigation.navigate('OrderConfirm')}>
-          <Text style={styles.bottomBtnText}>Submit Order</Text>
-          <Image source={images.forwardIcon} style={styles.forwardIcon} />
-        </TouchableOpacity>
-        </View>
+          <View >
+            <View style={styles.pricesStyling}>
+              <Text style={styles.priceText1}>Shipping:</Text>
+              <Text style={styles.priceNumber1}>{`$${shipping}.0`}</Text>
+            </View>
+            <View style={styles.pricesStyling}>
+              <Text style={styles.priceText1}>Sub Total:</Text>
+              <Text style={styles.priceNumber1}>{`$${totalAmount}.0`}</Text>
+            </View>
+            <View style={styles.pricesStyling2}>
+              <Text style={styles.priceText2}>{`Total(${userData?.cart?.length} items):`}</Text>
+              <Text style={styles.priceNumber2}>{`$${subTotalAmount}.0`}</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.bottomBtn}
+              onPress={() => navigation.navigate('OrderConfirm')}>
+              <Text style={styles.bottomBtnText}>Submit Order</Text>
+              <Image source={images.forwardIcon} style={styles.forwardIcon} />
+            </TouchableOpacity>
+          </View>
         </View>
 
         <Modal

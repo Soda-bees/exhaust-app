@@ -48,6 +48,23 @@ const userDataSlice = createSlice({
         }
       }
     },
+    addShippingAddressRedux: (state, action) => {
+      if (state.userData) {
+        state.userData.shippingAddress.push(action.payload)
+      }
+    },
+    selectShippingAddressRedux: (state, action) => {
+      const { _id } = action.payload
+      state.userData.shippingAddress.forEach((address) => {
+        address.selected = false;
+      });
+
+      const selectedItem = state.userData.shippingAddress.find((address) => address._id === _id);
+      if (selectedItem) {
+        selectedItem.selected = true;
+      }
+
+    }
   },
 });
 
@@ -58,7 +75,10 @@ export const {
   increasPreviousQty,
   deleteCartRedux,
   increaseQtyByOneRedux,
-  decreaseQtyByOneRedux } = userDataSlice.actions;
+  decreaseQtyByOneRedux,
+  addShippingAddressRedux,
+  selectShippingAddressRedux
+} = userDataSlice.actions;
 
 export const selectUserData = (state) => state.userData.userData;
 

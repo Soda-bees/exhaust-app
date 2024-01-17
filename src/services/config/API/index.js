@@ -100,3 +100,21 @@ export const signup = async (body) => {
     const { data } = await apiInstance.post('auth/signup', body, { headers })
     return data
 }
+
+export const addShippingAddress = async (token, body) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+    const { data } = await apiInstance.post('addShippingAddress', body, { headers })
+    return data
+}
+
+export const selectShippingAddress = async (token , docId) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+    const { data } = await apiInstance.post('selectShippingAddress' , {docId} , {headers})
+    return data
+}

@@ -203,5 +203,6 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.medium,
     fontWeight: '500',
     color: colors.red
-  }
+  },
+   
 });
