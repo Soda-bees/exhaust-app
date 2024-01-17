@@ -30,12 +30,11 @@ export default function AddShippingAddress({navigation}) {
         />
         <View style={styles.mainContainer}>
           <View style={styles.MainCartView}>
-            {
-              address &&
+         
             <Text style={styles.labelName}>Address</Text>
-            }
+     
             <TextInput
-              placeholder="Address"
+              placeholder="Enter address."
               placeholderTextColor={colors.black}
               style={styles.inputField}
               onChangeText={(text) => setAddress(text)}
@@ -46,7 +45,7 @@ export default function AddShippingAddress({navigation}) {
           <View style={styles.MainCartView}>
             <Text style={styles.labelName}>City</Text>
             <TextInput
-              placeholder="Chino Hills"
+              placeholder="Enter city."
               placeholderTextColor={colors.black}
               style={styles.inputField}
             />
@@ -55,7 +54,7 @@ export default function AddShippingAddress({navigation}) {
           <View style={styles.MainCartView}>
             <Text style={styles.labelName}>State/Province/Region</Text>
             <TextInput
-              placeholder="California"
+              placeholder="Enter state."
               placeholderTextColor={colors.black}
               style={styles.inputField}
             />
@@ -64,7 +63,7 @@ export default function AddShippingAddress({navigation}) {
           <View style={styles.MainCartView}>
             <Text style={styles.labelName}>Zip Code (Postal Code)</Text>
             <TextInput
-              placeholder="91709"
+              placeholder="Enter zip code."
               placeholderTextColor={colors.black}
               style={styles.inputField}
               keyboardType='numeric'
@@ -75,13 +74,13 @@ export default function AddShippingAddress({navigation}) {
             <Text style={styles.labelName}>Country</Text>
             <View style={styles.row}>
               <TextInput
-                placeholder="United States"
+                placeholder="Enter country."
                 placeholderTextColor={colors.black}
                 style={styles.inputField}
               />
-              <TouchableOpacity>
+              {/* <TouchableOpacity>
                 <Image source={images.rightArrow} style={styles.arrowSizing} />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
           <TouchableOpacity style={styles.bottomBtn} onPress={() => navigation.navigate('Checkout')}>
