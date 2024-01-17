@@ -39,6 +39,12 @@ export const styles = StyleSheet.create({
     // top:sizes.screenHeight * 0.008,
     
   },
+  pickerText:{
+    color:colors.black,
+    marginTop:sizes.screenHeight * 0.01,
+    marginBottom:sizes.screenHeight * 0.01,
+    fontSize:fontSize.medium
+  },
   inputField:{
     color:colors.black,
     width:sizes.screenWidth * 0.7,
@@ -52,6 +58,7 @@ export const styles = StyleSheet.create({
   row:{
     flexDirection:'row',
     justifyContent:'space-between',
+    alignItems:'center',
   },
   arrowSizing:{
     resizeMode:'contain',

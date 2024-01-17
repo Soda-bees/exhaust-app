@@ -22,7 +22,7 @@ export default function UploadPhoto({ navigation, route }) {
   const [imgUri, setImgUri] = useState('');
   const [uploadPhoteLoader, setUploadPhoteLoader] = useState(false)
   const [loader, setLoader] = useState(false)
-  const [error, setError] = useState('sjkakhjsda')
+  const [error, setError] = useState('')
 
   const handleUploadPhoto = () => {
     let options = {
