@@ -110,11 +110,38 @@ export const addShippingAddress = async (token, body) => {
     return data
 }
 
-export const selectShippingAddress = async (token , docId) => {
+export const selectShippingAddress = async (token, docId) => {
     const headers = {
         'Content-Type': 'application/json',
         "Authorization": `Bearer ${token}`
     }
-    const { data } = await apiInstance.post('selectShippingAddress' , {docId} , {headers})
+    const { data } = await apiInstance.post('selectShippingAddress', { docId }, { headers })
+    return data
+}
+
+export const deleteShippingAddress = async (token, addressId) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+    const { data } = await apiInstance.post('deleteShippingAddress', { addressId }, { headers })
+    return data
+}
+
+export const updateShippingAddress = async (token, body) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+    const { data } = await apiInstance.post('updateShippingAddress', body, { headers })
+    return data
+}
+
+export const addCard = async (token , body) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+    const { data } = await apiInstance.post('addNewCard', body, { headers })
     return data
 }

@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
     padding: sizes.screenWidth * 0.03,
     paddingHorizontal: sizes.screenWidth * 0.06,
     marginTop: sizes.screenHeight * 0.02,
-    height: sizes.screenHeight * 0.18,
+    // height: sizes.screenHeight * 0.18,
     borderRadius: sizes.screenWidth * 0.03,
     backgroundColor: colors.white,
     alignSelf: 'center',
@@ -77,8 +77,8 @@ export const styles = StyleSheet.create({
   loaderView: {
     width: sizes.screenWidth * 0.05,
     height: sizes.screenHeight * 0.05,
-    alignItems:'center',
-    justifyContent:'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   headingSty2: {
     color: colors.black,
@@ -87,6 +87,61 @@ export const styles = StyleSheet.create({
   scrollViewParent: {
     height: sizes.screenHeight * 0.8,
     width: sizes.screenWidth,
-    
-  }
+  },
+  topTextSty2: {
+    fontSize: fontSize.small,
+    color: colors.btnBlue,
+    borderWidth: 1,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    borderRadius: sizes.screenWidth * 0.3,
+    width: sizes.screenWidth * 0.34,
+    height: sizes.screenHeight * 0.03,
+    borderColor: colors.btnBlue,
+    backgroundColor: colors.lightBlue,
+    alignSelf: 'flex-end',
+    marginRight: sizes.screenWidth * 0.06,
+    marginBottom: sizes.screenHeight * 0.025
+  },
+  iconsView: {
+    flexDirection: 'row',
+  },
+  icon: {
+    resizeMode: 'contain',
+    height: sizes.screenHeight * 0.022,
+    width: sizes.screenHeight * 0.02,
+    marginTop: sizes.screenHeight * 0.01,
+    marginRight: sizes.screenWidth * 0.02
+  },
+  icon2: {
+    resizeMode: 'contain',
+    height: sizes.screenHeight * 0.022,
+    width: sizes.screenHeight * 0.02,
+    marginTop: sizes.screenHeight * 0.01,
+  },
+  bottomBtn: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginLeft: sizes.screenWidth * 0.04,
+    paddingHorizontal: sizes.screenWidth * 0.03,
+    // marginTop: sizes.screenHeight * 0.02,
+    // borderWidth: 1,
+    borderRadius: sizes.screenWidth * 0.1,
+    height: sizes.screenHeight * 0.065,
+    backgroundColor: colors.btnBlue,
+    width: sizes.screenHeight * 0.46,
+    marginBottom: sizes.screenHeight * 0.02
+  },
+  bottomBtnText: {
+    color: colors.white,
+    fontSize: fontSize.medium,
+    fontWeight: '500',
+    marginLeft: sizes.screenWidth * 0.02,
+  },
+  forwardIcon: {
+    resizeMode: 'contain',
+    height: sizes.screenHeight * 0.04,
+    width: sizes.screenHeight * 0.04,
+  },
 });

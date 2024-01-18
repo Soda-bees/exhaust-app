@@ -63,7 +63,29 @@ const userDataSlice = createSlice({
       if (selectedItem) {
         selectedItem.selected = true;
       }
+    },
+    deleteAddressRedux: (state, action) => {
+      if (state.userData) {
+        state.userData.shippingAddress = state.userData.shippingAddress.filter(item => item._id !== action.payload._id);
+      }
+    },
+    updateAddressRedux: (state, action) => {
+      const updatedAddress = action.payload;
 
+      if (state.userData) {
+        // Find the index of the address with the matching _id
+        const index = state.userData.shippingAddress.findIndex((address) => address._id === updatedAddress._id);
+
+        // If the address is found, update it
+        if (index !== -1) {
+          state.userData.shippingAddress[index] = updatedAddress;
+        }
+      }
+    },
+    addCardRedux: (state, action) => {
+      if (state.userData) {
+        state.userData.cards.push(action.payload)
+      }
     }
   },
 });
@@ -77,7 +99,10 @@ export const {
   increaseQtyByOneRedux,
   decreaseQtyByOneRedux,
   addShippingAddressRedux,
-  selectShippingAddressRedux
+  selectShippingAddressRedux,
+  deleteAddressRedux,
+  updateAddressRedux,
+  addCardRedux
 } = userDataSlice.actions;
 
 export const selectUserData = (state) => state.userData.userData;

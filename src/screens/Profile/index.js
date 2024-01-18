@@ -14,6 +14,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 import { removeAuthToken } from '../../store/authToken';
 import { removeProducts } from '../../store/products';
+import { removeUserData } from '../../store/userData';
 
 export default function Profile({navigation}) {
   const dispatch = useDispatch()
@@ -21,6 +22,8 @@ export default function Profile({navigation}) {
 
   const handleLogout = () => {
     dispatch(removeAuthToken())
+    dispatch(removeUserData())
+    dispatch(removeProducts())
     // dispatch(removeProducts())
   }
 

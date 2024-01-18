@@ -74,6 +74,8 @@ import soundPause from '../../../assets/soundPause.png';
 import checkBoxBtn from '../../../assets/checkBoxBtn.png';
 import location2 from "../../../assets/location2.png"
 import congratulation from "../../../assets/congratulation.png"
+import edit from "../../../assets/edit.png"
+import cardBlue from "../../../assets/cardBlue.png"
 
 
 const images = {
@@ -152,7 +154,9 @@ const images = {
   logo,
   profileUpload,
   location2,
-  congratulation
+  congratulation,
+  edit,
+  cardBlue
 };
 
 

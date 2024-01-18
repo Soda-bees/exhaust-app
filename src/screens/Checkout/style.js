@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     // borderWidth:1,
     padding: sizes.screenWidth * 0.03,
     marginTop: sizes.screenHeight * 0.02,
-    height: sizes.screenHeight * 0.13,
+    // height: sizes.screenHeight * 0.13,
     borderRadius: sizes.screenWidth * 0.03,
     backgroundColor: colors.white,
     shadowColor: '#000000',
@@ -140,7 +140,7 @@ export const styles = StyleSheet.create({
     textAlignVertical:'center',
     textAlign:'center',
     marginLeft: sizes.screenWidth * 0.04,
-    marginTop: sizes.screenHeight * 0.07,
+    marginTop: sizes.screenHeight * 0.05,
     borderRadius:sizes.screenWidth * 0.1,    
     height: sizes.screenHeight * 0.06,
     backgroundColor:colors.btnBlue,
@@ -150,11 +150,8 @@ export const styles = StyleSheet.create({
   },
   forwardIcon: {
     resizeMode: 'contain',
-    // backgroundColor: 'red',
     height: sizes.screenHeight * 0.04,
     width: sizes.screenHeight * 0.04,
-    // marginTop: sizes.screenHeight * 0.01,
-    // marginRight: sizes.screenHeight * 0.01,
   },
   bottomBtnText:{
     color:colors.white,
@@ -207,7 +204,8 @@ export const styles = StyleSheet.create({
     backgroundColor:colors.white,
     borderRadius:sizes.screenHeight * 0.1,
     marginTop:sizes.screenHeight * 0.03,
-    flexDirection:'row'
+    flexDirection:'row',
+    // backgroundColor:'red'
   },
   textInputField:{
     color:colors.black,
@@ -241,5 +239,16 @@ export const styles = StyleSheet.create({
     marginLeft:sizes.screenWidth * 0.11,
     alignSelf:'center'
     // position:'absolute'
+  },
+  loaderContainer:{
+    alignSelf:'center',
+    marginTop: sizes.screenHeight * 0.05,
+  },
+  errorMessageText:{
+    color:colors.red,
+    marginLeft:sizes.screenWidth * 0.06,
+    fontSize:fontSize.medium,
+    marginTop:sizes.screenHeight * 0.02,
+    fontWeight:'500'
   },
 });

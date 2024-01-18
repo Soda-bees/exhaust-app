@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   TextInput,
 } from 'react-native';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { styles } from './style';
 import images from '../../services/utilities/images';
 import Header from '../../components/Header';
@@ -16,14 +16,17 @@ import CountryPicker from 'react-native-country-picker-modal';
 import PhoneInput from 'react-native-phone-number-input';
 import formatToJSON from '../../services/utilities/JsonLog';
 import { useDispatch, useSelector } from 'react-redux';
-import { addShippingAddressRedux, selectUserData } from '../../store/userData';
+import { addShippingAddressRedux, selectUserData, updateAddressRedux } from '../../store/userData';
 import Loader from '../../components/Loader';
 import { selectAuthToken } from '../../store/authToken';
-import { addShippingAddress } from '../../services/config/API';
+import { addShippingAddress, updateShippingAddress } from '../../services/config/API';
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
-export default function AddShippingAddress({ navigation }) {
+export default function AddShippingAddress({ navigation, route }) {
 
   const dispatch = useDispatch()
+  const item = route.params?.item;
+
 
   const userData = useSelector(selectUserData)
   const authToken = useSelector(selectAuthToken)
@@ -32,7 +35,7 @@ export default function AddShippingAddress({ navigation }) {
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [zipCode, setZipCode] = useState(); //number
+  const [zipCode, setZipCode] = useState('');
   const [selectedCountry, setSelectedCountry] = useState(null); //countryPicker
   const [isCountryPickerVisible, setCountryPickerVisibility] = useState(false);
   const [value, setValue] = useState('');
@@ -41,6 +44,24 @@ export default function AddShippingAddress({ navigation }) {
   const [contactNo, setContactNo] = useState('');
   const [loader, setLoader] = useState(false)
   const [error, setError] = useState('')
+  const [isEdit, setIsEdit] = useState(false)
+  const [addressId, setAddressId] = useState('')
+
+  useEffect(() => {
+
+    if (route.params && item) {
+      setIsEdit(true)
+      setAddress(item?.address)
+      setCity(item?.city)
+      setState(item?.state)
+      setSelectedCountry(item?.country);
+      setZipCode(String(item?.zipCode))
+      setAddressId(item?._id)
+      // phoneInput.current?.selectCountryByCode(+54);
+    } else {
+      setIsEdit(false)
+    }
+  }, [route.params]);
 
   const onCountrySelect = country => {
     setSelectedCountry(country.name);
@@ -52,7 +73,7 @@ export default function AddShippingAddress({ navigation }) {
   };
 
   const handleAddShippingAddress = async () => {
-    // navigation.navigate('Checkout')
+
     setLoader(true)
     try {
       const obj = {
@@ -61,7 +82,7 @@ export default function AddShippingAddress({ navigation }) {
         state,
         zipCode,
         country: selectedCountry,
-        phone: value,
+        // phone: value,
       }
       const response = await addShippingAddress(authToken, obj)
       console.log(response);
@@ -70,6 +91,7 @@ export default function AddShippingAddress({ navigation }) {
         dispatch(addShippingAddressRedux(newAddress))
         setError('')
         setLoader(false)
+        navigation.navigate('ShippingAddresses')
       } else {
         setError(response.message)
         setLoader(false)
@@ -82,12 +104,44 @@ export default function AddShippingAddress({ navigation }) {
     }
   }
 
+  const handleEditShippingAddress = async () => {
+    try {
+      setLoader(true)
+      const obj = {
+        addressId,
+        address,
+        city,
+        state,
+        zipCode,
+        country: selectedCountry,
+        selected: item?.selected,
+        userId: item?.userId
+      }
+      const response = await updateShippingAddress(authToken, obj)
+      if (response.success) {
+        const updatedAddress = response.updatedAddress
+        dispatch(updateAddressRedux(updatedAddress))
+        setError('')
+        setLoader(false)
+        navigation.navigate('ShippingAddresses')
+      } else {
+        setError(response.message)
+        setLoader(false)
+      }
+    } catch (error) {
+      console.log(error.message);
+      setError(error.message)
+      setLoader(false)
+    }
+
+  }
+
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
         <View>
           <Header
-            title={'Adding Shipping Addresses'}
+            title={isEdit ? 'Update Shipping Addresses' : 'Adding Shipping Addresses'}
             backImage={images.backIcon}
           />
           <View style={styles.mainContainer}>
@@ -152,12 +206,12 @@ export default function AddShippingAddress({ navigation }) {
                 />
               </View>
             </View>
-            <View style={styles.MainCartView2}>
-              <Text style={styles.labelName}>Zip Code (Postal Code)</Text>
+            {/* <View style={styles.MainCartView2}>
+              <Text style={styles.labelName}>Phone</Text>
               <PhoneInput
                 ref={phoneInput}
                 defaultValue={value}
-                defaultCode="US"
+                defaultCode="BR"
                 layout="first"
                 withShadow={false}
                 autoFocus={false}
@@ -166,7 +220,7 @@ export default function AddShippingAddress({ navigation }) {
                 onChangeFormattedText={text => {
                   setValue(text);
                 }}
-                value={formattedValue}
+                value={contactNo}
                 withDarkTheme={false}
                 flagButtonStyle={{
                   backgroundColor: colors.bgLight,
@@ -190,7 +244,7 @@ export default function AddShippingAddress({ navigation }) {
                   setContactNo(text);
                 }}
               />
-            </View>
+            </View> */}
             <Text style={styles.errorTest}>{error}</Text>
           </View>
         </View>
@@ -203,9 +257,14 @@ export default function AddShippingAddress({ navigation }) {
               :
               <TouchableOpacity
                 style={styles.bottomBtn}
-                onPress={handleAddShippingAddress}
+                onPress={() => {
+                  isEdit ?
+                    handleEditShippingAddress()
+                    :
+                    handleAddShippingAddress()
+                }}
               >
-                <Text style={styles.bottomBtnText} >Save Address</Text>
+                <Text style={styles.bottomBtnText}>{isEdit ? 'Update address' : 'Save Address'}</Text>
               </TouchableOpacity>
           }
         </View>

@@ -17,6 +17,7 @@ export default function Header({ backImage, title, addToCartImage, navigate }) {
         </TouchableOpacity >
         <Text style={styles.headerText}>{title}</Text>
 
+    
         <TouchableOpacity onPress={() => navigation.navigate(navigate)} style={styles.cartImgTouchable}>
           {
             userData?.cart?.length > 0 && 

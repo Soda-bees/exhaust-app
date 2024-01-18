@@ -4,13 +4,13 @@ import Header from '../../components/Header'
 import { styles } from './style'
 import images from '../../services/utilities/images'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectShippingAddressRedux, selectUserData } from '../../store/userData'
+import { deleteAddressRedux, selectShippingAddressRedux, selectUserData } from '../../store/userData'
 import formatToJSON from '../../services/utilities/JsonLog'
 import { colors, sizes } from '../../services'
-import { selectShippingAddress } from '../../services/config/API'
+import { deleteShippingAddress, selectShippingAddress } from '../../services/config/API'
 import { selectAuthToken } from '../../store/authToken'
 
-export default function ShippingAddresses() {
+export default function ShippingAddresses({ navigation }) {
 
   const dispatch = useDispatch()
 
@@ -19,6 +19,8 @@ export default function ShippingAddresses() {
   // console.log(formatToJSON(userData.shippingAddress));
   const [cardStatus, setCardStatus] = useState('');
   const [loader, setLoader] = useState([])
+  const [deleteLoader, setDeleteLoader] = useState([])
+  const [editLoader, setEditLoader] = useState([])
 
 
   const handleSelectAddress = async (_id) => {
@@ -38,33 +40,76 @@ export default function ShippingAddresses() {
     }
   }
 
+  const handleDeleteAddress = async (_id) => {
+    // setDeleteLoader([...deleteLoader , _id])
+    // dispatch(deleteAddressRedux({_id}))
+    // setDeleteLoader(loader.filter((id) => id !== _id))
+    try {
+      setDeleteLoader([...deleteLoader, _id])
+      const response = await deleteShippingAddress(authToken, _id)
+      console.log(response);
+      if (response.success) {
+        dispatch(deleteAddressRedux({ _id }))
+        setDeleteLoader(loader.filter((id) => id !== _id))
+      } else {
+        setDeleteLoader(loader.filter((id) => id !== _id))
+        console.log(response.message);
+      }
+    } catch (error) {
+      setDeleteLoader(loader.filter((id) => id !== _id))
+      console.log(error.message);
+    }
+
+  }
+
+  const handleEditAddress = async (item) => {
+    navigation.navigate('AddShippingAddress', { item })
+  }
+
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
         <View>
-          <Header title={'Shipping Addresses'} backImage={images.backIcon} />
+          <Header title={'Shipping Addresses'} backImage={images.backIcon} showCart={true} />
           <View style={styles.mainContainer}>
             {
               userData.shippingAddress.length > 0 ?
                 <View style={styles.scrollViewParent}>
-                  <ScrollView style={{ backgroundColor: 'transparent', paddingHorizontal: 10 }}>
+                  <ScrollView style={{ backgroundColor: 'transparent', paddingHorizontal: 10 }} showsVerticalScrollIndicator={false}>
                     {
                       userData.shippingAddress.map((item, index) => {
                         return (
-                          // <View style={styles.shippingAddressContainer}>
-
-                          // </View>
-                          <View style={styles.MainCartView}>
+                          <View style={styles.MainCartView} key={index}>
                             <View style={styles.firstCart}>
                               <Text style={styles.firstCartText}>{userData?.name}</Text>
-                              <TouchableOpacity>
-                                <Text style={styles.firstCartText1}>Edit</Text>
-                              </TouchableOpacity>
+                              <View style={styles.iconsView}>
+                                {
+                                  deleteLoader.includes(item._id) ?
+                                    <View style={{ marginRight: sizes.screenWidth * 0.02, marginTop: sizes.screenWidth * 0.01 }}>
+                                      <ActivityIndicator size={20} />
+                                    </View>
+                                    :
+                                    <TouchableOpacity onPress={() => handleDeleteAddress(item._id)}>
+                                      <Image source={images.deleteIcon} style={styles.icon} />
+                                    </TouchableOpacity>
+                                }
+                                {
+                                  editLoader.includes(item._id) ?
+                                    <View style={{ marginTop: sizes.screenWidth * 0.01 }}>
+                                      <ActivityIndicator size={20} />
+                                    </View>
+                                    :
+                                    <TouchableOpacity onPress={() => { handleEditAddress(item) }}>
+                                      <Image source={images.edit} style={styles.icon2} />
+                                    </TouchableOpacity>
+                                }
+                              </View>
                             </View>
                             <Text style={styles.firstCartText}>{item.address}</Text>
                             <Text style={styles.firstCartText}>
                               {`${item.city}, ${item.zipCode}, ${item.state}, ${item.country}`}
                             </Text>
+                            {/* <Text style={styles.firstCartText}>{item.phone}</Text> */}
                             <View style={styles.row}>
                               <TouchableOpacity
                                 // onPress={() => {
@@ -97,7 +142,7 @@ export default function ShippingAddresses() {
                   </ScrollView>
                 </View> :
                 <View>
-                  <Text>nh hai card</Text>
+                  <Text>nh hai address</Text>
                 </View>
             }
             {/* <View style={styles.MainCartView}>
@@ -182,7 +227,19 @@ export default function ShippingAddresses() {
 
         </View>
 
-        <Text>jahsja</Text>
+        <TouchableOpacity
+        // onPress={() =>
+        //   navigation.navigate(selectedAddress ? 'AddShippingAddress' : "ShippingAddresses")
+        // }
+        >
+          {/* <Text style={styles.topTextSty2}>Add new address</Text> */}
+          <TouchableOpacity
+            style={styles.bottomBtn}
+            onPress={() => navigation.navigate('AddShippingAddress')}>
+            <Text style={styles.bottomBtnText}>Add new address</Text>
+            <Image source={images.forwardIcon} style={styles.forwardIcon} />
+          </TouchableOpacity>
+        </TouchableOpacity>
       </ImageBackground>
     </SafeAreaView>
   )
