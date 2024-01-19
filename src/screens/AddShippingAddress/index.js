@@ -20,7 +20,6 @@ import { addShippingAddressRedux, selectUserData, updateAddressRedux } from '../
 import Loader from '../../components/Loader';
 import { selectAuthToken } from '../../store/authToken';
 import { addShippingAddress, updateShippingAddress } from '../../services/config/API';
-import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 export default function AddShippingAddress({ navigation, route }) {
 
@@ -41,14 +40,22 @@ export default function AddShippingAddress({ navigation, route }) {
   const [value, setValue] = useState('');
   const [formattedValue, setFormattedValue] = useState('');
   const phoneInput = useRef(null)
-  const [contactNo, setContactNo] = useState('');
+  // const [contactNo, setContactNo] = useState(userData ? userData.number : '');
+  const [contactNo, setContactNo] = useState(route.params && item ? item?.number : userData ? userData.number : '');
   const [loader, setLoader] = useState(false)
   const [error, setError] = useState('')
   const [isEdit, setIsEdit] = useState(false)
   const [addressId, setAddressId] = useState('')
+  const [defaultCountryCode, setDefaultCountryCode] = useState(route.params && item ? item?.countryCode : userData ? userData.countryCode : '')
+
+  // useEffect(() => {
+  //   if (userData) {
+  //     console.log(userData.number);
+  //     setContactNo(userData.number)
+  //   }
+  // }, [userData])
 
   useEffect(() => {
-
     if (route.params && item) {
       setIsEdit(true)
       setAddress(item?.address)
@@ -57,7 +64,6 @@ export default function AddShippingAddress({ navigation, route }) {
       setSelectedCountry(item?.country);
       setZipCode(String(item?.zipCode))
       setAddressId(item?._id)
-      // phoneInput.current?.selectCountryByCode(+54);
     } else {
       setIsEdit(false)
     }
@@ -82,7 +88,8 @@ export default function AddShippingAddress({ navigation, route }) {
         state,
         zipCode,
         country: selectedCountry,
-        // phone: value,
+        countryCode: phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
+        number: phoneInput?.current?._reactInternals?.stateNode?.state?.number
       }
       const response = await addShippingAddress(authToken, obj)
       console.log(response);
@@ -115,9 +122,13 @@ export default function AddShippingAddress({ navigation, route }) {
         zipCode,
         country: selectedCountry,
         selected: item?.selected,
-        userId: item?.userId
+        userId: item?.userId,
+        countryCode: phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
+        number: phoneInput?.current?._reactInternals?.stateNode?.state?.number
       }
+      console.log(formatToJSON(obj));
       const response = await updateShippingAddress(authToken, obj)
+      console.log(response);
       if (response.success) {
         const updatedAddress = response.updatedAddress
         dispatch(updateAddressRedux(updatedAddress))
@@ -206,12 +217,13 @@ export default function AddShippingAddress({ navigation, route }) {
                 />
               </View>
             </View>
-            {/* <View style={styles.MainCartView2}>
+            <View style={styles.MainCartView2}>
               <Text style={styles.labelName}>Phone</Text>
               <PhoneInput
                 ref={phoneInput}
                 defaultValue={value}
-                defaultCode="BR"
+                // defaultCode={isEdit ? defaultCountryCode : userData.countryCode}
+                defaultCode={defaultCountryCode}
                 layout="first"
                 withShadow={false}
                 autoFocus={false}
@@ -244,7 +256,7 @@ export default function AddShippingAddress({ navigation, route }) {
                   setContactNo(text);
                 }}
               />
-            </View> */}
+            </View>
             <Text style={styles.errorTest}>{error}</Text>
           </View>
         </View>

@@ -31,6 +31,7 @@ export default function SignUp({ navigation }) {
   const [loader, setLoader] = useState(false)
 
   const handleSignup = async () => {
+    // console.log(phoneInput.current._reactInternals.stateNode.state);
     setLoader(true)
     try {
       const obj = {
@@ -38,9 +39,11 @@ export default function SignUp({ navigation }) {
         email: email.toLowerCase(),
         phone: value,
         location,
-        password
+        password,
+        countryCode: phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
+        number: phoneInput?.current?._reactInternals?.stateNode?.state?.number
       }
-      const response = await checkExistingEmail(obj) 
+      const response = await checkExistingEmail(obj)
       if (response.success) {
         setError('')
         setLoader(false)
@@ -94,6 +97,7 @@ export default function SignUp({ navigation }) {
               <PhoneInput
                 ref={phoneInput}
                 defaultValue={value}
+                // defaultCode={defaultCountryCode ? defaultCountryCode : "BR"}
                 defaultCode="US"
                 layout="first"
                 withShadow={false}

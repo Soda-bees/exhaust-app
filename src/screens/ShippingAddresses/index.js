@@ -109,12 +109,8 @@ export default function ShippingAddresses({ navigation }) {
                             <Text style={styles.firstCartText}>
                               {`${item.city}, ${item.zipCode}, ${item.state}, ${item.country}`}
                             </Text>
-                            {/* <Text style={styles.firstCartText}>{item.phone}</Text> */}
                             <View style={styles.row}>
                               <TouchableOpacity
-                                // onPress={() => {
-                                //   setCardStatus('First');
-                                // }}
                                 onPress={() => {
                                   handleSelectAddress(item._id)
                                 }}
@@ -145,101 +141,14 @@ export default function ShippingAddresses({ navigation }) {
                   <Text>nh hai address</Text>
                 </View>
             }
-            {/* <View style={styles.MainCartView}>
-            <View style={styles.firstCart}>
-              <Text style={styles.firstCartText}>Jane Doe</Text>
-              <TouchableOpacity>
-                <Text style={styles.firstCartText1}>Edit</Text>
-              </TouchableOpacity>
-            </View>
-            <Text style={styles.firstCartText}>3 Newbridge Court</Text>
-            <Text style={styles.firstCartText}>
-              Chino Hills, CA 91709, United States
-            </Text>
-            <View style={styles.row}>
-          <TouchableOpacity
-            onPress={() => {
-              setCardStatus('First');
-            }}>
-            <Image
-              source={
-                cardStatus == 'First' ? images.checkboxon : images.checkboxoff
-              }
-              style={styles.checkBox}
-            />
-          </TouchableOpacity>
-          <Text style={styles.headingSty2}>Use as the shipping address </Text>
-        </View>
-          </View> */}
-            {/* <View View style={styles.MainCartView}>
-            <View style={styles.firstCart}>
-              <Text style={styles.firstCartText}>Jane Doe</Text>
-              <TouchableOpacity>
-                <Text style={styles.firstCartText1}>Edit</Text>
-              </TouchableOpacity>
-            </View>
-            <Text style={styles.firstCartText}>3 Newbridge Court</Text>
-            <Text style={styles.firstCartText}>
-              Chino Hills, CA 91709, United States
-            </Text>
-            <View style={styles.row}>
-          <TouchableOpacity
-            onPress={() => {
-              setCardStatus('Second');
-            }}>
-            <Image
-              source={
-                cardStatus == 'Second' ? images.checkboxon : images.checkboxoff
-              }
-              style={styles.checkBox}
-            />
-          </TouchableOpacity>
-          <Text style={styles.headingSty2}>Use as the shipping address </Text>
-        </View>
           </View>
-          <View View style={styles.MainCartView}>
-            <View style={styles.firstCart}>
-              <Text style={styles.firstCartText}>Jane Doe</Text>
-              <TouchableOpacity>
-                <Text style={styles.firstCartText1}>Edit</Text>
-              </TouchableOpacity>
-            </View>
-            <Text style={styles.firstCartText}>3 Newbridge Court</Text>
-            <Text style={styles.firstCartText}>
-              Chino Hills, CA 91709, United States
-            </Text>
-            <View style={styles.row}>
-          <TouchableOpacity
-            onPress={() => {
-              setCardStatus('Third');
-            }}>
-            <Image
-              source={
-                cardStatus == 'Third' ? images.checkboxon : images.checkboxoff
-              }
-              style={styles.checkBox}
-            />
-          </TouchableOpacity>
-          <Text style={styles.headingSty2}>Use as the shipping address </Text>
         </View>
-          </View> */}
-          </View>
-
-        </View>
-
-        <TouchableOpacity
-        // onPress={() =>
-        //   navigation.navigate(selectedAddress ? 'AddShippingAddress' : "ShippingAddresses")
-        // }
-        >
-          {/* <Text style={styles.topTextSty2}>Add new address</Text> */}
           <TouchableOpacity
             style={styles.bottomBtn}
             onPress={() => navigation.navigate('AddShippingAddress')}>
             <Text style={styles.bottomBtnText}>Add new address</Text>
             <Image source={images.forwardIcon} style={styles.forwardIcon} />
           </TouchableOpacity>
-        </TouchableOpacity>
       </ImageBackground>
     </SafeAreaView>
   )

@@ -125,8 +125,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: sizes.screenWidth * 0.04,
     paddingHorizontal: sizes.screenWidth * 0.03,
-    // marginTop: sizes.screenHeight * 0.02,
-    // borderWidth: 1,
     borderRadius: sizes.screenWidth * 0.1,
     height: sizes.screenHeight * 0.065,
     backgroundColor: colors.btnBlue,

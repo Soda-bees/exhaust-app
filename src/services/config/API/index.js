@@ -145,3 +145,30 @@ export const addCard = async (token , body) => {
     const { data } = await apiInstance.post('addNewCard', body, { headers })
     return data
 }
+
+export const selectCard = async (token, docId) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+    const { data } = await apiInstance.post('selectPaymentCard', { docId }, { headers })
+    return data
+}
+
+export const deleteCard = async (token, cardId) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+    const { data } = await apiInstance.post('deleteCard', { cardId }, { headers })
+    return data
+}
+
+export const updateCard = async (token, body) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+    const { data } = await apiInstance.post('updateCard', body, { headers })
+    return data
+}

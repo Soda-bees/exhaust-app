@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { styles } from './style';
@@ -14,19 +15,20 @@ import Header from '../../components/Header';
 import Modal from 'react-native-modal';
 import { colors, sizes } from '../../services';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCardRedux, selectUserData } from '../../store/userData';
+import { addCardRedux, selectUserData, updateCardRedux } from '../../store/userData';
 import formatToJSON from '../../services/utilities/JsonLog';
 import Loader from '../../components/Loader';
-import { addCard } from '../../services/config/API';
+import { addCard, updateCard } from '../../services/config/API';
 import { selectAuthToken } from '../../store/authToken';
 
-export default function Checkout({ navigation }) {
+export default function Checkout({ navigation, route }) {
 
   const dispatch = useDispatch()
+  const item = route.params?.item;
 
   const userData = useSelector(selectUserData)
   const authToken = useSelector(selectAuthToken)
-  console.log(userData.cards.length);
+  // console.log(userData.cards.length);
 
   const [isModalVisisble, setIsModalVisisble] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0)
@@ -39,6 +41,9 @@ export default function Checkout({ navigation }) {
   const [cardNumber, setCardNumber] = useState()
   const [expireDate, setExpireDate] = useState('')
   const [cvv, setCvv] = useState()
+  const [selectedCard, setSelectedCard] = useState()
+  const [editCard, setEditcard] = useState(false)
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
     const cart = userData.cart
@@ -46,9 +51,28 @@ export default function Checkout({ navigation }) {
     const totalAmount = calculateTotalAmount(cart)
     const selectedAddress = userData.shippingAddress.filter((address) => address.selected)
     setSelectedAddress(selectedAddress[0]);
+    const selectedCard = userData.cards.filter((address) => address.selected)
+    setSelectedCard(selectedCard[0]);
     setTotalAmount(totalAmount)
     setSubTotalAmount(totalAmount + shipping)
   }, [userData])
+
+  useEffect(() => {
+    if (route.params && item) {
+      if (item.isEdit) {
+        const { data } = item
+        setEditcard(true)
+        setIsModalVisisble(true)
+        setName(data?.name)
+        setCardNumber(String(data?.cardNumber))
+        setExpireDate(data?.expireDate)
+        setCvv(String(data?.cvv))
+      } else {
+        setIsModalVisisble(true)
+        setEditcard(false)
+      }
+    }
+  }, [route.params, item]);
 
   const calculateTotalAmount = (cart) => {
     // Use reduce to iterate through the cart and accumulate the total amount
@@ -80,6 +104,11 @@ export default function Checkout({ navigation }) {
         dispatch(addCardRedux(newCard))
         setaddCardLoader(false)
         setIsModalVisisble(false)
+        setName('')
+        setCardNumber('')
+        setExpireDate('')
+        setCvv('')
+        setAddCardError('')
       } else {
         setAddCardError(response.message)
         setaddCardLoader(false)
@@ -89,6 +118,50 @@ export default function Checkout({ navigation }) {
       setAddCardError(error.message)
       setaddCardLoader(false)
     }
+  }
+
+  const handleEditCard = async () => {
+    try {
+      setaddCardLoader(true)
+      const obj = {
+        cardId: item?.data?._id,
+        name,
+        cardNumber,
+        expireDate,
+        cvv,
+        selected: item?.data?.selected,
+        userId: item?.data?.userId
+      }
+      const response = await updateCard(authToken, obj)
+      console.log(formatToJSON(response));
+      if (response.success) {
+        const updatedCard = response.updatedCard
+        dispatch(updateCardRedux(updatedCard))
+        setName('')
+        setCardNumber('')
+        setExpireDate('')
+        setCvv('')
+        setEditcard(false)
+        setIsModalVisisble(false)
+        setaddCardLoader(false)
+      } else {
+        setAddCardError(response.message)
+        setaddCardLoader(false)
+      }
+    } catch (error) {
+      console.log(error.message);
+      setaddCardLoader(false)
+    }
+  }
+
+  const handleOpenModal = () => {
+    setEditcard(false)
+    setIsModalVisisble(true)
+  }
+
+  const handleConfirmOrder = async () => {
+    // navigation.navigate('OrderConfirm')
+    console.log("order confirm");
   }
   return (
     <SafeAreaView>
@@ -124,29 +197,36 @@ export default function Checkout({ navigation }) {
                 <Text style={styles.firstCartText}>
                   {`${selectedAddress.city}, ${selectedAddress.zipCode}, ${selectedAddress.state}, ${selectedAddress.country}`}
                 </Text>
-                {/* <Text  style={styles.firstCartText}>{selectedAddress.phone}</Text> */}
               </View>
             }
 
             <View style={styles.topTextView}>
               <Text style={styles.topTextSty1}>Payment</Text>
               <TouchableOpacity
-                // onPress={() => setIsModalVisisble(!isModalVisisble)}
-                onPress={()=> navigation.navigate('PaymentMethod')}
-                >
-                <Text style={styles.topTextSty2}>Add Card</Text>
+                onPress={() =>
+                  selectedCard ?
+                    handleOpenModal()
+                    :
+                    navigation.navigate('PaymentMethod')
+                }
+              >
+                <Text style={styles.topTextSty2}>{selectedCard ? "Add new card" : "Select card"}</Text>
               </TouchableOpacity>
             </View>
-            {/* <View style={styles.MainCartView2}>
-            <View style={styles.row}>
-              <Image source={images.mastercard} style={styles.cardIcon} />
-              <Text style={styles.firstCartText}>**** **** **** 3947</Text>
-            </View>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('PaymentMethod')}>
-              <Text style={styles.firstCartText1}>Change</Text>
-            </TouchableOpacity>
-          </View> */}
+            {
+              selectedCard &&
+              <View style={styles.MainCartView2}>
+                <View style={styles.row}>
+                  <Image source={images.mastercard} style={styles.cardIcon} />
+                  <Text style={styles.firstCartText}>{`**** **** **** ${String(selectedCard.cardNumber).substring(String(selectedCard.cardNumber).length - 4)}`}</Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('PaymentMethod')}>
+                  <Text style={styles.firstCartText1}>Change</Text>
+                </TouchableOpacity>
+              </View>
+            }
+
           </View>
 
           <View >
@@ -162,24 +242,47 @@ export default function Checkout({ navigation }) {
               <Text style={styles.priceText2}>{`Total(${userData?.cart?.length} items):`}</Text>
               <Text style={styles.priceNumber2}>{`$${subTotalAmount}.0`}</Text>
             </View>
-            <TouchableOpacity
-              style={styles.bottomBtn}
-              onPress={() => navigation.navigate('OrderConfirm')}>
-              <Text style={styles.bottomBtnText}>Submit Order</Text>
-              <Image source={images.forwardIcon} style={styles.forwardIcon} />
-            </TouchableOpacity>
+            {
+              loader ?
+                <View style={styles.bottomBtn}>
+                  <Text style={styles.bottomBtnText}>Submit Order</Text>
+                  <ActivityIndicator color={colors.white} size={31} />
+                </View>
+                :
+                <TouchableOpacity
+                  style={
+                    selectedAddress && selectedCard
+                      ? styles.bottomBtn
+                      : styles.bottomBtnDisable
+                  }
+                  onPress={() => {
+                    selectedAddress && selectedCard && handleConfirmOrder();
+                  }}
+                >
+                  <Text style={styles.bottomBtnText}>Submit Order</Text>
+                  <Image source={images.forwardIcon} style={styles.forwardIcon}/>
+                </TouchableOpacity>
+            }
+
           </View>
         </View>
 
         <Modal
-          // visible={isModalVisisble}
           isVisible={isModalVisisble}
           backdropOpacity={0.3}
-          onBackdropPress={() => setIsModalVisisble(false)}>
+          onBackdropPress={() => {
+            setName('')
+            setCardNumber('')
+            setExpireDate('')
+            setCvv('')
+            setIsModalVisisble(false)
+          }
+          }
+        >
           <View style={styles.modalBody}>
             <View style={styles.modalMainView}>
               <View style={styles.horizontalLine}></View>
-              <Text style={styles.modalHeading}>Add New Card</Text>
+              <Text style={styles.modalHeading} >{`${editCard ? "Update card" : "Add New Card"}`}</Text>
               <View style={styles.modalInputField2}>
                 <Text style={styles.inputFieldLabel}>Name on card</Text>
                 <TextInput
@@ -238,10 +341,16 @@ export default function Checkout({ navigation }) {
                   </View>
                   :
                   <TouchableOpacity
-                    onPress={handleAddCard}
-                    // onPress={() => setIsModalVisisble(false)}
+                    onPress={() => {
+                      editCard ?
+                        handleEditCard()
+                        :
+                        handleAddCard()
+                    }}
                     style={styles.modalBottomBtn}>
-                    <Text style={styles.bottomBtnText}>Submit Order</Text>
+                    <Text style={styles.bottomBtnText}>
+                      {`${editCard ? "Update card" : "Add card"}`}
+                    </Text>
                   </TouchableOpacity>
               }
             </View>

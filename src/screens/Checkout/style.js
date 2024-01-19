@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {colors, fontSize, sizes} from '../../services';
+import { StyleSheet } from 'react-native';
+import { colors, fontSize, sizes } from '../../services';
 import { screensEnabled } from 'react-native-screens';
 
 export const styles = StyleSheet.create({
@@ -64,9 +64,9 @@ export const styles = StyleSheet.create({
   firstCartText1: {
     color: colors.btnBlue,
   },
-  row:{
-    flexDirection:'row',
-    alignItems:'center'
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   MainCartView2: {
     // borderWidth:1,
@@ -92,7 +92,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     width: sizes.screenWidth * 0.18,
     height: sizes.screenHeight * 0.06,
-    marginRight:sizes.screenWidth * 0.04
+    marginRight: sizes.screenWidth * 0.04
     // backgroundColor:'red'
   },
   pricesStyling: {
@@ -116,7 +116,7 @@ export const styles = StyleSheet.create({
   priceText2: {
     color: colors.disabledBg3,
     fontSize: fontSize.medium,
-    fontWeight:'bold'
+    fontWeight: 'bold'
   },
   priceNumber2: {
     color: colors.black,
@@ -131,124 +131,140 @@ export const styles = StyleSheet.create({
     paddingHorizontal: sizes.screenWidth * 0.03,
     marginTop: sizes.screenHeight * 0.02,
     // borderWidth: 1,
-    borderRadius:sizes.screenWidth * 0.1,    
+    borderRadius: sizes.screenWidth * 0.1,
     height: sizes.screenHeight * 0.06,
-    backgroundColor:colors.btnBlue,
+    backgroundColor: colors.btnBlue,
+    width: sizes.screenHeight * 0.46,
+  },
+  bottomBtnDisable: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginLeft: sizes.screenWidth * 0.04,
+    paddingHorizontal: sizes.screenWidth * 0.03,
+    marginTop: sizes.screenHeight * 0.02,
+    borderRadius: sizes.screenWidth * 0.1,
+    height: sizes.screenHeight * 0.06,
+    backgroundColor: colors.gray,
     width: sizes.screenHeight * 0.46,
   },
   modalBottomBtn: {
-    textAlignVertical:'center',
-    textAlign:'center',
+    textAlignVertical: 'center',
+    textAlign: 'center',
     marginLeft: sizes.screenWidth * 0.04,
     marginTop: sizes.screenHeight * 0.05,
-    borderRadius:sizes.screenWidth * 0.1,    
+    borderRadius: sizes.screenWidth * 0.1,
     height: sizes.screenHeight * 0.06,
-    backgroundColor:colors.btnBlue,
+    backgroundColor: colors.btnBlue,
     width: sizes.screenHeight * 0.46,
-    alignItems:'center',
-    paddingTop:sizes.screenHeight * 0.015
+    alignItems: 'center',
+    paddingTop: sizes.screenHeight * 0.015
   },
   forwardIcon: {
     resizeMode: 'contain',
     height: sizes.screenHeight * 0.04,
     width: sizes.screenHeight * 0.04,
   },
-  bottomBtnText:{
-    color:colors.white,
-    fontSize:fontSize.medium,
-    fontWeight:'500',
-    marginLeft:sizes.screenWidth * 0.02,
+  bottomBtnText: {
+    color: colors.white,
+    fontSize: fontSize.medium,
+    fontWeight: '500',
+    marginLeft: sizes.screenWidth * 0.02,
   },
-  modalBody:{
+  modalBody: {
     height: sizes.screenHeight,
     width: sizes.screenWidth,
     alignSelf: 'center',
     justifyContent: 'flex-end',
   },
 
-  modalMainView:{
-    backgroundColor:'blue',
-    alignSelf:'center',
-    width:sizes.screenWidth * 1,
-    height:sizes.screenHeight * 0.7,
-    borderTopLeftRadius: sizes.screenHeight*0.04,
-    borderTopRightRadius: sizes.screenHeight*0.04,
+  modalMainView: {
+    backgroundColor: 'blue',
+    alignSelf: 'center',
+    width: sizes.screenWidth * 1,
+    height: sizes.screenHeight * 0.7,
+    borderTopLeftRadius: sizes.screenHeight * 0.04,
+    borderTopRightRadius: sizes.screenHeight * 0.04,
     backgroundColor: colors.bglightblue,
   },
-  horizontalLine:{
-    width:sizes.screenWidth * 0.16,
-    height:sizes.screenHeight * 0.007,
-    backgroundColor:colors.disabledBg2,
-    alignSelf:'center',
-    borderRadius:10,
-    marginTop:sizes.screenHeight * 0.015
+  horizontalLine: {
+    width: sizes.screenWidth * 0.16,
+    height: sizes.screenHeight * 0.007,
+    backgroundColor: colors.disabledBg2,
+    alignSelf: 'center',
+    borderRadius: 10,
+    marginTop: sizes.screenHeight * 0.015
   },
-  modalHeading:{
-    alignSelf:'center',
-    color:colors.black,
-    marginTop:sizes.screenHeight * 0.03,
-    fontSize:fontSize.large,
+  modalHeading: {
+    alignSelf: 'center',
+    color: colors.black,
+    marginTop: sizes.screenHeight * 0.03,
+    fontSize: fontSize.large,
   },
-  modalInputField:{
-    height:sizes.screenHeight * 0.08,
-    width:sizes.screenWidth * 0.9,
-    alignSelf:'center',
-    backgroundColor:colors.white,
-    borderRadius:sizes.screenHeight * 0.1,
-    marginTop:sizes.screenHeight * 0.03,
+  modalInputField: {
+    height: sizes.screenHeight * 0.08,
+    width: sizes.screenWidth * 0.9,
+    alignSelf: 'center',
+    backgroundColor: colors.white,
+    borderRadius: sizes.screenHeight * 0.1,
+    marginTop: sizes.screenHeight * 0.03,
   },
-  modalInputField2:{
-    height:sizes.screenHeight * 0.08,
-    width:sizes.screenWidth * 0.9,
-    alignSelf:'center',
-    backgroundColor:colors.white,
-    borderRadius:sizes.screenHeight * 0.1,
-    marginTop:sizes.screenHeight * 0.03,
-    flexDirection:'row',
+  modalInputField2: {
+    height: sizes.screenHeight * 0.08,
+    width: sizes.screenWidth * 0.9,
+    alignSelf: 'center',
+    backgroundColor: colors.white,
+    borderRadius: sizes.screenHeight * 0.1,
+    marginTop: sizes.screenHeight * 0.03,
+    flexDirection: 'row',
     // backgroundColor:'red'
   },
-  textInputField:{
-    color:colors.black,
-    height:sizes.screenHeight * 0.05,
-    width:sizes.screenWidth * 0.75,
-    margin:sizes.screenWidth * 0.03,
-    marginLeft:sizes.screenWidth * 0.06,
+  textInputField: {
+    color: colors.black,
+    height: sizes.screenHeight * 0.05,
+    width: sizes.screenWidth * 0.75,
+    margin: sizes.screenWidth * 0.03,
+    marginLeft: sizes.screenWidth * 0.06,
     // backgroundColor:'red',
   },
-  textInputField2:{
-    color:colors.black,
-    height:sizes.screenHeight * 0.05,
-    width:sizes.screenWidth * 0.6,
-    marginLeft:sizes.screenWidth * 0.06,
-    marginTop:sizes.screenHeight * 0.025,
-    fontSize:fontSize.medium,
+  textInputField2: {
+    color: colors.black,
+    height: sizes.screenHeight * 0.05,
+    width: sizes.screenWidth * 0.6,
+    marginLeft: sizes.screenWidth * 0.06,
+    marginTop: sizes.screenHeight * 0.025,
+    fontSize: fontSize.medium,
     // backgroundColor:'red'
   },
-  inputFieldLabel:{
-    color:colors.disabledBg3,
-    marginLeft:sizes.screenWidth * 0.07,
-    marginTop:sizes.screenWidth * 0.03,
-    fontSize:fontSize.small,
-    position:'absolute',
+  inputFieldLabel: {
+    color: colors.disabledBg3,
+    marginLeft: sizes.screenWidth * 0.07,
+    marginTop: sizes.screenWidth * 0.03,
+    fontSize: fontSize.small,
+    position: 'absolute',
     // backgroundColor:'blue'
   },
-  imageSize:{
-    resizeMode:'contain',
-    width:sizes.screenWidth * 0.08,
-    height:sizes.screenHeight * 0.05,
-    marginLeft:sizes.screenWidth * 0.11,
-    alignSelf:'center'
+  imageSize: {
+    resizeMode: 'contain',
+    width: sizes.screenWidth * 0.08,
+    height: sizes.screenHeight * 0.05,
+    marginLeft: sizes.screenWidth * 0.11,
+    alignSelf: 'center'
     // position:'absolute'
   },
-  loaderContainer:{
-    alignSelf:'center',
+  loaderContainer: {
+    alignSelf: 'center',
     marginTop: sizes.screenHeight * 0.05,
   },
-  errorMessageText:{
-    color:colors.red,
-    marginLeft:sizes.screenWidth * 0.06,
-    fontSize:fontSize.medium,
-    marginTop:sizes.screenHeight * 0.02,
-    fontWeight:'500'
+  errorMessageText: {
+    color: colors.red,
+    marginLeft: sizes.screenWidth * 0.06,
+    fontSize: fontSize.medium,
+    marginTop: sizes.screenHeight * 0.02,
+    fontWeight: '500'
   },
+  errorText: {
+    color: colors.red,
+    // marginTop:sizes.screenHeight * 0.03
+  }
 });
