@@ -12,8 +12,15 @@ import {styles} from './style';
 import images from '../../services/utilities/images';
 import Header from '../../components/Header';
 import {colors} from '../../services';
+import { useSelector } from 'react-redux';
+import { selectUserData } from '../../store/userData';
 
 export default function EditProfile({navigation}) {
+
+  const userData = useSelector(selectUserData)
+
+  
+
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>

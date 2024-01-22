@@ -76,6 +76,8 @@ import location2 from "../../../assets/location2.png"
 import congratulation from "../../../assets/congratulation.png"
 import edit from "../../../assets/edit.png"
 import cardBlue from "../../../assets/cardBlue.png"
+import forwardIcon2 from "../../../assets/forwardIcon2.png"
+import orders from "../../../assets/orders.png"
 
 
 const images = {
@@ -156,7 +158,9 @@ const images = {
   location2,
   congratulation,
   edit,
-  cardBlue
+  cardBlue,
+  forwardIcon2,
+  orders
 };
 
 

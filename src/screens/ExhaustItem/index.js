@@ -69,20 +69,20 @@ export default function ExhaustItem({ route, navigation }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const progress = useProgress();
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   TrackPlayer.setupPlayer().then(() => {
-  //     TrackPlayer.addEventListener(Event.PlaybackState, ({ state }) => {
-  //       if (state === TrackPlayer.STATE_ENDED) {
-  //         setIsPlaying(false);
-  //       }
-  //     });
-  //   });
+    TrackPlayer.setupPlayer().then(() => {
+      TrackPlayer.addEventListener(Event.PlaybackState, ({ state }) => {
+        if (state === TrackPlayer.STATE_ENDED) {
+          setIsPlaying(false);
+        }
+      });
+    });
 
-  //   return () => {
-  //     TrackPlayer?.removeEventListener(Event.PlaybackState);
-  //   };
-  // }, []);
+    return () => {
+      TrackPlayer?.removeEventListener(Event.PlaybackState);
+    };
+  }, []);
 
   useEffect(() => {
     if (
@@ -120,23 +120,23 @@ export default function ExhaustItem({ route, navigation }) {
     }
   };
 
-  // useEffect(() => {
-  //   const unsubscribeFocus = navigation.addListener('focus', () => {
-  //   });
+  useEffect(() => {
+    const unsubscribeFocus = navigation.addListener('focus', () => {
+    });
 
-  //   const unsubscribeBlur = navigation.addListener('blur', () => {
-  //     TrackPlayer.stop();
-  //     TrackPlayer.reset();
-  //   });
+    const unsubscribeBlur = navigation.addListener('blur', () => {
+      TrackPlayer.stop();
+      TrackPlayer.reset();
+    });
 
-  //   return () => {
-  //     unsubscribeFocus();
-  //     unsubscribeBlur();
+    return () => {
+      unsubscribeFocus();
+      unsubscribeBlur();
 
-  //     TrackPlayer.stop();
-  //     TrackPlayer.reset();
-  //   };
-  // }, [navigation]);
+      TrackPlayer.stop();
+      TrackPlayer.reset();
+    };
+  }, [navigation]);
 
   const handleAddToCart = async () => {
     setLoader(true)

@@ -67,7 +67,7 @@ export const styles = StyleSheet.create({
     borderRadius:sizes.screenWidth * 0.04,
     borderColor:colors.disabledBg2,
     backgroundColor:colors.white,
-    height:sizes.screenHeight * 0.16
+    height:sizes.screenHeight * 0.2
   },
   bottomView:{
     flexDirection:'row',

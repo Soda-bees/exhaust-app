@@ -1,10 +1,15 @@
-import {View, Text, SafeAreaView, ImageBackground, Image, TouchableOpacity} from 'react-native';
+import { View, Text, SafeAreaView, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
-import {styles} from './style';
+import { styles } from './style';
 import Header from '../../components/Header';
 import images from '../../services/utilities/images';
+import { useSelector } from 'react-redux';
+import { selectUserData } from '../../store/userData';
 
-export default function OrderConfirm({navigation}) {
+export default function OrderConfirm({ navigation }) {
+
+  
+
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
@@ -17,7 +22,7 @@ export default function OrderConfirm({navigation}) {
             confirm your recent order with us. Below are the details of your
             purchase:
           </Text>
-          <TouchableOpacity style={styles.bottomBtn} onPress={() => navigation.navigate('OrderDetails')}>
+          <TouchableOpacity style={styles.bottomBtn} onPress={() => navigation.navigate('MyOrders')}>
             <Text style={styles.bottomBtnText}>Your Order Details</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.bottomBtn1} onPress={() => navigation.navigate('MyTabs')}>

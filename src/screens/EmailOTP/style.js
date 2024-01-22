@@ -48,6 +48,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.btnBlue,
   },
+  loaderContainer:{
+    marginTop: sizes.screenHeight * 0.05,
+  },  
   btnTextColor: {
     color: colors.white,
   },
@@ -74,5 +77,12 @@ export const styles = StyleSheet.create({
   },
   padding:{
     marginTop:sizes.screenHeight * 0.1
-  }
+  },
+  errorText: {
+    color: colors.red,
+    fontSize: fontSize.medium,
+    fontWeight: '500',
+    width: sizes.screenWidth * 0.85,
+    marginTop: sizes.screenHeight * 0.01,
+}
   });

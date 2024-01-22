@@ -17,10 +17,10 @@ export default function Header({ backImage, title, addToCartImage, navigate }) {
         </TouchableOpacity >
         <Text style={styles.headerText}>{title}</Text>
 
-    
+
         <TouchableOpacity onPress={() => navigation.navigate(navigate)} style={styles.cartImgTouchable}>
           {
-            userData?.cart?.length > 0 && 
+            userData?.cart?.length > 0 &&
             <View style={styles.notificationView}>
               <Text style={styles.text}>{userData?.cart?.length}</Text>
             </View>

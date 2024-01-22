@@ -137,7 +137,7 @@ export const updateShippingAddress = async (token, body) => {
     return data
 }
 
-export const addCard = async (token , body) => {
+export const addCard = async (token, body) => {
     const headers = {
         'Content-Type': 'application/json',
         "Authorization": `Bearer ${token}`
@@ -170,5 +170,32 @@ export const updateCard = async (token, body) => {
         "Authorization": `Bearer ${token}`
     }
     const { data } = await apiInstance.post('updateCard', body, { headers })
+    return data
+}
+
+export const order = async (token, body) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+    const { data } = await apiInstance.post('order', body, { headers })
+    return data
+}
+
+export const forgotPassword = async (email) => {
+    const headers = {
+        'Content-Type': 'application/json',
+    }
+
+    const { data } = await apiInstance.post('auth/forgotPasswordOtp', { email }, { headers })
+    return data
+}
+
+export const resetPassword = async (email, password) => {
+    const headers = {
+        'Content-Type': 'application/json',
+    }
+
+    const { data } = await apiInstance.post('auth/resetPassword', { email, password }, { headers })
     return data
 }

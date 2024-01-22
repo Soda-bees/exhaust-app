@@ -15,10 +15,10 @@ import Header from '../../components/Header';
 import Modal from 'react-native-modal';
 import { colors, sizes } from '../../services';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCardRedux, selectUserData, updateCardRedux } from '../../store/userData';
+import { addCardRedux, addNewOrderRedux, emptyCartRedux, removeOrderRedux, selectUserData, updateCardRedux } from '../../store/userData';
 import formatToJSON from '../../services/utilities/JsonLog';
 import Loader from '../../components/Loader';
-import { addCard, updateCard } from '../../services/config/API';
+import { addCard, order, updateCard } from '../../services/config/API';
 import { selectAuthToken } from '../../store/authToken';
 
 export default function Checkout({ navigation, route }) {
@@ -28,7 +28,7 @@ export default function Checkout({ navigation, route }) {
 
   const userData = useSelector(selectUserData)
   const authToken = useSelector(selectAuthToken)
-  // console.log(userData.cards.length);
+  console.log(userData.orders.length);
 
   const [isModalVisisble, setIsModalVisisble] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0)
@@ -160,8 +160,38 @@ export default function Checkout({ navigation, route }) {
   }
 
   const handleConfirmOrder = async () => {
-    // navigation.navigate('OrderConfirm')
-    console.log("order confirm");
+    try {
+      setLoader(true)
+      let products = []
+      userData.cart.forEach(cartItem => {
+        const productInfo = {
+          product: cartItem.product._id,
+          qty: cartItem.qty,
+        };
+        products.push(productInfo);
+      });
+      const obj = {
+        shippingAddress: selectedAddress._id,
+        status: 'Processing',
+        paymentMethod: 'master card'
+      }
+      obj.products = products
+      const response = await order(authToken, obj)
+      if (response.success) {
+        const newOrder = response.newOrder
+        dispatch(addNewOrderRedux(newOrder))
+        dispatch(emptyCartRedux())
+        navigation.navigate("OrderConfirm")
+        setLoader(false)
+      } else {
+        setLoader(false)
+        console.log(response.message);
+      }
+    } catch (error) {
+      setLoader(false)
+      console.log(error);
+    }
+
   }
   return (
     <SafeAreaView>
@@ -249,19 +279,27 @@ export default function Checkout({ navigation, route }) {
                   <ActivityIndicator color={colors.white} size={31} />
                 </View>
                 :
-                <TouchableOpacity
-                  style={
-                    selectedAddress && selectedCard
-                      ? styles.bottomBtn
-                      : styles.bottomBtnDisable
-                  }
-                  onPress={() => {
-                    selectedAddress && selectedCard && handleConfirmOrder();
-                  }}
-                >
-                  <Text style={styles.bottomBtnText}>Submit Order</Text>
-                  <Image source={images.forwardIcon} style={styles.forwardIcon}/>
-                </TouchableOpacity>
+                selectedAddress && selectedCard ?
+                  <TouchableOpacity
+                    style={styles.bottomBtn}
+                    onPress={() => {
+                      handleConfirmOrder();
+                    }}
+                  >
+                    <Text style={styles.bottomBtnText}>Submit Order</Text>
+                    <Image source={images.forwardIcon} style={styles.forwardIcon} />
+                  </TouchableOpacity>
+                  :
+                  <View
+                    style={
+
+                      styles.bottomBtnDisable
+                    }
+
+                  >
+                    <Text style={styles.bottomBtnText}>Submit Order</Text>
+                    <Image source={images.forwardIcon2} style={styles.forwardIcon} />
+                  </View>
             }
 
           </View>

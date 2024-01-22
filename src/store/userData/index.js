@@ -107,15 +107,24 @@ const userDataSlice = createSlice({
       const updatedCard = action.payload;
 
       if (state.userData) {
-        // Find the index of the address with the matching _id
         const index = state.userData.cards.findIndex((address) => address._id === updatedCard._id);
 
-        // If the address is found, update it
         if (index !== -1) {
           state.userData.cards[index] = updatedCard;
         }
       }
     },
+    addNewOrderRedux: (state, action) => {
+      if (state.userData) {
+        state.userData.orders.push(action.payload)
+      }
+    },
+    removeOrderRedux: (state) => {
+      state.userData.orders = []
+    },
+    emptyCartRedux: (state) => {
+      state.userData.cart = []
+    }
   },
 });
 
@@ -134,7 +143,10 @@ export const {
   addCardRedux,
   selectCardRedux,
   deleteCardRedux,
-  updateCardRedux
+  updateCardRedux,
+  addNewOrderRedux,
+  removeOrderRedux,
+  emptyCartRedux
 } = userDataSlice.actions;
 
 export const selectUserData = (state) => state.userData.userData;

@@ -35,7 +35,7 @@ export default function Brands({ navigation }) {
           {brandData.map((item, index) => {
             return (
               <View style={styles.test} key={index}>
-                <TouchableOpacity style={styles.brandContainer}>
+                <TouchableOpacity style={styles.brandContainer} onPress={() => navigation.navigate('ProductsBrand' , {item})}>
                   <View style={styles.brandIconContainer}>
                     <Image style={styles.brandIcon} source={{ uri: item.logo }} />
                   </View>

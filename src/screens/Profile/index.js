@@ -6,17 +6,20 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
-import {styles} from './style';
+import React, { useState } from 'react';
+import { styles } from './style';
 import images from '../../services/utilities/images';
 import Header from '../../components/Header';
-import {ScrollView} from 'react-native-gesture-handler';
-import { useDispatch } from 'react-redux';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeAuthToken } from '../../store/authToken';
 import { removeProducts } from '../../store/products';
-import { removeUserData } from '../../store/userData';
+import { removeUserData, selectUserData } from '../../store/userData';
 
-export default function Profile({navigation}) {
+export default function Profile({ navigation }) {
+
+  const userData = useSelector(selectUserData)
+
   const dispatch = useDispatch()
   const [radioBtn, setRadioBtn] = useState(false);
 
@@ -24,7 +27,6 @@ export default function Profile({navigation}) {
     dispatch(removeAuthToken())
     dispatch(removeUserData())
     dispatch(removeProducts())
-    // dispatch(removeProducts())
   }
 
   return (
@@ -38,7 +40,7 @@ export default function Profile({navigation}) {
             <View style={styles.fieldView}>
               <Image source={images.friends} style={styles.iconImgSty} />
               <View style={styles.verticalLine}></View>
-              <Text style={styles.textSty}>John Doe</Text>
+              <Text style={styles.textSty}>{userData.name}</Text>
             </View>
           </View>
           <View>
@@ -46,7 +48,7 @@ export default function Profile({navigation}) {
             <View style={styles.fieldView}>
               <Image source={images.email} style={styles.iconImgSty} />
               <View style={styles.verticalLine}></View>
-              <Text style={styles.textSty}>john123@gmail.com</Text>
+              <Text style={styles.textSty}>{userData.email}</Text>
             </View>
           </View>
           <View>
@@ -54,7 +56,7 @@ export default function Profile({navigation}) {
             <View style={styles.fieldView}>
               <Image source={images.phone} style={styles.iconImgSty} />
               <View style={styles.verticalLine}></View>
-              <Text style={styles.textSty}>+12345678</Text>
+              <Text style={styles.textSty}>{userData.number}</Text>
             </View>
           </View>
           <Text style={styles.bottomHeading}>Settings</Text>
@@ -80,6 +82,19 @@ export default function Profile({navigation}) {
                 style={styles.bottonIconImgSty}
               />
             </TouchableOpacity>
+            <TouchableOpacity style={styles.bottomView}
+              onPress={() => navigation.navigate('MyOrders')}
+            >
+              <Image
+                source={images.orders}
+                style={styles.iconImgStyBottom}
+              />
+              <Text style={styles.textStyling}>My orders</Text>
+              <Image
+                source={images.brownArrow}
+                style={styles.bottonIconImgSty}
+              />
+            </TouchableOpacity>
             <View style={styles.bottomView}>
               <Image
                 source={images.notification}
@@ -97,8 +112,8 @@ export default function Profile({navigation}) {
             </View>
           </View>
         </View>
-        <TouchableOpacity style={styles.bottomBtn} 
-        onPress={handleLogout}
+        <TouchableOpacity style={styles.bottomBtn}
+          onPress={handleLogout}
         >
           <Image source={images.logout} style={styles.forwardIcon} />
           <Text style={styles.bottomBtnText}>Logout</Text>

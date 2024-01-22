@@ -62,11 +62,11 @@ export default function SignIn({ navigation }) {
 
   const handleSetBrand = (allProducts) => {
     const brandMap = {};
-  
+
     // Iterate through each product
     allProducts.forEach((product) => {
       const { brand } = product;
-  
+
       // Check if the brand name is already in the object
       if (brand.name in brandMap) {
         // If yes, increment the quantity count
@@ -76,13 +76,13 @@ export default function SignIn({ navigation }) {
         brandMap[brand.name] = { ...brand, quantity: 1, selected: false };
       }
     });
-  
+
     // Convert the object values to an array
     const uniqueBrandsWithSelectedKey = Object.values(brandMap);
-  
+
     dispatch(setBrands(uniqueBrandsWithSelectedKey))
   };
-  
+
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>

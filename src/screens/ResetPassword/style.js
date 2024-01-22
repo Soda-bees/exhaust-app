@@ -72,4 +72,14 @@ export const styles = StyleSheet.create({
     marginRight:sizes.screenWidth * 0.05
     // backgroundColor:'red'
   },
+  loaderContainer:{
+    marginTop: sizes.screenHeight * 0.1,
+  },
+  errorText: {
+    color: colors.red,
+    fontSize: fontSize.medium,
+    fontWeight: '500',
+    width: sizes.screenWidth * 0.85,
+    marginTop: sizes.screenHeight * 0.01,
+}
 });
