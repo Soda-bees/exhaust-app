@@ -117,11 +117,11 @@ export const styles = StyleSheet.create({
     marginBottom: sizes.screenHeight * 0.02
   },
   errorTest:{
-    color:colors.red,
-    fontSize:fontSize.medium,
-    marginTop:sizes.screenHeight * 0.015,
-    marginLeft:sizes.screenWidth * 0.02,
-    fontWeight:'500'
-  }
+   width: sizes.screenWidth * 0.75,
+   marginBottom: sizes.screenHeight * 0.01,
+   fontWeight: '500',
+   color: colors.error
+  },
+ 
 
 })

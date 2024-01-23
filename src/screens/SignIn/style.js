@@ -193,11 +193,9 @@ export const styles = StyleSheet.create({
     // backgroundColor:'red'
   },
   errorText: {
-    // backgroundColor:'red',
     width: sizes.screenWidth * 0.75,
-    marginTop: sizes.screenHeight * 0.02,
-    fontSize: fontSize.medium,
+    marginBottom: sizes.screenHeight * 0.01,
     fontWeight: '500',
-    color: colors.red
+    color: colors.error
   }
 });

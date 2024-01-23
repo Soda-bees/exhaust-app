@@ -27,6 +27,9 @@ export const styles = StyleSheet.create({
     color: colors.black,
     fontSize: fontSize.h4,
     fontWeight: '800',
+    paddingRight:sizes.screenWidth * 0.05,
+    marginLeft:'auto',
+    marginRight:'auto'
   },
 
   headerBackIcon: {

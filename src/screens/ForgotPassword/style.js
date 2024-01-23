@@ -57,10 +57,9 @@ export const styles = StyleSheet.create({
         marginTop: sizes.screenHeight * 0.123,
     },
     errorText: {
-        color: colors.red,
-        fontSize: fontSize.medium,
+        width: sizes.screenWidth * 0.75,
+        marginBottom: sizes.screenHeight * 0.01,
         fontWeight: '500',
-        width: sizes.screenWidth * 0.85,
-        marginTop: sizes.screenHeight * 0.01,
+        color: colors.error
     }
 })

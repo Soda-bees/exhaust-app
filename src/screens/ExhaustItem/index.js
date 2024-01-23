@@ -176,7 +176,7 @@ export default function ExhaustItem({ route, navigation }) {
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
-        <Header backImage={images.backIcon} addToCartImage={images.cartIcon} navigate={'MyCart'} />
+        <Header backImage={images.backIcon} addToCartImage={images.cartIcon} navigate={'Store'} />
         <ImageSLider productImages={productImages} />
         <View style={styles.bottomContainer}>
           <View style={styles.mainContainer}>

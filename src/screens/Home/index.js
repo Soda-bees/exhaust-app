@@ -121,14 +121,15 @@ export default function Home({ navigation }) {
             return (
               <View key={index}>
                 <View style={styles.bg}>
-                  <View style={styles.lastLeftView}>
+                  <TouchableOpacity style={styles.lastLeftView}
+                    onPress={() =>
+                      navigation.navigate('ExhaustItem', {
+                        data: item,
+                      })
+                    }
+                  >
                     <Image source={{ uri: item?.images[0] }} style={styles.lastLeftViewImg} />
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate('ExhaustItem', {
-                          data: item,
-                        })
-                      }>
+                    <View>
                       <Text style={styles.lastLeftViewTextHeading}>
                         {item.brand.name}
                       </Text>
@@ -151,8 +152,8 @@ export default function Home({ navigation }) {
                           </TouchableOpacity>
                         </View>
                       </View>
-                    </TouchableOpacity>
-                  </View>
+                    </View>
+                  </TouchableOpacity>
                 </View>
               </View>
             );

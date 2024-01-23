@@ -1,6 +1,7 @@
 import axios from "axios"
 import apiInstance from "../../utilities/ApiInstance"
 
+
 export const checkServerConnection = async () => {
     const headers = {
         'Content-Type': 'application/json',
@@ -197,5 +198,15 @@ export const resetPassword = async (email, password) => {
     }
 
     const { data } = await apiInstance.post('auth/resetPassword', { email, password }, { headers })
+    return data
+}
+
+export const updateProfile = async (token, body) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+
+    const { data } = await apiInstance.post('editProfile', body , { headers })
     return data
 }

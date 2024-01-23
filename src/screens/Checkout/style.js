@@ -257,11 +257,10 @@ export const styles = StyleSheet.create({
     marginTop: sizes.screenHeight * 0.05,
   },
   errorMessageText: {
-    color: colors.red,
-    marginLeft: sizes.screenWidth * 0.06,
-    fontSize: fontSize.medium,
-    marginTop: sizes.screenHeight * 0.02,
-    fontWeight: '500'
+    width: sizes.screenWidth * 0.75,
+    marginBottom: sizes.screenHeight * 0.01,
+    fontWeight: '500',
+    color: colors.error
   },
   errorText: {
     color: colors.red,

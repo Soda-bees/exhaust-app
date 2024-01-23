@@ -31,7 +31,6 @@ export default function SignUp({ navigation }) {
   const [loader, setLoader] = useState(false)
 
   const handleSignup = async () => {
-    // console.log(phoneInput.current._reactInternals.stateNode.state);
     setLoader(true)
     try {
       const obj = {
@@ -93,11 +92,9 @@ export default function SignUp({ navigation }) {
             </View>
 
             <View style={styles.inputField}>
-              {/* <Image style={styles.icon} source={images.lockIcon} /> */}
               <PhoneInput
                 ref={phoneInput}
                 defaultValue={value}
-                // defaultCode={defaultCountryCode ? defaultCountryCode : "BR"}
                 defaultCode="US"
                 layout="first"
                 withShadow={false}
@@ -114,14 +111,18 @@ export default function SignUp({ navigation }) {
                   height: sizes.screenHeight * 0.04,
                   width: sizes.screenHeight * 0.04,
                   alignSelf: 'center',
+                  marginTop:sizes.screenWidth * 0.01
                 }}
                 containerStyle={{
-                  height: sizes.screenHeight * 0.07,
+                  height: sizes.screenHeight * 0.06,
                   width: sizes.screenHeight * 0.346,
+                  borderRadius:sizes.screenWidth * 0.05,
+                  marginBottom:sizes.screenWidth * 0.01,
                 }}
                 textInputStyle={{
                   height: sizes.screenHeight * 0.07,
                   color: colors.black,
+                  marginTop:sizes.screenWidth * 0.01
                 }}
                 textInputProps={{
                   placeholderTextColor: colors.disabledBg2,
@@ -134,7 +135,6 @@ export default function SignUp({ navigation }) {
             <View style={styles.inputField}>
               <Image style={styles.icon} source={images.location2} />
               <TextInput
-                // secureTextEntry={!eyeIconShow ? true : false}
                 placeholder="Location"
                 placeholderTextColor={colors.lightGrey}
                 style={styles.inputText}

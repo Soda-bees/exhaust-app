@@ -59,13 +59,9 @@ export const styles = StyleSheet.create({
     marginTop: sizes.screenHeight * 0.02
   },
   error:{
-    color:colors.red,
-    alignSelf:'flex-start',
-    marginLeft:sizes.screenWidth * 0.06,
-    marginTop: sizes.screenHeight * 0.23,
-    marginBottom:sizes.screenHeight * 0.02,
-    fontSize:fontSize.medium
-    // marginTop:sizes.screenHeight * 0.
+    width: sizes.screenWidth * 0.75,
+    marginBottom: sizes.screenHeight * 0.01,
+    fontWeight: '500',
+    color: colors.error
   }
-  //   roundedBorder: {borderRadius: sizes.screenWidth * 0.5},
 });

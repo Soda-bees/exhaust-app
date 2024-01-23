@@ -26,9 +26,9 @@ export default function Brands({ navigation }) {
             <Image style={styles.headerBackIcon} source={images.backIcon} />
           </TouchableOpacity>
           <Text style={styles.heading}>Brands</Text>
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <Image style={styles.headerIcon} source={images.seacrchIcon} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false}>

@@ -83,6 +83,20 @@ export default function SignIn({ navigation }) {
     dispatch(setBrands(uniqueBrandsWithSelectedKey))
   };
 
+  const handleNavigateToForgotPass = () => {
+    setEmail('')
+    setPassword('')
+    setError('')
+    navigation.navigate('ForgotPassword')
+  }
+
+  const handleNavigateSignup = () => {
+    setEmail('')
+    setPassword('')
+    setError('')
+    navigation.navigate('SignUp')
+  }
+
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
@@ -135,7 +149,8 @@ export default function SignIn({ navigation }) {
                 <Text style={styles.rememberMeText}>Remember me</Text>
               </View>
               <TouchableOpacity
-                onPress={() => navigation.navigate('ForgotPassword')}>
+                onPress={handleNavigateToForgotPass}
+              >
                 <Text style={styles.textUnderline}>Forgot Password?</Text>
               </TouchableOpacity>
             </View>
@@ -158,7 +173,7 @@ export default function SignIn({ navigation }) {
 
         <View style={styles.row}>
           <Text style={styles.signUpText}> Don't have an account?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+          <TouchableOpacity onPress={handleNavigateSignup}>
             <Text style={styles.blueText}> Sign Up</Text>
           </TouchableOpacity>
         </View>

@@ -124,7 +124,27 @@ const userDataSlice = createSlice({
     },
     emptyCartRedux: (state) => {
       state.userData.cart = []
-    }
+    },
+    updateProfileDataRedux: (state, action) => {
+      if (state.userData) {
+        const { name, location, profile, countryCode, number } = action.payload;
+        if (name !== undefined) {
+          state.userData.name = name;
+        }
+        if (location !== undefined) {
+          state.userData.location = location;
+        }
+        if (profile !== undefined) {
+          state.userData.profile = profile;
+        }
+        if (countryCode !== undefined) {
+          state.userData.countryCode = countryCode;
+        }
+        if (number !== undefined) {
+          state.userData.number = number;
+        }
+      }
+    },
   },
 });
 
@@ -146,7 +166,8 @@ export const {
   updateCardRedux,
   addNewOrderRedux,
   removeOrderRedux,
-  emptyCartRedux
+  emptyCartRedux,
+  updateProfileDataRedux
 } = userDataSlice.actions;
 
 export const selectUserData = (state) => state.userData.userData;

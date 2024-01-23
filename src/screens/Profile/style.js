@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {colors, fontSize, sizes} from '../../services';
+import { StyleSheet } from 'react-native';
+import { colors, fontSize, sizes } from '../../services';
 
 export const styles = StyleSheet.create({
   container: {
@@ -16,13 +16,13 @@ export const styles = StyleSheet.create({
     height: sizes.screenWidth * 0.23,
     marginTop: sizes.screenHeight * 0.03,
     marginLeft: sizes.screenHeight * 0.16,
+    borderRadius: sizes.screenWidth * 0.02
   },
   iconImgSty: {
     resizeMode: 'contain',
     width: sizes.screenWidth * 0.04,
     height: sizes.screenWidth * 0.03,
     marginLeft: sizes.screenWidth * 0.04,
-    // backgroundColor:'red'
   },
   iconImgStyBottom: {
     resizeMode: 'contain',
@@ -40,11 +40,21 @@ export const styles = StyleSheet.create({
     marginTop: sizes.screenHeight * 0.04,
   },
   verticalLine: {
-    width: sizes.screenWidth * 0.001,
+    width: sizes.screenWidth * 0.002,
     height: sizes.screenHeight * 0.02,
     backgroundColor: colors.black,
     marginLeft: sizes.screenWidth * 0.03,
-    marginRight: sizes.screenWidth * 0.03,
+    marginRight: sizes.screenWidth * 0.01,
+  },
+  verticalLine2: {
+    width: sizes.screenWidth * 0.002,
+    height: sizes.screenHeight * 0.02,
+    backgroundColor: colors.black,
+    marginLeft: sizes.screenWidth * 0.03,
+    marginRight: sizes.screenWidth * 0.01,
+    position: 'absolute',
+    top: sizes.screenHeight * 0.02,
+    left: sizes.screenWidth * 0.11
   },
   textSty: {
     color: colors.black,
@@ -61,57 +71,57 @@ export const styles = StyleSheet.create({
     zIndex: 10,
     textAlign: 'center',
   },
-  bottomMainView:{
-    paddingHorizontal:sizes.screenWidth * 0.04,
-    borderWidth:1,
-    borderRadius:sizes.screenWidth * 0.04,
-    borderColor:colors.disabledBg2,
-    backgroundColor:colors.white,
-    height:sizes.screenHeight * 0.2
+  bottomMainView: {
+    paddingHorizontal: sizes.screenWidth * 0.04,
+    borderWidth: 1,
+    borderRadius: sizes.screenWidth * 0.04,
+    borderColor: colors.disabledBg2,
+    backgroundColor: colors.white,
+    height: sizes.screenHeight * 0.2
   },
-  bottomView:{
-    flexDirection:'row',
-    alignItems:'center',
-    marginTop:sizes.screenHeight * 0.026
+  bottomView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: sizes.screenHeight * 0.026
   },
-  textStyling:{
-    color:colors.black,
-    fontWeight:'bold',
-    fontSize:fontSize.small,
-    marginLeft:sizes.screenWidth * 0.04
+  textStyling: {
+    color: colors.black,
+    fontWeight: 'bold',
+    fontSize: fontSize.small,
+    marginLeft: sizes.screenWidth * 0.04
   },
-  textStyling2:{
-    color:colors.disabledBg3,
-    fontWeight:'bold',
-    fontSize:fontSize.small,
-    marginLeft:sizes.screenWidth * 0.04,
-    position:'absolute',
-    right:sizes.screenWidth * 0.08
+  textStyling2: {
+    color: colors.disabledBg3,
+    fontWeight: 'bold',
+    fontSize: fontSize.small,
+    marginLeft: sizes.screenWidth * 0.04,
+    position: 'absolute',
+    right: sizes.screenWidth * 0.08
   },
   bottonIconImgSty: {
     resizeMode: 'contain',
     width: sizes.screenWidth * 0.04,
     height: sizes.screenWidth * 0.03,
     marginLeft: sizes.screenWidth * 0.04,
-    position:'absolute',
-    right:0
+    position: 'absolute',
+    right: 0
   },
-  bottomHeading:{
-    color:colors.black,
-    marginTop:sizes.screenHeight * 0.04,
-    marginBottom:sizes.screenHeight * 0.02,
-    fontWeight:'bold',
-    fontSize:fontSize.large
+  bottomHeading: {
+    color: colors.black,
+    marginTop: sizes.screenHeight * 0.04,
+    marginBottom: sizes.screenHeight * 0.02,
+    fontWeight: 'bold',
+    fontSize: fontSize.large
   },
-  btnIconImgSty:{
+  btnIconImgSty: {
     resizeMode: 'contain',
     width: sizes.screenWidth * 0.08,
     height: sizes.screenWidth * 0.04,
     marginLeft: sizes.screenWidth * 0.04,
   },
-  btnIconView:{
-    position:'absolute',
-    right:0,
+  btnIconView: {
+    position: 'absolute',
+    right: 0,
   },
   bottomBtn: {
     flexDirection: 'row',
@@ -120,9 +130,9 @@ export const styles = StyleSheet.create({
     marginLeft: sizes.screenWidth * 0.044,
     paddingHorizontal: sizes.screenWidth * 0.03,
     marginTop: sizes.screenHeight * 0.02,
-    borderRadius:sizes.screenWidth * 0.1,    
+    borderRadius: sizes.screenWidth * 0.1,
     height: sizes.screenHeight * 0.06,
-    backgroundColor:colors.btnBlue,
+    backgroundColor: colors.btnBlue,
     width: sizes.screenHeight * 0.45,
   },
   forwardIcon: {
@@ -130,10 +140,59 @@ export const styles = StyleSheet.create({
     width: sizes.screenWidth * 0.05,
     height: sizes.screenHeight * 0.025,
   },
-  bottomBtnText:{
-    color:colors.white,
-    fontSize:fontSize.medium,
-    fontWeight:'500',
-    marginLeft:sizes.screenWidth * 0.02
+  bottomBtnText: {
+    color: colors.white,
+    fontSize: fontSize.medium,
+    fontWeight: '500',
+    marginLeft: sizes.screenWidth * 0.02
+  },
+  inputField: {
+    width: sizes.screenWidth * 0.9,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: sizes.screenHeight * 0.08,
+    borderColor: colors.borderGrey,
+    paddingLeft: sizes.screenWidth * 0.05,
+    marginTop: sizes.screenHeight * 0.02
+  },
+  icon: {
+    resizeMode: 'contain',
+    height: sizes.screenWidth * 0.04,
+    width: sizes.screenWidth * 0.05,
+  },
+  inputText: {
+    color: colors.textGreyDark,
+    width: sizes.screenWidth * 0.58,
+  },
+  placeholder: {
+    position: 'absolute',
+    left: sizes.screenWidth * 0.12,
+    bottom: sizes.screenWidth * 0.101,
+    backgroundColor: '#F3F5F8',
+    color: colors.black,
+    paddingHorizontal: sizes.screenHeight * 0.01,
+    fontSize: fontSize.small
+  },
+  MainCartView2: {
+    paddingHorizontal: sizes.screenWidth * 0.06,
+    paddingVertical: sizes.screenHeight * 0.005,
+    marginTop: sizes.screenHeight * 0.02,
+    borderRadius: sizes.screenWidth * 0.2,
+    borderColor: colors.borderGrey,
+    borderWidth: 1,
+  },
+  inputFieldBackground: {
+    borderTopRightRadius: sizes.screenWidth * 0.08,
+    borderBottomRightRadius: sizes.screenWidth * 0.08,
+    backgroundColor: 'transparent',
+    height: sizes.screenHeight * 0.06,
+    bottom: sizes.screenHeight * 0.007
+  },
+  labelName: {
+    fontSize: fontSize.small,
+    paddingTop: sizes.screenHeight * 0.01,
+    paddingLeft: sizes.screenWidth * 0.01,
+    color: colors.disabledBg3,
   },
 });
