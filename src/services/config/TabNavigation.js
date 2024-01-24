@@ -29,7 +29,6 @@ export default function TabNavigation() {
           height: sizes.screenHeight * 0.08,
           paddingTop: sizes.screenHeight * 0.01,
           paddingHorizontal: sizes.screenWidth * 0.04,
-          // borderTopWidth: 0,
           borderTopRightRadius: sizes.screenWidth * 0.07,
           borderTopLeftRadius: sizes.screenWidth * 0.07,
         },
@@ -46,8 +45,6 @@ export default function TabNavigation() {
                 width: sizes.screenWidth * 0.19,
                 height: focused ? sizes.screenWidth * 0.08 : sizes.screenWidth * 0.05,
                 marginTop: sizes.screenHeight * 0.02,
-                // backgroundColor:colors.red
-                // tintColor: focused ? colors.btnBlue : colors.gray,
               }}
             />
           ),

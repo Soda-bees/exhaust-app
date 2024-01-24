@@ -260,7 +260,9 @@ export const styles = StyleSheet.create({
     width: sizes.screenWidth * 0.75,
     marginBottom: sizes.screenHeight * 0.01,
     fontWeight: '500',
-    color: colors.error
+    color: colors.error,
+    marginTop:sizes.screenHeight * 0.02,
+    marginLeft:sizes.screenWidth * 0.06
   },
   errorText: {
     color: colors.red,

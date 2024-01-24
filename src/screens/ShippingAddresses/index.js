@@ -9,6 +9,8 @@ import formatToJSON from '../../services/utilities/JsonLog'
 import { colors, sizes } from '../../services'
 import { deleteShippingAddress, selectShippingAddress } from '../../services/config/API'
 import { selectAuthToken } from '../../store/authToken'
+import Modal from "react-native-modal"
+
 
 export default function ShippingAddresses({ navigation }) {
 
@@ -21,6 +23,9 @@ export default function ShippingAddresses({ navigation }) {
   const [loader, setLoader] = useState([])
   const [deleteLoader, setDeleteLoader] = useState([])
   const [editLoader, setEditLoader] = useState([])
+  const [isPermissionModal, setIsPermissionModal] = useState(false)
+  const [deleteAddress_id, setDeleteAddress_id] = useState('')
+  const [modalLoader, setModalLoader] = useState(false)
 
 
   const handleSelectAddress = async (_id) => {
@@ -30,6 +35,7 @@ export default function ShippingAddresses({ navigation }) {
       if (response.success) {
         setLoader(loader.filter((id) => id !== _id))
         dispatch(selectShippingAddressRedux({ _id }))
+        // navigation.navigate('Checkout')
       } else {
         setLoader(loader.filter((id) => id !== _id))
         console.log(response.message);
@@ -41,29 +47,37 @@ export default function ShippingAddresses({ navigation }) {
   }
 
   const handleDeleteAddress = async (_id) => {
-    // setDeleteLoader([...deleteLoader , _id])
-    // dispatch(deleteAddressRedux({_id}))
-    // setDeleteLoader(loader.filter((id) => id !== _id))
     try {
       setDeleteLoader([...deleteLoader, _id])
+      setModalLoader(true)
       const response = await deleteShippingAddress(authToken, _id)
-      console.log(response);
       if (response.success) {
         dispatch(deleteAddressRedux({ _id }))
         setDeleteLoader(loader.filter((id) => id !== _id))
+        setIsPermissionModal(false)
+        setModalLoader(false)
       } else {
         setDeleteLoader(loader.filter((id) => id !== _id))
+        setIsPermissionModal(false)
+        setModalLoader(false)
         console.log(response.message);
       }
     } catch (error) {
       setDeleteLoader(loader.filter((id) => id !== _id))
+      setIsPermissionModal(false)
+      setModalLoader(false)
       console.log(error.message);
     }
-
   }
 
   const handleEditAddress = async (item) => {
     navigation.navigate('AddShippingAddress', { item })
+  }
+
+  const handleCloseModal = () => {
+    if (!modalLoader) {
+      setIsPermissionModal(false)
+    }
   }
 
   return (
@@ -89,7 +103,13 @@ export default function ShippingAddresses({ navigation }) {
                                       <ActivityIndicator size={20} />
                                     </View>
                                     :
-                                    <TouchableOpacity onPress={() => handleDeleteAddress(item._id)}>
+                                    <TouchableOpacity
+                                      onPress={() => {
+                                        setDeleteAddress_id(item._id)
+                                        setIsPermissionModal(true)
+                                      }}
+                                    // onPress={() => handleDeleteAddress(item._id)}
+                                    >
                                       <Image source={images.deleteIcon} style={styles.icon} />
                                     </TouchableOpacity>
                                 }
@@ -128,7 +148,7 @@ export default function ShippingAddresses({ navigation }) {
                                     />
                                 }
                               </TouchableOpacity>
-                              <Text style={styles.headingSty2}>Use as the shipping address </Text>
+                              <Text style={styles.headingSty2}>Use this shipping address</Text>
                             </View>
                           </View>
                         )
@@ -137,18 +157,49 @@ export default function ShippingAddresses({ navigation }) {
                     <View style={{ marginBottom: sizes.screenHeight * 0.02 }}></View>
                   </ScrollView>
                 </View> :
-                <View>
-                  <Text>nh hai address</Text>
+                <View style={styles.noAddressContainer}>
+                  <Image source={images.noAddress} style={styles.noAddressImg} />
+                  <Text style={styles.noAddressText}>No shipping address found.</Text>
                 </View>
             }
           </View>
         </View>
-          <TouchableOpacity
-            style={styles.bottomBtn}
-            onPress={() => navigation.navigate('AddShippingAddress')}>
-            <Text style={styles.bottomBtnText}>Add new address</Text>
-            <Image source={images.forwardIcon} style={styles.forwardIcon} />
-          </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.bottomBtn}
+          onPress={() => navigation.navigate('AddShippingAddress')}>
+          <Text style={styles.bottomBtnText}>Add new address</Text>
+          <Image source={images.forwardIcon} style={styles.forwardIcon} />
+        </TouchableOpacity>
+        <Modal isVisible={isPermissionModal} onBackdropPress={handleCloseModal}>
+          <View style={styles.modalContainer}>
+            <Image source={images.deleteAddress} style={styles.deleteCartImg} />
+            <Text style={styles.modalText}>Are you sure you want to delete this address?</Text>
+            <View style={styles.modalBtnContainer}>
+              {
+                modalLoader ?
+                  <View style={styles.noBtn}>
+                    <Text style={styles.modlBtnText2}>No</Text>
+                  </View>
+                  :
+                  <TouchableOpacity style={styles.noBtn} onPress={handleCloseModal} >
+                    <Text style={styles.modlBtnText2}>No</Text>
+                  </TouchableOpacity>
+              }
+              {
+                modalLoader ?
+                  <View style={styles.yesBtn}>
+                    <ActivityIndicator color={colors.white} size={25} />
+                  </View>
+                  :
+                  <TouchableOpacity style={styles.yesBtn}
+                    onPress={() => handleDeleteAddress(deleteAddress_id)}
+                  >
+                    <Text style={styles.modlBtnText}>Yes</Text>
+                  </TouchableOpacity>
+              }
+            </View>
+          </View>
+        </Modal>
       </ImageBackground>
     </SafeAreaView>
   )

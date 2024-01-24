@@ -152,7 +152,7 @@ export default function AddShippingAddress({ navigation, route }) {
       <ImageBackground style={styles.container} source={images.bg}>
         <View>
           <Header
-            title={isEdit ? 'Update Shipping Addresses' : 'Adding Shipping Addresses'}
+            title={isEdit ? 'Update Shipping Address' : 'Add Shipping Address'}
             backImage={images.backIcon}
           />
           <View style={styles.mainContainer}>
@@ -160,8 +160,8 @@ export default function AddShippingAddress({ navigation, route }) {
               <Text style={styles.labelName}>Address</Text>
 
               <TextInput
-                placeholder="Enter address"
-                placeholderTextColor={colors.black}
+                placeholder="Enter Address"
+                placeholderTextColor={colors.disabledBg3}
                 style={styles.inputField}
                 onChangeText={text => setAddress(text)}
                 value={address}
@@ -171,8 +171,8 @@ export default function AddShippingAddress({ navigation, route }) {
             <View style={styles.MainCartView}>
               <Text style={styles.labelName}>City</Text>
               <TextInput
-                placeholder="Enter city."
-                placeholderTextColor={colors.black}
+                placeholder="Enter City."
+                placeholderTextColor={colors.disabledBg3}
                 style={styles.inputField}
                 onChangeText={text => setCity(text)}
                 value={city}
@@ -182,8 +182,8 @@ export default function AddShippingAddress({ navigation, route }) {
             <View style={styles.MainCartView}>
               <Text style={styles.labelName}>State/Province/Region</Text>
               <TextInput
-                placeholder="Enter state"
-                placeholderTextColor={colors.black}
+                placeholder="Enter State"
+                placeholderTextColor={colors.disabledBg3}
                 style={styles.inputField}
                 onChangeText={text => setState(text)}
                 value={state}
@@ -193,8 +193,8 @@ export default function AddShippingAddress({ navigation, route }) {
             <View style={styles.MainCartView}>
               <Text style={styles.labelName}>Zip Code (Postal Code)</Text>
               <TextInput
-                placeholder="Enter zip code"
-                placeholderTextColor={colors.black}
+                placeholder="Enter Zip Code"
+                placeholderTextColor={colors.disabledBg3}
                 style={styles.inputField}
                 keyboardType="numeric"
                 onChangeText={text => setZipCode(text)}
@@ -210,10 +210,11 @@ export default function AddShippingAddress({ navigation, route }) {
                   withFlag
                   withCountryNameButton
                   withAlphaFilter
-                  placeholder={selectedCountry ? selectedCountry : 'Select country'}
+                  placeholder={selectedCountry ? selectedCountry : 'Select Country'}
                   onSelect={onCountrySelect}
                   visible={isCountryPickerVisible}
                   onClose={() => setCountryPickerVisibility(false)}
+
                 />
               </View>
             </View>
@@ -222,7 +223,6 @@ export default function AddShippingAddress({ navigation, route }) {
               <PhoneInput
                 ref={phoneInput}
                 defaultValue={value}
-                // defaultCode={isEdit ? defaultCountryCode : userData.countryCode}
                 defaultCode={defaultCountryCode}
                 layout="first"
                 withShadow={false}
@@ -234,6 +234,13 @@ export default function AddShippingAddress({ navigation, route }) {
                 }}
                 value={contactNo}
                 withDarkTheme={false}
+                codeTextStyle={{
+                  // backgroundColor:'red',
+                  height:sizes.screenHeight * 0.028,
+                  marginTop:sizes.screenHeight * 0.004,
+                  // position:'absolute'
+                  right:sizes.screenWidth * 0.025
+                }}
                 flagButtonStyle={{
                   backgroundColor: colors.bgLight,
                   height: sizes.screenHeight * 0.04,
@@ -245,9 +252,10 @@ export default function AddShippingAddress({ navigation, route }) {
                   width: sizes.screenHeight * 0.346,
                 }}
                 textInputStyle={{
-                  height: sizes.screenHeight * 0.05,
+                  height: sizes.screenHeight * 0.058,
                   color: colors.black,
-                  top: sizes.screenHeight * 0.004
+                  top: sizes.screenHeight * 0.004,
+                  right:sizes.screenWidth * 0.045
                 }}
                 textInputProps={{
                   placeholderTextColor: colors.disabledBg2,

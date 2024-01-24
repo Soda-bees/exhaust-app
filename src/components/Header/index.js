@@ -15,18 +15,18 @@ export default function Header({ backImage, title, addToCartImage, navigate }) {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image source={backImage} style={styles.imgSty} />
         </TouchableOpacity >
-        <Text style={styles.headerText}>{title}</Text>
+        <Text style={addToCartImage ? styles.headerText : styles.headerText2}>{title}</Text>
 
-
-        <TouchableOpacity onPress={() => navigation.navigate(navigate)} style={styles.cartImgTouchable}>
-          {
-            userData?.cart?.length > 0 &&
-            <View style={styles.notificationView}>
-              <Text style={styles.text}>{userData?.cart?.length}</Text>
-            </View>
-          }
-          <Image source={addToCartImage} style={styles.cartImgSty} />
-        </TouchableOpacity>
+        {addToCartImage && (
+          <TouchableOpacity onPress={() => navigation.navigate(navigate)} style={styles.cartImgTouchable}>
+            {userData?.cart?.length > 0 && (
+              <View style={styles.notificationView}>
+                <Text style={styles.text}>{userData?.cart?.length}</Text>
+              </View>
+            )}
+            <Image source={addToCartImage} style={styles.cartImgSty} />
+          </TouchableOpacity>
+        )}
       </View>
     </SafeAreaView>
   );

@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
   cardNo: {
     color: colors.white,
     marginTop: sizes.screenHeight * 0.07,
-    fontSize: fontSize.h3
+    fontSize: fontSize.h5
   },
   detailsContainer: {
     flexDirection: 'row',
@@ -106,15 +106,86 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor:'red'
     marginRight: sizes.screenWidth * 0.06
   },
 
   checkView: {
-    // backgroundColor: 'red',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     height: sizes.screenHeight * 0.05
-  }
+  },
+  noCardContainer:{
+    width:sizes.screenWidth ,
+    height:sizes.screenHeight * 0.78,
+    flexDirection:'column',
+    alignItems:'center'
+  },
+  noCardImg: {
+    width: sizes.screenWidth * 0.25,
+    height: sizes.screenWidth * 0.25,
+    marginTop: sizes.screenHeight * 0.25,
+  },
+  nocardText: {
+    color: colors.black,
+    fontSize: fontSize.h6,
+    fontWeight: '500'
+  },
+
+  modalContainer: {
+    width: sizes.screenWidth * 0.83,
+    backgroundColor: colors.white,
+    alignSelf: 'center',
+    borderRadius: sizes.screenWidth * 0.04,
+    paddingVertical: sizes.screenHeight * 0.03
+  },
+  deleteCartImg: {
+    width: sizes.screenWidth * 0.18,
+    height: sizes.screenWidth * 0.18,
+    resizeMode: 'contain',
+    alignSelf: 'center'
+  },
+  modalText: {
+    color: colors.black,
+    textAlign: 'center',
+    width: sizes.screenWidth * 0.5,
+    alignSelf: 'center',
+    fontSize: fontSize.medium,
+    fontWeight: '500',
+    marginTop: sizes.screenHeight * 0.01
+  },
+  modalBtnContainer: {
+    width: sizes.screenWidth * 0.64,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: "space-between",
+    marginTop: sizes.screenHeight * 0.02
+  },
+  noBtn: {
+    width: sizes.screenWidth * 0.31,
+    backgroundColor: colors.disabledBg,
+    height: sizes.screenHeight * 0.05,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: sizes.screenWidth * 0.01
+  },
+  yesBtn: {
+    width: sizes.screenWidth * 0.31,
+    backgroundColor: colors.btnBlue,
+    height: sizes.screenHeight * 0.05,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: sizes.screenWidth * 0.01
+  },
+  modlBtnText: {
+    color: colors.white,
+    fontSize: fontSize.smallM,
+    fontWeight: '500'
+  },
+  modlBtnText2: {
+    color: colors.black,
+    fontSize: fontSize.smallM,
+    fontWeight: '500'
+  },
 })

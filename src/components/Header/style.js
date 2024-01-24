@@ -25,6 +25,14 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: colors.black
     },
+    headerText2: {
+        fontSize: fontSize.large,
+        fontWeight: 'bold',
+        color: colors.black,
+        marginRight:'auto',
+        marginLeft:'auto',
+        paddingRight:sizes.screenWidth * 0.04
+    },
     cartImgTouchable: {
         position: 'relative'
     },
@@ -43,6 +51,7 @@ export const styles = StyleSheet.create({
     },
     text: {
         color: colors.white,
-        fontWeight: '500'
+        fontWeight: '500',
+        fontSize:fontSize.smallM
     }
 })

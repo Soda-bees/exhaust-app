@@ -77,7 +77,7 @@ export default function OrderDetails({ navigation, route }) {
             <Text style={styles.firstViewText2}>#59890045678</Text>
             <Text style={styles.firstViewText}>{date}</Text>
             <Text style={styles.firstViewText2}>
-              {`${orderAddress.city}, ${orderAddress.zipCode}, ${orderAddress.state}, ${orderAddress.country}`}
+              {`${orderAddress?.city}, ${orderAddress?.zipCode}, ${orderAddress?.state}, ${orderAddress?.country}`}
             </Text>
             <Text style={styles.firstViewText}>Payment Method</Text>
             <View style={styles.firstViewRow2}>
@@ -88,7 +88,7 @@ export default function OrderDetails({ navigation, route }) {
             {
               orderData?.products.map((item, index) => {
                 return (
-                  <View style={styles.firstViewRow}>
+                  <View style={styles.firstViewRow} key={index}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                       <Text style={styles.secondViewText}>{item?.product?.name}</Text>
                       <Text>

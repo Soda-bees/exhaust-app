@@ -28,6 +28,7 @@ import { selectAuthToken } from '../../store/authToken';
 import Congratulations from '../../screens/Congratulations';
 import MyOrders from '../../screens/MyOrders';
 import ProductsBrand from '../../screens/productsBrands';
+import AddToCartDetails from '../../screens/AddToCartDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,26 +52,23 @@ const MyAppStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MyTabs" component={MyTabs} />
+      <Stack.Screen name="OrderConfirm" component={OrderConfirm} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} />
       <Stack.Screen name="EmailOTP" component={EmailOTP} />
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="AddToCartDetails" component={AddToCartDetails} />
       <Stack.Screen name="Brands" component={Brands} />
       <Stack.Screen name="ProductsBrand" component={ProductsBrand} />
       <Stack.Screen name="PopularExhaust" component={PopularrExhaust} />
-      <Stack.Screen name="MyCart" component={MyCart} />
       <Stack.Screen name="MyOrders" component={MyOrders} />
       <Stack.Screen name="Checkout" component={Checkout} />
       <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
       <Stack.Screen name="ShippingAddresses" component={ShippingAddresses} />
       <Stack.Screen name="AddShippingAddress" component={AddShippingAddress} />
-      <Stack.Screen name="OrderConfirm" component={OrderConfirm} />
       <Stack.Screen name="OrderDetails" component={OrderDetails} />
       <Stack.Screen name="ExhaustItem" component={ExhaustItem} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="Notification" component={Notification} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       <Stack.Screen name="UploadPhoto" component={UploadPhoto} />
       <Stack.Screen name="UploadProfilePhoto" component={UploadProfilePhoto} />

@@ -78,9 +78,23 @@ import edit from "../../../assets/edit.png"
 import cardBlue from "../../../assets/cardBlue.png"
 import forwardIcon2 from "../../../assets/forwardIcon2.png"
 import orders from "../../../assets/orders.png"
+import emptyCart from "../../../assets/emptyCart.png"
+import deleteCart from "../../../assets/deleteCart.png"
+import noAddress from "../../../assets/noAddress.png"
+import noCards from "../../../assets/noCards.png"
+import deleteCard from "../../../assets/deleteCard.png"
+import deleteAddress from "../../../assets/deleteAddress.png"
+import profileCard from "../../../assets/profileCard.png"
+import address from "../../../assets/address.png"
 
 
 const images = {
+  address,
+  profileCard,
+  deleteAddress,
+  deleteCard,
+  noCards,
+  noAddress,
   add,
   bg,
   facebookIcon,
@@ -160,7 +174,9 @@ const images = {
   edit,
   cardBlue,
   forwardIcon2,
-  orders
+  orders,
+  emptyCart,
+  deleteCart
 };
 
 

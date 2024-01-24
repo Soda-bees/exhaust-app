@@ -22,9 +22,9 @@ export default function OrderConfirm({ navigation }) {
             confirm your recent order with us. Below are the details of your
             purchase:
           </Text>
-          <TouchableOpacity style={styles.bottomBtn} onPress={() => navigation.navigate('MyOrders')}>
+          {/* <TouchableOpacity style={styles.bottomBtn} onPress={() => navigation.navigate('MyOrders')}>
             <Text style={styles.bottomBtnText}>Your Order Details</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity style={styles.bottomBtn1} onPress={() => navigation.navigate('MyTabs')}>
             <Text style={styles.bottomBtnText}>Back to Home</Text>
           </TouchableOpacity>

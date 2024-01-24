@@ -41,7 +41,11 @@ export default function ProductsBrand({ navigation, route }) {
                             <Image style={styles.headerBackIcon} source={images.backIcon} />
                         </TouchableOpacity>
                         <Text style={styles.heading}>Brands</Text>
+                        <TouchableOpacity 
+                        onPress={() => navigation.navigate('Profile')}
+                        >
                         <Image style={styles.headerIcon} source={{ uri: userData?.profile }} />
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.headingContainer}>
                         <Text style={styles.heading2}>{item?.name}</Text>

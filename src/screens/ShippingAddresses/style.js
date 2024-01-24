@@ -142,4 +142,77 @@ export const styles = StyleSheet.create({
     height: sizes.screenHeight * 0.04,
     width: sizes.screenHeight * 0.04,
   },
+  noAddressContainer: {
+    width: sizes.screenWidth,
+    height: sizes.screenHeight * 0.85,
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  noAddressImg: {
+    width: sizes.screenWidth * 0.25,
+    height: sizes.screenWidth * 0.25,
+    marginTop: sizes.screenHeight * 0.32,
+  },
+  noAddressText: {
+    color: colors.black,
+    fontSize: fontSize.h6,
+    fontWeight: '500',
+    marginTop:sizes.screenHeight * 0.01
+  },
+  modalContainer: {
+    width: sizes.screenWidth * 0.83,
+    backgroundColor: colors.white,
+    alignSelf: 'center',
+    borderRadius: sizes.screenWidth * 0.04,
+    paddingVertical: sizes.screenHeight * 0.03
+  },
+  deleteCartImg: {
+    width: sizes.screenWidth * 0.2,
+    height: sizes.screenWidth * 0.2,
+    resizeMode: 'contain',
+    alignSelf: 'center'
+  },
+  modalText: {
+    color: colors.black,
+    textAlign: 'center',
+    width: sizes.screenWidth * 0.5,
+    alignSelf: 'center',
+    fontSize: fontSize.medium,
+    fontWeight: '500',
+    marginTop: sizes.screenHeight * 0.01
+  },
+  modalBtnContainer: {
+    width: sizes.screenWidth * 0.64,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: "space-between",
+    marginTop: sizes.screenHeight * 0.02
+  },
+  noBtn: {
+    width: sizes.screenWidth * 0.31,
+    backgroundColor: colors.disabledBg,
+    height: sizes.screenHeight * 0.05,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: sizes.screenWidth * 0.01
+  },
+  yesBtn: {
+    width: sizes.screenWidth * 0.31,
+    backgroundColor: colors.btnBlue,
+    height: sizes.screenHeight * 0.05,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: sizes.screenWidth * 0.01
+  },
+  modlBtnText: {
+    color: colors.white,
+    fontSize: fontSize.smallM,
+    fontWeight: '500'
+  },
+  modlBtnText2: {
+    color: colors.black,
+    fontSize: fontSize.smallM,
+    fontWeight: '500'
+  },
 });

@@ -36,7 +36,7 @@ export default function MyOrders({ navigation }) {
     return (
         <SafeAreaView>
             <ImageBackground style={styles.container} source={images.bg}>
-                <Header title={'My orders'} backImage={images.backIcon} />
+                <Header title={'My Orders'} backImage={images.backIcon} />
                 {
                     userData?.orders?.length > 0 ?
                         <View style={styles.scrollViewParent}>

@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
       },
       bottomBtn1: {
         marginLeft: sizes.screenWidth * 0.01,
-        marginTop: sizes.screenHeight * 0.02,
+        marginTop: sizes.screenHeight * 0.1,
         borderRadius:sizes.screenWidth * 0.1,    
         height: sizes.screenHeight * 0.07,
         backgroundColor:colors.btnBlue,

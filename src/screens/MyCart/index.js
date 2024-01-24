@@ -20,6 +20,7 @@ import { decreaseQtyByOneRedux, deleteCartRedux, increaseQtyByOneRedux, selectUs
 import formatToJSON from '../../services/utilities/JsonLog';
 import { decCartByOne, deleteToCart, incCartByOne } from '../../services/config/API';
 import { selectAuthToken } from '../../store/authToken';
+import Modal from "react-native-modal"
 
 export default function MyCart({ navigation, route }) {
 
@@ -27,7 +28,6 @@ export default function MyCart({ navigation, route }) {
 
   const userData = useSelector(selectUserData)
   const authToken = useSelector(selectAuthToken)
-  // console.log("-=-=", formatToJSON(userData.cart));
 
   const [quantity, setQuantity] = useState(0);
   const [quantityTwo, setQuantityTwo] = useState(0);
@@ -35,10 +35,12 @@ export default function MyCart({ navigation, route }) {
   const [totalAmount, setTotalAmount] = useState(0)
   const [subTotalAmount, setSubTotalAmount] = useState(0)
   const [shipping, setShipping] = useState(34)
-  // const [deleteLoader, setDeleteLoader] = useState(false)
   const [loadingItems, setLoadingItems] = useState([]);
   const [cartIncDecLoader, setCartIncDecLoader] = useState([]);
-  const [refreshLoader , setRefreshLoader] = useState(false)
+  const [refreshLoader, setRefreshLoader] = useState(false)
+  const [isPermissionModal, setIsPermissionModal] = useState(false)
+  const [deleteCard_id, setDeleteCard_id] = useState('')
+  const [modalLoader, setModalLoader] = useState(false)
 
   useEffect(() => {
     const cart = userData.cart
@@ -65,18 +67,25 @@ export default function MyCart({ navigation, route }) {
 
   const handleDeleteCart = async (_id) => {
     setLoadingItems([...loadingItems, _id]);
+    setModalLoader(true)
     try {
       const response = await deleteToCart(authToken, _id)
       if (response.success) {
         dispatch(deleteCartRedux({ _id }))
         setLoadingItems(loadingItems.filter((id) => id !== _id));
+        setModalLoader(false)
+        setIsPermissionModal(false)
       } else {
         console.log(response.message);
         setLoadingItems(loadingItems.filter((id) => id !== _id));
+        setModalLoader(false)
+        setIsPermissionModal(false)
       }
     } catch (error) {
       console.log(error);
       setLoadingItems(loadingItems.filter((id) => id !== _id));
+      setModalLoader(false)
+      setIsPermissionModal(false)
     }
   };
 
@@ -122,7 +131,11 @@ export default function MyCart({ navigation, route }) {
     }, 200)
   }
 
-
+  const handleCloseModal = () => {
+    if (!modalLoader) {
+      setIsPermissionModal(false)
+    }
+  }
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
@@ -132,105 +145,152 @@ export default function MyCart({ navigation, route }) {
           </TouchableOpacity>
           <Text style={styles.heading}>My Cart</Text>
         </View>
-        <View style={styles.scrollBody}>
-          <View style={styles.scrollViewParent}>
-            <ScrollView
-              refreshControl={
-                <RefreshControl
-                  refreshing={refreshLoader}
-                  onRefresh={() => { scrollViewFunction() }}
-                  colors={[colors.btnBlue]}
-                  progressBackgroundColor="white"
-                />
-              }
-              showsVerticalScrollIndicator={false}>
-              {
-                userData?.cart && userData?.cart.map((item, index) => {
-                  return (
-                    <View key={index} style={styles.itemContainer}>
-                      <TouchableOpacity style={styles.itemDetails} onPress={() => { console.log(item._id) }}>
-                        <View style={styles.ferrariF12ExhaustContainer}>
-                          <Image
-                            style={styles.ferrariF12Exhaust}
-                            source={{ uri: item?.product?.images[0] }}
-                          />
-                        </View>
-                        <View>
-                          <Text style={styles.brandName}>{item?.product?.brand?.name}</Text>
-                          <Text style={styles.exhaustType}>{item?.product?.name}</Text>
-                          <Text style={styles.exhaustPrice}>{`$${item?.product?.price}.00`}</Text>
-                        </View>
-                      </TouchableOpacity>
-                      <View style={styles.deleteAndQuantityContainer}>
-                        {
-                          loadingItems.includes(item._id) ?
+        {
+          userData?.cart.length > 0 ?
+            <View style={styles.scrollBody}>
+              <View style={styles.scrollViewParent}>
+                <ScrollView
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshLoader}
+                      onRefresh={() => { scrollViewFunction() }}
+                      colors={[colors.btnBlue]}
+                      progressBackgroundColor="white"
+                    />
+                  }
+                  showsVerticalScrollIndicator={false}>
+                  {
+                    userData?.cart && userData?.cart.map((item, index) => {
+                      return (
+                        <View key={index} style={styles.itemContainer}>
+                          <TouchableOpacity style={styles.itemDetails}
+                            onPress={() =>
+                              navigation.navigate('AddToCartDetails', {
+                                data: item,
+                              })
+                            }
+                          >
+                            <View style={styles.ferrariF12ExhaustContainer}>
+                              <Image
+                                style={styles.ferrariF12Exhaust}
+                                source={{ uri: item?.product?.images[0] }}
+                              />
+                            </View>
                             <View>
-                              <ActivityIndicator color={colors.btnBlue} size={22} />
+                              <Text style={styles.brandName}>{item?.product?.brand?.name}</Text>
+                              <Text style={styles.exhaustType}>{item?.product?.name}</Text>
+                              <Text style={styles.exhaustPrice}>{`$${item?.product?.price}.00`}</Text>
                             </View>
-                            :
-                            <TouchableOpacity onPress={() => handleDeleteCart(item._id)}>
-                              <Image style={styles.deleteIcon} source={images.deleteIcon} />
-                            </TouchableOpacity>
-                        }
-                        {
-                          cartIncDecLoader.includes(item._id) ?
-                            <View style={styles.quantityContainer2}>
-                              <ActivityIndicator color={colors.btnBlue} size={20} />
-                            </View>
-                            :
-                            <View style={loadingItems.includes(item._id) ? styles.quantityContainer2 : styles.quantityContainer}>
-                              <TouchableOpacity
-                                onPress={() => { item.qty > 1 && handleDecCartByOne(item._id) }}
-                              >
-                                <Text style={styles.textQuantityMinus}>_</Text>
-                              </TouchableOpacity>
-                              <Text style={styles.textQuantity}>{item?.qty}</Text>
-                              <TouchableOpacity
-                                onPress={() => { handleIncCartByOne(item._id) }}
-                              >
-                                <Text style={styles.textQuantityPlus}>+</Text>
-                              </TouchableOpacity>
-                            </View>
+                          </TouchableOpacity>
+                          <View style={styles.deleteAndQuantityContainer}>
+                            {
+                              loadingItems.includes(item._id) ?
+                                <View>
+                                  <ActivityIndicator color={colors.btnBlue} size={22} />
+                                </View>
+                                :
+                                <TouchableOpacity onPress={() => {
+                                  setDeleteCard_id(item._id)
+                                  setIsPermissionModal(true)
+                                }}>
+                                  <Image style={styles.deleteIcon} source={images.deleteIcon} />
+                                </TouchableOpacity>
+                            }
+                            {
+                              cartIncDecLoader.includes(item._id) ?
+                                <View style={styles.quantityContainer2}>
+                                  <ActivityIndicator color={colors.btnBlue} size={20} />
+                                </View>
+                                :
+                                <View style={loadingItems.includes(item._id) ? styles.quantityContainer2 : styles.quantityContainer}>
+                                  <TouchableOpacity
+                                    onPress={() => { item.qty > 1 && handleDecCartByOne(item._id) }}
+                                  >
+                                    <Text style={styles.textQuantityMinus}>_</Text>
+                                  </TouchableOpacity>
+                                  <Text style={styles.textQuantity}>{item?.qty}</Text>
+                                  <TouchableOpacity
+                                    onPress={() => { handleIncCartByOne(item._id) }}
+                                  >
+                                    <Text style={styles.textQuantityPlus}>+</Text>
+                                  </TouchableOpacity>
+                                </View>
 
-                        }
+                            }
 
-                      </View>
-                    </View>
-                  )
-                }).reverse()
+                          </View>
+                        </View>
+                      )
+                    }).reverse()
+                  }
+                </ScrollView>
+              </View>
+              <View style={styles.promoSty}>
+                <TextInput
+                  placeholder="Promo Code"
+                  placeholderTextColor={colors.disabledBg3}
+                />
+                <TouchableOpacity>
+                  <Text style={styles.promoSty2}>Apply</Text>
+                </TouchableOpacity>
+              </View>
+              <View>
+                <View style={styles.pricesStyling}>
+                  <Text style={styles.priceText1}>Shipping:</Text>
+                  <Text style={styles.priceNumber1}>{`$${shipping}.0`}</Text>
+                </View>
+                <View style={styles.pricesStyling}>
+                  <Text style={styles.priceText1}>Sub Total:</Text>
+                  <Text style={styles.priceNumber1}>{`$${totalAmount}.0`}</Text>
+                </View>
+                <View style={styles.pricesStyling2}>
+                  <Text style={styles.priceText2}>{`Total(${userData?.cart?.length} items):`}</Text>
+                  <Text style={styles.priceNumber2}>{`$${subTotalAmount}.0`}</Text>
+                </View>
+              </View>
+              <TouchableOpacity
+                style={styles.bottomBtn}
+                onPress={() => navigation.navigate('Checkout')}>
+                <Text style={styles.bottomBtnText}>Proceed to Checkout</Text>
+                <Image source={images.forwardIcon} style={styles.forwardIcon} />
+              </TouchableOpacity>
+            </View>
+            :
+            <View style={styles.noCartContainer}>
+              <Image source={images.emptyCart} style={styles.emptyCartImg} />
+              <Text style={styles.noCartText}>No items found in the cart.</Text>
+            </View>
+        }
+        <Modal isVisible={isPermissionModal} onBackdropPress={handleCloseModal}>
+          <View style={styles.modalContainer}>
+            <Image source={images.deleteCart} style={styles.deleteCartImg} />
+            <Text style={styles.modalText}>Are you sure you want to delete this item?</Text>
+            <View style={styles.modalBtnContainer}>
+              {
+                modalLoader ?
+                  <View style={styles.noBtn}>
+                    <Text style={styles.modlBtnText2}>No</Text>
+                  </View>
+                  :
+                  <TouchableOpacity style={styles.noBtn} onPress={handleCloseModal} >
+                    <Text style={styles.modlBtnText2}>No</Text>
+                  </TouchableOpacity>
               }
-            </ScrollView>
-          </View>
-          <View style={styles.promoSty}>
-            <TextInput
-              placeholder="Promo Code"
-              placeholderTextColor={colors.disabledBg3}
-            />
-            <TouchableOpacity>
-              <Text style={styles.promoSty2}>Apply</Text>
-            </TouchableOpacity>
-          </View>
-          <View>
-            <View style={styles.pricesStyling}>
-              <Text style={styles.priceText1}>Shipping:</Text>
-              <Text style={styles.priceNumber1}>{`$${shipping}.0`}</Text>
-            </View>
-            <View style={styles.pricesStyling}>
-              <Text style={styles.priceText1}>Sub Total:</Text>
-              <Text style={styles.priceNumber1}>{`$${totalAmount}.0`}</Text>
-            </View>
-            <View style={styles.pricesStyling2}>
-              <Text style={styles.priceText2}>{`Total(${userData?.cart?.length} items):`}</Text>
-              <Text style={styles.priceNumber2}>{`$${subTotalAmount}.0`}</Text>
+              {
+                modalLoader ?
+                  <View style={styles.yesBtn}>
+                    <ActivityIndicator color={colors.white} size={25} />
+                  </View>
+                  :
+                  <TouchableOpacity style={styles.yesBtn}
+                    onPress={() => handleDeleteCart(deleteCard_id)}
+                  >
+                    <Text style={styles.modlBtnText}>Yes</Text>
+                  </TouchableOpacity>
+              }
             </View>
           </View>
-          <TouchableOpacity
-            style={styles.bottomBtn}
-            onPress={() => navigation.navigate('Checkout')}>
-            <Text style={styles.bottomBtnText}>Proceed to Checkout</Text>
-            <Image source={images.forwardIcon} style={styles.forwardIcon} />
-          </TouchableOpacity>
-        </View>
+        </Modal>
       </ImageBackground>
     </SafeAreaView>
   );

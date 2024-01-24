@@ -58,7 +58,7 @@ export default function Notification() {
         <Header
           title={'Notifications'}
           backImage={images.backIcon}
-          addToCartImage={images.threeDot}
+          // addToCartImage={images.threeDot}
         />
         <ScrollView>
           <View style={styles.mainContainer}>

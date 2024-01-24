@@ -14,7 +14,7 @@ import images from '../../services/utilities/images';
 import Header from '../../components/Header';
 import TrackPlayer, { useProgress, Event } from 'react-native-track-player';
 import { ProgressBar } from 'react-native-paper';
-import { colors } from '../../services';
+import { colors, sizes } from '../../services';
 import formatToJSON from '../../services/utilities/JsonLog';
 import ImageSLider from '../../components/ExhaustItemImageSlider';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,7 +42,6 @@ export default function ExhaustItem({ route, navigation }) {
   const [loader, setLoader] = useState(false)
 
   const { data } = route?.params;
-  // console.log(userData.cart.length);
 
   useEffect(() => {
     setSound(data?.sound)
@@ -168,15 +167,18 @@ export default function ExhaustItem({ route, navigation }) {
       console.log(error.message);
       setLoader(false)
     }
-    // Add product in cart successfully.
-    // Quantity has been increased.
-    // cartItem
   }
 
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
         <Header backImage={images.backIcon} addToCartImage={images.cartIcon} navigate={'Store'} />
+        {/* <View style={{
+          backgroundColor:'red',
+          height:sizes.screenHeight * 0.9
+        }}> */}
+
+        <ScrollView>
         <ImageSLider productImages={productImages} />
         <View style={styles.bottomContainer}>
           <View style={styles.mainContainer}>
@@ -273,6 +275,9 @@ export default function ExhaustItem({ route, navigation }) {
             </View>
           </View>
         </View>
+        </ScrollView>
+        {/* </View> */}
+
       </ImageBackground>
     </SafeAreaView>
   );

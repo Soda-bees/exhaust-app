@@ -12,9 +12,15 @@ export const styles = StyleSheet.create({
     marginTop: sizes.screenHeight * 0.02,
   },
   rowText: {
-    fontSize: fontSize.h5,
+    fontSize: fontSize.h5, 
     color: colors.black,
     fontWeight: 'bold',
+  },
+  qtyText: {
+    fontSize: fontSize.h5, 
+    color: colors.black,
+    fontWeight: 'bold',
+    textAlign:'center'
   },
   rowText4: {
     fontSize: fontSize.medium,
@@ -24,7 +30,6 @@ export const styles = StyleSheet.create({
   rowText2: {
     fontSize: fontSize.small,
     color: colors.gray,
-    // fontWeight:'bold'
   },
   rowText3: {
     color: colors.black,
@@ -35,7 +40,6 @@ export const styles = StyleSheet.create({
     height: sizes.screenWidth * 0.55,
     alignSelf: 'center',
     marginTop: sizes.screenHeight * 0.04,
-    // backgroundColor:'red'
   },
   bottomContainer: {
     backgroundColor: colors.white,
@@ -46,6 +50,7 @@ export const styles = StyleSheet.create({
     // borderRadius: sizes.screenWidth * 0.06,
     borderTopLeftRadius: sizes.screenWidth * 0.06,
     borderTopRightRadius: sizes.screenWidth * 0.06,
+
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
@@ -69,14 +74,13 @@ export const styles = StyleSheet.create({
   quantityContainer: {
     height: sizes.screenHeight * 0.04,
     backgroundColor: colors.borderColor,
-    width: sizes.screenWidth * 0.2,
+    // width: sizes.screenWidth * 0.2,
     justifyContent: 'space-between',
     paddingLeft: sizes.screenWidth * 0.03,
     paddingRight: sizes.screenWidth * 0.03,
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: sizes.screenHeight * 0.05,
-    // borderWidth:1
   },
 
   textQuantityMinus: {
@@ -101,7 +105,6 @@ export const styles = StyleSheet.create({
     width: sizes.screenWidth * 0.15,
     height: sizes.screenHeight * 0.02,
     marginRight: sizes.screenWidth * 0.01,
-    // backgroundColor:'red'
   },
   heading: {
     color: colors.black,
@@ -115,7 +118,6 @@ export const styles = StyleSheet.create({
   },
   info2: {
     color: colors.gray,
-    // marginTop: sizes.screenHeight * 0.01,
   },
   verticalLine: {
     width: sizes.screenWidth * 0.002,
@@ -133,12 +135,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: sizes.screenHeight * 0.04,
     paddingHorizontal: sizes.screenWidth * 0.01,
-    // backgroundColor:'red'
   },
   row3: {
     flexDirection: 'row',
     alignItems: 'center',
-    // marginTop: sizes.screenHeight * 0.01,
     borderRadius: sizes.screenWidth * 0.2,
     width: sizes.screenWidth * 0.49,
     height: sizes.screenHeight * 0.06,
@@ -148,7 +148,6 @@ export const styles = StyleSheet.create({
   btnDis: {
     flexDirection: 'row',
     alignItems: 'center',
-    // marginTop: sizes.screenHeight * 0.01,
     borderRadius: sizes.screenWidth * 0.2,
     width: sizes.screenWidth * 0.49,
     height: sizes.screenHeight * 0.06,
@@ -164,37 +163,23 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: sizes.screenHeight * 0.02,
-    // justifyContent: 'space-between',
   },
   soundIconSty: {
     resizeMode: 'contain',
     width: sizes.screenWidth * 0.12,
     height: sizes.screenWidth * 0.11,
-    // backgroundColor:'red'
   },
   progressBar: {
-    // backgroundColor:'red',
     width: sizes.screenWidth * 0.76,
     marginLeft: sizes.screenWidth * 0.03,
   },
-  // thumb: {
-  //   position: 'absolute',
-  //   marginLeft: sizes.screenWidth * 0.12, // Adjust based on the thumb width
-  //   // top: -5, // Adjust based on the thumb height
-  //   width: sizes.screenWidth * 0.03, // Adjust based on the thumb width
-  //   height: sizes.screenWidth * 0.03, // Adjust based on the thumb height
-  //   borderRadius: 10, // Make it a circle
-  //   backgroundColor: colors.btnBlue, // Adjust the color as needed
-  // },
   imageSlider: {
-    // backgroundColor:'red',
     width: sizes.screenWidth,
     height: sizes.screenHeight * 0.2
   },
   sliderImg: {
     width: sizes.screenWidth,
     height: sizes.screenHeight * 0.2,
-    // backgroundColor:'green'
   }
 
 });

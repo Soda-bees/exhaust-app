@@ -181,7 +181,7 @@ export default function PopularrExhaust({ navigation }) {
           }
         </View>
         <Text style={styles.popularheadingLeft}>Popular Exhaust</Text>
-        <View style={styles.scrollViewParent}>
+        <View style={brand.some(obj => obj.selected) ? styles.scrollViewParent2 : styles.scrollViewParent}>
           <ScrollView showsVerticalScrollIndicator={false}
             refreshControl={
               <RefreshControl
@@ -230,15 +230,14 @@ export default function PopularrExhaust({ navigation }) {
                                   {`$${item.price}.00`}
                                 </Text>
                                 <View style={styles.plusImgView}>
-                                  <TouchableOpacity
-                                    onPress={() =>
-                                      navigation.navigate('MyCart', { data: item })
-                                    }>
+                                  <View
+
+                                  >
                                     <Image
                                       source={images.plusSign}
                                       style={styles.plusSignImg}
                                     />
-                                  </TouchableOpacity>
+                                  </View>
                                 </View>
                               </View>
                             </View>
@@ -250,6 +249,7 @@ export default function PopularrExhaust({ navigation }) {
               }
             </View>
           </ScrollView>
+          {/* <View style={{marginBottom:sizes.screenHeight * 0.01}}></View> */}
         </View>
       </View>
       <Modal

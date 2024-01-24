@@ -1,22 +1,18 @@
-import {StyleSheet} from 'react-native';
-import {colors} from '../../services/utilities/colors';
-import {fontSize, sizes} from '../../services';
+import { StyleSheet } from 'react-native';
+import { colors } from '../../services/utilities/colors';
+import { fontSize, sizes } from '../../services';
 
 export const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.bglightblue,
     alignItems: 'center',
-    // justifyContent: 'center',
     width: sizes.screenWidth,
     height: sizes.screenHeight,
-    // paddingLeft: sizes.screenWidth * 0.05,
-    // paddingRight: sizes.screenWidth * 0.05,
   },
 
   header: {
     width: sizes.screenWidth * 0.9,
     flexDirection: 'row',
-    // justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: sizes.screenHeight * 0.03,
     marginBottom: sizes.screenHeight * 0.03,
@@ -119,7 +115,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: sizes.screenHeight * 0.05,
-    justifyContent:'center'
+    justifyContent: 'center'
   },
 
   textQuantityMinus: {
@@ -139,7 +135,6 @@ export const styles = StyleSheet.create({
     color: colors.black,
     fontSize: fontSize.large,
   },
-  //////////////////////////////////////
 
   brandContainer: {
     backgroundColor: '#F4F4F6',
@@ -204,7 +199,6 @@ export const styles = StyleSheet.create({
     height: sizes.screenHeight * 0.06,
   },
   promoSty: {
-    // borderWidth:1,
     justifyContent: 'space-between',
     flexDirection: 'row',
     paddingHorizontal: sizes.screenWidth * 0.03,
@@ -217,7 +211,6 @@ export const styles = StyleSheet.create({
     marginBottom: sizes.screenWidth * 0.07,
   },
   promoSty2: {
-    // borderWidth:1,
     backgroundColor: colors.btnBlue,
     color: colors.white,
     textAlign: 'center',
@@ -225,7 +218,6 @@ export const styles = StyleSheet.create({
     width: sizes.screenWidth * 0.18,
     height: sizes.screenHeight * 0.04,
     borderRadius: sizes.screenWidth * 0.02,
-    // marginHorizontal:sizes.screenWidth * 0.06
   },
   pricesStyling: {
     flexDirection: 'row',
@@ -248,7 +240,7 @@ export const styles = StyleSheet.create({
   priceText2: {
     color: colors.disabledBg3,
     fontSize: fontSize.medium,
-    fontWeight:'bold'
+    fontWeight: 'bold'
   },
   priceNumber2: {
     color: colors.black,
@@ -262,9 +254,9 @@ export const styles = StyleSheet.create({
     marginLeft: sizes.screenWidth * 0.04,
     paddingHorizontal: sizes.screenWidth * 0.03,
     marginTop: sizes.screenHeight * 0.02,
-    borderRadius:sizes.screenWidth * 0.1,    
+    borderRadius: sizes.screenWidth * 0.1,
     height: sizes.screenHeight * 0.06,
-    backgroundColor:colors.btnBlue,
+    backgroundColor: colors.btnBlue,
     width: sizes.screenHeight * 0.46,
   },
   forwardIcon: {
@@ -272,15 +264,90 @@ export const styles = StyleSheet.create({
     height: sizes.screenHeight * 0.04,
     width: sizes.screenHeight * 0.04,
   },
-  bottomBtnText:{
-    color:colors.white,
-    fontSize:fontSize.medium,
-    fontWeight:'500',
-    marginLeft:sizes.screenWidth * 0.02
+  bottomBtnText: {
+    color: colors.white,
+    fontSize: fontSize.medium,
+    fontWeight: '500',
+    marginLeft: sizes.screenWidth * 0.02
   },
-  scrollViewParent:{
-    width:sizes.screenWidth,
-    height:sizes.screenHeight * 0.58,
-    paddingBottom:sizes.screenHeight * 0.01
-  }
+  scrollViewParent: {
+    width: sizes.screenWidth,
+    height: sizes.screenHeight * 0.49,
+    paddingBottom: sizes.screenHeight * 0.01,
+  },
+  noCartContainer: {
+    height: sizes.screenHeight * 0.82,
+    width: sizes.screenWidth,
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  emptyCartImg: {
+    width: sizes.screenWidth * 0.25,
+    height: sizes.screenWidth * 0.25,
+    marginTop: sizes.screenHeight * 0.28,
+    marginRight: sizes.screenWidth * 0.05
+  },
+  noCartText: {
+    color: colors.black,
+    fontSize: fontSize.h6,
+    fontWeight: '500'
+  },
+
+  /////////////////////
+  modalContainer: {
+    width: sizes.screenWidth * 0.83,
+    backgroundColor: colors.white,
+    alignSelf: 'center',
+    borderRadius: sizes.screenWidth * 0.04,
+    paddingVertical: sizes.screenHeight * 0.03
+  },
+  deleteCartImg: {
+    width: sizes.screenWidth * 0.2,
+    height: sizes.screenWidth * 0.2,
+    resizeMode: 'contain',
+    alignSelf: 'center'
+  },
+  modalText: {
+    color: colors.black,
+    textAlign: 'center',
+    width: sizes.screenWidth * 0.5,
+    alignSelf: 'center',
+    fontSize: fontSize.medium,
+    fontWeight: '500',
+    marginTop: sizes.screenHeight * 0.01
+  },
+  modalBtnContainer: {
+    width: sizes.screenWidth * 0.64,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: "space-between",
+    marginTop: sizes.screenHeight * 0.02
+  },
+  noBtn: {
+    width: sizes.screenWidth * 0.31,
+    backgroundColor: colors.disabledBg,
+    height: sizes.screenHeight * 0.05,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: sizes.screenWidth * 0.01
+  },
+  yesBtn: {
+    width: sizes.screenWidth * 0.31,
+    backgroundColor: colors.btnBlue,
+    height: sizes.screenHeight * 0.05,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: sizes.screenWidth * 0.01
+  },
+  modlBtnText: {
+    color: colors.white,
+    fontSize: fontSize.smallM,
+    fontWeight: '500'
+  },
+  modlBtnText2: {
+    color: colors.black,
+    fontSize: fontSize.smallM,
+    fontWeight: '500'
+  },
 });

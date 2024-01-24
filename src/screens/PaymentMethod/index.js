@@ -17,6 +17,7 @@ import { deleteCardRedux, selectCardRedux, selectUserData } from '../../store/us
 import { colors } from '../../services';
 import { deleteCard, selectCard } from '../../services/config/API';
 import { selectAuthToken } from '../../store/authToken';
+import Modal from "react-native-modal"
 
 export default function PaymentMethod({ navigation }) {
 
@@ -26,22 +27,31 @@ export default function PaymentMethod({ navigation }) {
 
   const [deleteLoader, setDeleteLoader] = useState([])
   const [selectLoader, setSelectLoader] = useState([])
+  const [isPermissionModal, setIsPermissionModal] = useState(false)
+  const [deleteCard_id, setDeleteCard_id] = useState('')
+  const [modalLoader, setModalLoader] = useState(false)
 
   const handleDeleteCard = async (_id) => {
     try {
       setDeleteLoader([...deleteLoader, _id])
+      setModalLoader(true)
       const response = await deleteCard(authToken, _id)
-      console.log(response);
       if (response.success) {
         setDeleteLoader(deleteLoader.filter((id) => id !== _id))
         dispatch(deleteCardRedux({ _id }))
+        setIsPermissionModal(false)
+        setModalLoader(false)
       } else {
         console.log(response.message);
         setDeleteLoader(deleteLoader.filter((id) => id !== _id))
+        setIsPermissionModal(false)
+        setModalLoader(false)
       }
     } catch (error) {
       console.log(error.message);
       setDeleteLoader(deleteLoader.filter((id) => id !== _id))
+      setIsPermissionModal(false)
+      setModalLoader(false)
     }
   }
 
@@ -52,7 +62,7 @@ export default function PaymentMethod({ navigation }) {
       if (response.success) {
         dispatch(selectCardRedux({ _id }))
         setSelectLoader(selectLoader.filter((id) => id !== _id))
-        navigation.navigate('Checkout')
+        // navigation.navigate('Checkout')
       } else {
         console.log(response.message);
         setSelectLoader(selectLoader.filter((id) => id !== _id))
@@ -60,6 +70,12 @@ export default function PaymentMethod({ navigation }) {
     } catch (error) {
       console.log(error.message);
       setSelectLoader(selectLoader.filter((id) => id !== _id))
+    }
+  }
+
+  const handleCloseModal = () => {
+    if (!modalLoader) {
+      setIsPermissionModal(false)
     }
   }
 
@@ -112,7 +128,7 @@ export default function PaymentMethod({ navigation }) {
                                     />
                                   </TouchableOpacity>
                               }
-                              <Text style={styles.headingSty2}>Use as default payment method</Text>
+                              <Text style={styles.headingSty2}>Use this payment card</Text>
                             </View>
                             <View style={styles.iconContainer}>
                               <TouchableOpacity
@@ -125,7 +141,11 @@ export default function PaymentMethod({ navigation }) {
                                   <ActivityIndicator color={colors.btnBlue} size={17} />
                                   :
                                   <TouchableOpacity
-                                    onPress={() => handleDeleteCard(item._id)}
+                                    // onPress={() => handleDeleteCard(item._id)}
+                                    onPress={() => {
+                                      setDeleteCard_id(item._id)
+                                      setIsPermissionModal(true)
+                                    }}
                                   >
                                     <Image source={images.deleteIcon} style={styles.icon2} />
                                   </TouchableOpacity>
@@ -139,7 +159,10 @@ export default function PaymentMethod({ navigation }) {
                   }
                 </ScrollView>
                 :
-                <Text>no cards</Text>
+                <View style={styles.noCardContainer}>
+                  <Image source={images.noCards} style={styles.noCardImg} />
+                  <Text style={styles.nocardText}>No payment card found.</Text>
+                </View>
             }
           </View>
         </View>
@@ -151,6 +174,36 @@ export default function PaymentMethod({ navigation }) {
           <Text style={styles.bottomBtnText}>Add new card</Text>
           <Image source={images.forwardIcon} style={styles.forwardIcon} />
         </TouchableOpacity>
+        <Modal isVisible={isPermissionModal} onBackdropPress={handleCloseModal}>
+          <View style={styles.modalContainer}>
+            <Image source={images.deleteCard} style={styles.deleteCartImg} />
+            <Text style={styles.modalText}>Are you sure you want to delete this card?</Text>
+            <View style={styles.modalBtnContainer}>
+              {
+                modalLoader ?
+                  <View style={styles.noBtn}>
+                    <Text style={styles.modlBtnText2}>No</Text>
+                  </View>
+                  :
+                  <TouchableOpacity style={styles.noBtn} onPress={handleCloseModal} >
+                    <Text style={styles.modlBtnText2}>No</Text>
+                  </TouchableOpacity>
+              }
+              {
+                modalLoader ?
+                  <View style={styles.yesBtn}>
+                    <ActivityIndicator color={colors.white} size={25} />
+                  </View>
+                  :
+                  <TouchableOpacity style={styles.yesBtn}
+                    onPress={() => handleDeleteCard(deleteCard_id)}
+                  >
+                    <Text style={styles.modlBtnText}>Yes</Text>
+                  </TouchableOpacity>
+              }
+            </View>
+          </View>
+        </Modal>
       </ImageBackground>
     </SafeAreaView>
   );

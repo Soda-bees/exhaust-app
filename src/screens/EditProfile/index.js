@@ -202,6 +202,13 @@ export default function EditProfile({ navigation }) {
                 }}
                 value={contactNo}
                 withDarkTheme={false}
+                codeTextStyle={{
+                  // backgroundColor:'red',
+                  height:sizes.screenHeight * 0.028,
+                  marginTop:sizes.screenHeight * 0.004,
+                  // position:'absolute'
+                  right:sizes.screenWidth * 0.025
+                }}
                 flagButtonStyle={{
                   backgroundColor: 'transparent',
                   height: sizes.screenHeight * 0.04,
@@ -215,9 +222,10 @@ export default function EditProfile({ navigation }) {
                   width: sizes.screenHeight * 0.346,
                 }}
                 textInputStyle={{
-                  height: sizes.screenHeight * 0.05,
+                  height: sizes.screenHeight * 0.058,
                   color: colors.black,
-                  top: sizes.screenHeight * 0.004
+                  top: sizes.screenHeight * 0.004,
+                  right:sizes.screenWidth * 0.045
                 }}
                 textInputProps={{
                   placeholderTextColor: colors.disabledBg2,

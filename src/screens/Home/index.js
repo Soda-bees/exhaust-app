@@ -141,15 +141,13 @@ export default function Home({ navigation }) {
                           {`$${item.price}.00`}
                         </Text>
                         <View style={styles.plusImgView}>
-                          <TouchableOpacity
-                            onPress={() =>
-                              navigation.navigate('MyCart', { data: item })
-                            }>
+                          <View
+                            >
                             <Image
                               source={images.plusSign}
                               style={styles.plusSignImg}
                             />
-                          </TouchableOpacity>
+                          </View>
                         </View>
                       </View>
                     </View>

@@ -8,7 +8,8 @@ export const styles = StyleSheet.create({
     height: sizes.screenHeight,
   },
   mainContainer: {
-    paddingHorizontal: sizes.screenWidth * 0.05,
+    alignItems: 'center',
+    height: sizes.screenHeight*0.86,
   },
   profileImgSty: {
     resizeMode: 'contain',
@@ -77,7 +78,7 @@ export const styles = StyleSheet.create({
     borderRadius: sizes.screenWidth * 0.04,
     borderColor: colors.disabledBg2,
     backgroundColor: colors.white,
-    height: sizes.screenHeight * 0.2
+    paddingBottom:sizes.screenWidth * 0.04
   },
   bottomView: {
     flexDirection: 'row',
@@ -127,13 +128,13 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: sizes.screenWidth * 0.044,
     paddingHorizontal: sizes.screenWidth * 0.03,
     marginTop: sizes.screenHeight * 0.02,
     borderRadius: sizes.screenWidth * 0.1,
     height: sizes.screenHeight * 0.06,
     backgroundColor: colors.btnBlue,
     width: sizes.screenHeight * 0.45,
+    marginBottom: sizes.screenHeight*0.02
   },
   forwardIcon: {
     resizeMode: 'contain',
@@ -168,7 +169,16 @@ export const styles = StyleSheet.create({
   placeholder: {
     position: 'absolute',
     left: sizes.screenWidth * 0.12,
-    bottom: sizes.screenWidth * 0.101,
+    bottom: sizes.screenWidth * 0.12,
+    backgroundColor: '#F3F5F8',
+    color: colors.black,
+    paddingHorizontal: sizes.screenHeight * 0.01,
+    fontSize: fontSize.small
+  },
+  placeholderPhone: {
+    position: 'absolute',
+    left: sizes.screenWidth * 0.12,
+    bottom: sizes.screenWidth * 0.1,
     backgroundColor: '#F3F5F8',
     color: colors.black,
     paddingHorizontal: sizes.screenHeight * 0.01,

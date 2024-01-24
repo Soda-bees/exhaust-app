@@ -28,6 +28,7 @@ export const styles = StyleSheet.create({
         marginRight: sizes.screenWidth * 0.7,
         color: colors.black,
         fontSize: fontSize.small,
+        fontWeight:'600'
     },
     textStylingStyling: {
         borderWidth: 1,
@@ -57,9 +58,10 @@ export const styles = StyleSheet.create({
         marginTop: sizes.screenHeight * 0.123,
     },
     errorText: {
-        width: sizes.screenWidth * 0.75,
+        width: sizes.screenWidth * 0.85,
         marginBottom: sizes.screenHeight * 0.01,
         fontWeight: '500',
-        color: colors.error
+        color: colors.error,
+        marginTop:sizes.screenHeight * 0.01
     }
 })

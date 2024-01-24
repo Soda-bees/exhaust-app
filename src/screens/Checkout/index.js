@@ -160,6 +160,7 @@ export default function Checkout({ navigation, route }) {
   }
 
   const handleConfirmOrder = async () => {
+    // console.log(formatToJSON(userData.cart));
     try {
       setLoader(true)
       let products = []
@@ -196,7 +197,9 @@ export default function Checkout({ navigation, route }) {
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
-        <Header title={'Checkout'} backImage={images.backIcon} navigate={'MyCart'} addToCartImage={images.cartIcon} />
+        <Header title={'Checkout'} backImage={images.backIcon} navigate={'Store'}
+          addToCartImage={images.cartIcon}
+        />
         <View style={{
           height: sizes.screenHeight * 0.9, flexDirection: 'column',
           justifyContent: 'space-between'
@@ -326,8 +329,8 @@ export default function Checkout({ navigation, route }) {
                 <TextInput
                   placeholder="Enter name"
                   style={styles.textInputField2}
-                  placeholderTextColor={colors.black}
-                  inputMode="numeric"
+                  placeholderTextColor={colors.disabledBg3}
+                  // inputMode="numeric"
                   onChangeText={(text) => setName(text)}
                   value={name}
                 />
@@ -336,9 +339,9 @@ export default function Checkout({ navigation, route }) {
                 <View>
                   <Text style={styles.inputFieldLabel}>Card Number</Text>
                   <TextInput
-                    placeholder="Exter card number"
+                    placeholder="Enter card number"
                     style={styles.textInputField2}
-                    placeholderTextColor={colors.black}
+                    placeholderTextColor={colors.disabledBg3}
                     inputMode="numeric"
                     onChangeText={(text) => setCardNumber(text)}
                     value={cardNumber}
@@ -349,9 +352,9 @@ export default function Checkout({ navigation, route }) {
               <View style={styles.modalInputField2}>
                 <Text style={styles.inputFieldLabel}>Expiry Date</Text>
                 <TextInput
-                  placeholder="Enter expire"
+                  placeholder="Enter expire date"
                   style={styles.textInputField2}
-                  placeholderTextColor={colors.black}
+                  placeholderTextColor={colors.disabledBg3}
                   inputMode="numeric"
                   onChangeText={(text) => setExpireDate(text)}
                   value={expireDate}
@@ -361,9 +364,9 @@ export default function Checkout({ navigation, route }) {
                 <View>
                   <Text style={styles.inputFieldLabel}>CVV</Text>
                   <TextInput
-                    placeholder="Enter cvv"
+                    placeholder="Enter CVV"
                     style={styles.textInputField2}
-                    placeholderTextColor={colors.black}
+                    placeholderTextColor={colors.disabledBg3}
                     inputMode="numeric"
                     onChangeText={(text) => setCvv(text)}
                     value={cvv}

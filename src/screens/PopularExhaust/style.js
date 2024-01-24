@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     width: sizes.screenWidth * 0.12,
     height: sizes.screenWidth * 0.12,
-    borderRadius:sizes.screenWidth * 0.06
+    borderRadius: sizes.screenWidth * 0.06
   },
 
   searchFilterView: {
@@ -252,10 +252,12 @@ export const styles = StyleSheet.create({
     gap: sizes.screenWidth * 0.03,
     width: sizes.screenWidth * 0.9,
     marginLeft: sizes.screenWidth * 0.025,
-    paddingTop: sizes.screenHeight * 0.01
+    marginVertical: sizes.screenHeight * 0.02
   },
   scrollViewParent: {
-    height: sizes.screenHeight * 0.66,
-    paddingBottom:sizes.screenHeight * 0.01
+    height: sizes.screenHeight * 0.65,
+  },
+  scrollViewParent2: {
+    height: sizes.screenHeight * 0.58,
   }
 });
