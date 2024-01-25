@@ -235,10 +235,8 @@ export default function AddShippingAddress({ navigation, route }) {
                 value={contactNo}
                 withDarkTheme={false}
                 codeTextStyle={{
-                  // backgroundColor:'red',
                   height:sizes.screenHeight * 0.028,
                   marginTop:sizes.screenHeight * 0.004,
-                  // position:'absolute'
                   right:sizes.screenWidth * 0.025
                 }}
                 flagButtonStyle={{

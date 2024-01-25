@@ -83,7 +83,7 @@ export const checkExistingEmail = async (body) => {
 export const uploadProfile = async (formData) => {
     const axiosConfig = {
         method: 'post',
-        url: 'http://192.168.100.59:5000/uploadProfile',
+        url: 'https://exhaust-backend.netlify.app/.netlify/functions/api/uploadProfile',
         data: formData,
         headers: {
             'Content-Type': 'multipart/form-data',

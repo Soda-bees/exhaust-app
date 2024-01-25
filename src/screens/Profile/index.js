@@ -32,7 +32,7 @@ export default function Profile({ navigation }) {
 
   const [radioBtn, setRadioBtn] = useState(false);
   const [value, setValue] = useState('');
-  const [defaultCountryCode, setDefaultCountryCode] = useState(userData?.countryCode)
+  const [defaultCountryCode, setDefaultCountryCode] = useState(userData.countryCode)
   const [contactNo, setContactNo] = useState(userData.number);
 
   const handleLogout = () => {
@@ -45,13 +45,13 @@ export default function Profile({ navigation }) {
   //   setDefaultCountryCode(userData?.countryCode)
   // }, [userData])
 
-  useEffect(() => {
-    navigation.addListener('focus', () => {
-      setDefaultCountryCode(userData?.countryCode)
-      setContactNo(userData?.number)
+  // useEffect(() => {
+  //   navigation.addListener('focus', () => {
+  //     setDefaultCountryCode(userData?.countryCode)
+  //     setContactNo(userData?.number)
 
-    });
-  }, [navigation]);
+  //   });
+  // }, [navigation]);
 
   return (
     <SafeAreaView>
@@ -87,7 +87,7 @@ export default function Profile({ navigation }) {
               <Text style={styles.placeholderPhone}>Phone</Text>
               <View style={styles.verticalLine2}></View>
               <PhoneInput
-                disabled
+                // disabled
                 ref={phoneInput}
                 defaultValue={value}
                 defaultCode={defaultCountryCode}
@@ -97,10 +97,8 @@ export default function Profile({ navigation }) {
                 disableArrowIcon={true}
                 textContainerStyle={styles.inputFieldBackground}
                 codeTextStyle={{
-                  // backgroundColor:'red',
                   height: sizes.screenHeight * 0.028,
                   marginTop: sizes.screenHeight * 0.004,
-                  // position:'absolute'
                   right: sizes.screenWidth * 0.025
                 }}
                 onChangeFormattedText={text => {

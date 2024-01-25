@@ -18,12 +18,14 @@ import { selectUserData } from '../../store/userData';
 import { selectProducts } from '../../store/products';
 import formatToJSON from '../../services/utilities/JsonLog';
 import { selectBrands } from '../../store/brands';
+import { selectAuthToken } from '../../store/authToken';
 
 export default function Home({ navigation }) {
 
   const userData = useSelector(selectUserData)
   const products = useSelector(selectProducts)
   const brands = useSelector(selectBrands)
+  const authToken = useSelector(selectAuthToken)
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [productListing, setProductListing] = useState([]);
@@ -99,7 +101,9 @@ export default function Home({ navigation }) {
             <Text style={styles.bottomViewHeading}>15% OFF</Text>
             <Text style={styles.bottomViewPara}>On everything today</Text>
             <Text style={styles.bottomViewCode}>with code : CSZEXHAUST</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+              console.log(authToken);
+            }}>
               <View style={styles.bottomViewbutton}>
                 <Text style={styles.bottomViewbuttonText}>Get Now</Text>
               </View>

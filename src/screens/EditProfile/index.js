@@ -53,7 +53,7 @@ export default function EditProfile({ navigation }) {
       },
     };
     launchImageLibrary(options, res => {
-      console.log('Response = ', res);
+      // console.log('Response = ', res);
       if (res.didCancel) {
         console.log('User cancelled image picker');
       } else if (res.error) {
@@ -62,7 +62,7 @@ export default function EditProfile({ navigation }) {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-        console.log(res.assets[0]);
+        // console.log(res.assets[0]);
         const img = res.assets[0];
         // setImgUri(img.uri);
         handleUploadProfile(img);
@@ -86,6 +86,7 @@ export default function EditProfile({ navigation }) {
       });
 
       const response = await uploadProfile(formData)
+      console.log("-=-=-=9098" , response);
       if (response.success) {
         setError('')
         setProfile(response.url)
