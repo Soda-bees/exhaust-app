@@ -86,9 +86,11 @@ import deleteCard from "../../../assets/deleteCard.png"
 import deleteAddress from "../../../assets/deleteAddress.png"
 import profileCard from "../../../assets/profileCard.png"
 import address from "../../../assets/address.png"
+import noOrders from "../../../assets/noOrders.png"
 
 
 const images = {
+  noOrders,
   address,
   profileCard,
   deleteAddress,

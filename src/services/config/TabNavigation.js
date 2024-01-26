@@ -36,6 +36,7 @@ export default function TabNavigation() {
       <Tab.Screen
         name="Home"
         component={Home}
+        
         options={{
           tabBarIcon: ({ focused }) => (
             <Image

@@ -1,18 +1,22 @@
-import { View, Text, SafeAreaView, ImageBackground, ScrollView, TouchableOpacity, Image } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, Text, SafeAreaView, ImageBackground, ScrollView, TouchableOpacity, Image, RefreshControl } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import images from '../../services/utilities/images'
 import { styles } from './style'
-import { useSelector } from 'react-redux'
-import { selectUserData } from '../../store/userData'
-import { sizes } from '../../services'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectUserData, updateOrdersRedux } from '../../store/userData'
+import { colors, sizes } from '../../services'
 import formatToJSON from '../../services/utilities/JsonLog'
 import { selectAuthToken } from '../../store/authToken'
+import { getUserDetails } from '../../services/config/API'
 
 export default function MyOrders({ navigation }) {
 
+    const dispatch = useDispatch()
+
     const userData = useSelector(selectUserData)
     const authToken = useSelector(selectAuthToken)
+    const [loader, setLoader] = useState(false)
 
     function timeAgo(timestamp) {
         const now = new Date();
@@ -33,6 +37,29 @@ export default function MyOrders({ navigation }) {
         }
     }
 
+    // useEffect(() => {
+    //     handleGetUserOrders()
+    // }, [])
+
+    const handleGetUserOrders = async () => {
+        try {
+            setLoader(true)
+            const response = await getUserDetails(authToken)
+            if (response.success) {
+                console.log(response.userData.orders.length);
+                setLoader(false)
+                const allorders = response.userData.orders
+                dispatch(updateOrdersRedux(allorders))
+            } else {
+                setLoader(false)
+                console.log(response.message);
+            }
+        } catch (error) {
+            setLoader(false)
+            console.log(error);
+        }
+    }
+
     return (
         <SafeAreaView>
             <ImageBackground style={styles.container} source={images.bg}>
@@ -40,9 +67,17 @@ export default function MyOrders({ navigation }) {
                 {
                     userData?.orders?.length > 0 ?
                         <View style={styles.scrollViewParent}>
-                            <ScrollView showsVerticalScrollIndicator={false}>
+                            <ScrollView showsVerticalScrollIndicator={false}
+                                refreshControl={
+                                    <RefreshControl
+                                        refreshing={loader}
+                                        onRefresh={() => { handleGetUserOrders() }}
+                                        colors={[colors.btnBlue]}
+                                        progressBackgroundColor="white"
+                                    />
+                                }
+                            >
                                 <View style={styles.cartContainer}>
-
                                     {
                                         userData?.orders.map((item, index) => {
                                             return (
@@ -66,9 +101,21 @@ export default function MyOrders({ navigation }) {
                             </ScrollView>
                         </View>
                         :
-                        <View>
-                            <Text>nh hai orders</Text>
-                        </View>
+                        <ScrollView showsVerticalScrollIndicator={false}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={loader}
+                                    onRefresh={() => { handleGetUserOrders() }}
+                                    colors={[colors.btnBlue]}
+                                    progressBackgroundColor="white"
+                                />
+                            }
+                        >
+                            <View style={styles.noOrdersContainer}>
+                                <Image source={images.noOrders} style={styles.noOrdersImg} />
+                                <Text style={styles.noOrdersText}>No orders found.</Text>
+                            </View>
+                        </ScrollView>
                 }
             </ImageBackground>
         </SafeAreaView>

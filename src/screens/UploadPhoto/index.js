@@ -80,7 +80,6 @@ export default function UploadPhoto({ navigation, route }) {
 
   const handleSignup = async () => {
     if (imgUri) {
-
       setLoader(true)
       try {
         userData.profile = imgUri

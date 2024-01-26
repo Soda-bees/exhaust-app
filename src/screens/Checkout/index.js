@@ -141,6 +141,7 @@ export default function Checkout({ navigation, route }) {
         setCardNumber('')
         setExpireDate('')
         setCvv('')
+        navigation.navigate('PaymentMethod')
         setEditcard(false)
         setIsModalVisisble(false)
         setaddCardLoader(false)
@@ -160,7 +161,6 @@ export default function Checkout({ navigation, route }) {
   }
 
   const handleConfirmOrder = async () => {
-    // console.log(formatToJSON(userData.cart));
     try {
       setLoader(true)
       let products = []

@@ -5,18 +5,27 @@ import {
   ImageBackground,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { styles } from './style';
 import images from '../../services/utilities/images';
 import Header from '../../components/Header';
-import { selectUserData } from '../../store/userData';
-import { useSelector } from 'react-redux';
+import { deleteOrderRedux, selectUserData } from '../../store/userData';
+import { useDispatch, useSelector } from 'react-redux';
 import formatToJSON from '../../services/utilities/JsonLog';
+import Loader from '../../components/Loader';
+import { cancelOrder } from '../../services/config/API';
+import { selectAuthToken } from '../../store/authToken';
+import Modal from "react-native-modal"
+import { colors } from '../../services';
 
 export default function OrderDetails({ navigation, route }) {
 
+  const dispatch = useDispatch()
+
   const userData = useSelector(selectUserData)
+  const authToken = useSelector(selectAuthToken)
   const { orderData } = route.params
 
   const [date, setDate] = useState('')
@@ -25,6 +34,11 @@ export default function OrderDetails({ navigation, route }) {
   const [paymentMethod, setPaymentMethod] = useState('')
   const [totalAmount, settotalAmount] = useState('')
   const [shipping, setShipping] = useState(34)
+  const [loader, setLoader] = useState(false)
+  const [error, setError] = useState('')
+  const [isPermissionModal, setIsPermissionModal] = useState(false)
+  const [modalLoader, setModalLoader] = useState(false)
+
 
   useEffect(() => {
     const date = getOrderDate(orderData?.createdAt)
@@ -60,6 +74,41 @@ export default function OrderDetails({ navigation, route }) {
 
     return totalAmount;
   };
+
+  const handleCancelOrder = async () => {
+    try {
+      const _id = orderData._id
+      setLoader(true)
+      setModalLoader(true)
+      const response = await cancelOrder(authToken, _id)
+      if (response.success) {
+        console.log(response);
+        dispatch(deleteOrderRedux({ _id }))
+        navigation.navigate('MyOrders')
+        setLoader(false)
+        setModalLoader(false)
+        setIsPermissionModal(false)
+      } else {
+        console.log(response.message);
+        setError(response.message)
+        setLoader(false)
+        setModalLoader(false)
+        setIsPermissionModal(false)
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error.message)
+      setLoader(false)
+      setModalLoader(false)
+      setIsPermissionModal(false)
+    }
+  }
+
+  const handleCloseModal = () => {
+    if (!modalLoader) {
+      setIsPermissionModal(false)
+    }
+  }
 
 
   return (
@@ -123,13 +172,51 @@ export default function OrderDetails({ navigation, route }) {
               </TouchableOpacity>
             </View>
           </View>
+          <Text style={styles.errorText}>{error}</Text>
         </View>
         {
           orderStatus === 'Processing' &&
-          <TouchableOpacity style={styles.bottomBtn}>
-            <Text style={styles.bottomBtnText}>Cancel order</Text>
-          </TouchableOpacity>
+            loader ?
+            <View style={styles.loaderContainer}>
+              <Loader />
+            </View>
+            :
+            <TouchableOpacity style={styles.bottomBtn}
+              onPress={() => setIsPermissionModal(true)}
+            >
+              <Text style={styles.bottomBtnText}>Cancel order</Text>
+            </TouchableOpacity>
         }
+        <Modal isVisible={isPermissionModal} onBackdropPress={handleCloseModal}>
+          <View style={styles.modalContainer}>
+            <Image source={images.noOrders} style={styles.deleteCartImg} />
+            <Text style={styles.modalText}>Are you sure you want to delete this order?</Text>
+            <View style={styles.modalBtnContainer}>
+              {
+                modalLoader ?
+                  <View style={styles.noBtn}>
+                    <Text style={styles.modlBtnText2}>No</Text>
+                  </View>
+                  :
+                  <TouchableOpacity style={styles.noBtn} onPress={handleCloseModal} >
+                    <Text style={styles.modlBtnText2}>No</Text>
+                  </TouchableOpacity>
+              }
+              {
+                modalLoader ?
+                  <View style={styles.yesBtn}>
+                    <ActivityIndicator color={colors.white} size={25} />
+                  </View>
+                  :
+                  <TouchableOpacity style={styles.yesBtn}
+                    onPress={() => handleCancelOrder()}
+                  >
+                    <Text style={styles.modlBtnText}>Yes</Text>
+                  </TouchableOpacity>
+              }
+            </View>
+          </View>
+        </Modal>
       </ImageBackground>
     </SafeAreaView>
   );

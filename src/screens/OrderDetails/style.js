@@ -78,4 +78,72 @@ export const styles = StyleSheet.create({
     fontSize: fontSize.medium,
     textAlign: 'center',
   },
+  loaderContainer: {
+    alignSelf: 'center'
+  },
+  errorText:{
+    width: sizes.screenWidth * 0.75,
+    marginBottom: sizes.screenHeight * 0.01,
+    fontWeight: '500',
+    color: colors.error,
+    marginTop:sizes.screenHeight * 0.02,
+    width:sizes.screenWidth * 0.9,
+    alignSelf:'center'
+  },
+  modalContainer: {
+    width: sizes.screenWidth * 0.83,
+    backgroundColor: colors.white,
+    alignSelf: 'center',
+    borderRadius: sizes.screenWidth * 0.04,
+    paddingVertical: sizes.screenHeight * 0.03
+  },
+  deleteCartImg: {
+    width: sizes.screenWidth * 0.2,
+    height: sizes.screenWidth * 0.2,
+    resizeMode: 'contain',
+    alignSelf: 'center'
+  },
+  modalText: {
+    color: colors.black,
+    textAlign: 'center',
+    width: sizes.screenWidth * 0.5,
+    alignSelf: 'center',
+    fontSize: fontSize.medium,
+    fontWeight: '500',
+    marginTop: sizes.screenHeight * 0.01
+  },
+  modalBtnContainer: {
+    width: sizes.screenWidth * 0.64,
+    alignSelf: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: "space-between",
+    marginTop: sizes.screenHeight * 0.02
+  },
+  noBtn: {
+    width: sizes.screenWidth * 0.31,
+    backgroundColor: colors.disabledBg,
+    height: sizes.screenHeight * 0.05,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: sizes.screenWidth * 0.01
+  },
+  yesBtn: {
+    width: sizes.screenWidth * 0.31,
+    backgroundColor: colors.btnBlue,
+    height: sizes.screenHeight * 0.05,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: sizes.screenWidth * 0.01
+  },
+  modlBtnText: {
+    color: colors.white,
+    fontSize: fontSize.smallM,
+    fontWeight: '500'
+  },
+  modlBtnText2: {
+    color: colors.black,
+    fontSize: fontSize.smallM,
+    fontWeight: '500'
+  },
 })

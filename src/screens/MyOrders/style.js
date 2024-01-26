@@ -62,6 +62,23 @@ export const styles = StyleSheet.create({
     itemTextLightTime: {
         fontSize: fontSize.small,
         color: colors.disabledBg2,
-    }
-
+    },
+    noOrdersContainer:{
+        width:sizes.screenWidth,
+        height:sizes.screenHeight * 0.94,
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    noOrdersImg: {
+        width: sizes.screenWidth * 0.25,
+        height: sizes.screenWidth * 0.25,
+        marginRight:sizes.screenWidth * 0.03
+      },
+      noOrdersText: {
+        color: colors.black,
+        fontSize: fontSize.h6,
+        fontWeight: '500',
+        marginTop:sizes.screenHeight * 0.01
+      },
 });

@@ -207,6 +207,26 @@ export const updateProfile = async (token, body) => {
         "Authorization": `Bearer ${token}`
     }
 
-    const { data } = await apiInstance.post('editProfile', body , { headers })
+    const { data } = await apiInstance.post('editProfile', body, { headers })
+    return data
+}
+
+export const getUserDetails = async (token) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+
+    const { data } = await apiInstance.get('userDetails', { headers })
+    return data
+}
+
+export const cancelOrder = async (token, orderId) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+
+    const { data } = await apiInstance.post('cancelOrder', { orderId }, { headers })
     return data
 }

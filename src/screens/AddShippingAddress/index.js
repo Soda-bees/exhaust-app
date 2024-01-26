@@ -171,7 +171,7 @@ export default function AddShippingAddress({ navigation, route }) {
             <View style={styles.MainCartView}>
               <Text style={styles.labelName}>City</Text>
               <TextInput
-                placeholder="Enter City."
+                placeholder="Enter City"
                 placeholderTextColor={colors.disabledBg3}
                 style={styles.inputField}
                 onChangeText={text => setCity(text)}

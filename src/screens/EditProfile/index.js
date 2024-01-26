@@ -120,6 +120,7 @@ export default function EditProfile({ navigation }) {
         setLoader(false)
         setError('')
         navigation.navigate('Profile')
+        // navigation.goBack()
       } else {
         setLoader(false)
         setError(response.message)

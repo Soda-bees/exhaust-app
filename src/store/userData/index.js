@@ -145,6 +145,14 @@ const userDataSlice = createSlice({
         }
       }
     },
+    updateOrdersRedux: (state , action) => {
+      state.userData.orders = action.payload
+    },
+    deleteOrderRedux: (state, action) => {
+      if (state.userData) {
+        state.userData.orders = state.userData.orders.filter(item => item._id !== action.payload._id);
+      }
+    },
   },
 });
 
@@ -167,7 +175,9 @@ export const {
   addNewOrderRedux,
   removeOrderRedux,
   emptyCartRedux,
-  updateProfileDataRedux
+  updateProfileDataRedux,
+  updateOrdersRedux,
+  deleteOrderRedux
 } = userDataSlice.actions;
 
 export const selectUserData = (state) => state.userData.userData;
