@@ -148,9 +148,8 @@ export default function ExhaustItem({ route, navigation }) {
         qty
       }
       const response = await addToCart(authToken, productId, qty)
-      console.log(response);
       if (response.success) {
-        if (response.message === 'Add product in cart successfully.') {
+        if (response.message === 'Product added in cart successfully.') {
           const cartItem = response.cartItem
           dispatch(addToCartrRedux(cartItem))
           setLoader(false)

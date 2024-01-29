@@ -119,9 +119,9 @@ export default function OrderDetails({ navigation, route }) {
           <View style={styles.mainContainer}>
             <View style={styles.firstViewRow3}>
               <Text style={styles.firstViewText}>{date}</Text>
-              <TouchableOpacity>
+              {/* <TouchableOpacity> */}
                 <Text style={styles.firstViewText1}>{orderStatus}</Text>
-              </TouchableOpacity>
+              {/* </TouchableOpacity> */}
             </View>
             <Text style={styles.firstViewText2}>#59890045678</Text>
             <Text style={styles.firstViewText}>{date}</Text>

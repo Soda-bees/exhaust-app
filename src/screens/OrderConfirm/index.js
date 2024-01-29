@@ -1,5 +1,13 @@
-import { View, Text, SafeAreaView, ImageBackground, Image, TouchableOpacity } from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ImageBackground,
+  Image,
+  TouchableOpacity,
+  BackHandler
+} from 'react-native';
+import React, { useEffect } from 'react';
 import { styles } from './style';
 import Header from '../../components/Header';
 import images from '../../services/utilities/images';
@@ -8,7 +16,18 @@ import { selectUserData } from '../../store/userData';
 
 export default function OrderConfirm({ navigation }) {
 
-  
+  useEffect(() => {
+    const handleBackButton = () => {
+      navigation.push('MyTabs');
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+    return () => {
+      backHandler.remove();
+    };
+  }, [navigation]);
 
   return (
     <SafeAreaView>

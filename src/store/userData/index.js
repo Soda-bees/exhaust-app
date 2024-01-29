@@ -14,8 +14,10 @@ const userDataSlice = createSlice({
       state.userData = null;
     },
     addToCartrRedux: (state, action) => {
+      console.log("redux received");
       if (state.userData) {
         state.userData.cart.push(action.payload)
+        console.log("redux push");
       }
     },
     increasPreviousQty: (state, action) => {

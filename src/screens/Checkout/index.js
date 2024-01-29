@@ -194,6 +194,25 @@ export default function Checkout({ navigation, route }) {
     }
 
   }
+
+  const handleFormatCardNumber = (text) => {
+    const formattedText = text.replace(/\D/g, '');
+    const formattedCardNumber = formattedText.replace(/(\d{4})/g, '$1 ');
+    setCardNumber(formattedCardNumber.trim());
+  };
+
+  const handleFormatExpiryDate = (text) => {
+    const formattedText = text.replace(/[^0-9]/g, '');
+  
+    if (formattedText.length > 2) {
+      const formattedExpiryDate = formattedText.replace(/(\d{2})(\d{0,2})/, '$1/$2');
+      setExpireDate(formattedExpiryDate);
+    } else {
+      setExpireDate(formattedText);
+    }
+  };
+
+
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
@@ -330,7 +349,6 @@ export default function Checkout({ navigation, route }) {
                   placeholder="Enter name"
                   style={styles.textInputField2}
                   placeholderTextColor={colors.disabledBg3}
-                  // inputMode="numeric"
                   onChangeText={(text) => setName(text)}
                   value={name}
                 />
@@ -343,8 +361,9 @@ export default function Checkout({ navigation, route }) {
                     style={styles.textInputField2}
                     placeholderTextColor={colors.disabledBg3}
                     inputMode="numeric"
-                    onChangeText={(text) => setCardNumber(text)}
+                    onChangeText={handleFormatCardNumber}
                     value={cardNumber}
+                    maxLength={19}
                   />
                 </View>
                 <Image source={images.mastercardTwo} style={styles.imageSize} />
@@ -356,8 +375,9 @@ export default function Checkout({ navigation, route }) {
                   style={styles.textInputField2}
                   placeholderTextColor={colors.disabledBg3}
                   inputMode="numeric"
-                  onChangeText={(text) => setExpireDate(text)}
+                  onChangeText={handleFormatExpiryDate}
                   value={expireDate}
+                  maxLength={5}
                 />
               </View>
               <View style={styles.modalInputField2}>
@@ -370,6 +390,7 @@ export default function Checkout({ navigation, route }) {
                     inputMode="numeric"
                     onChangeText={(text) => setCvv(text)}
                     value={cvv}
+                    maxLength={3}
                   />
                 </View>
                 <Image source={images.help} style={styles.imageSize} />

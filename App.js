@@ -5,13 +5,16 @@ import { checkServerConnection } from './src/services/config/API';
 import { Provider } from 'react-redux';
 import { persistor, store } from './src/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import SplashScreen from 'react-native-splash-screen';
 
 export default function App() {
-
+  
 
   useEffect(() => {
     LogBox.ignoreAllLogs();
-    handleCheckServerConnection()
+    handleCheckServerConnection();
+    SplashScreen.hide();
+
   }, [])
 
 

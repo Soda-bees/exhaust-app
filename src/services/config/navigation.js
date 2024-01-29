@@ -28,6 +28,7 @@ import Congratulations from '../../screens/Congratulations';
 import MyOrders from '../../screens/MyOrders';
 import ProductsBrand from '../../screens/productsBrands';
 import AddToCartDetails from '../../screens/AddToCartDetails';
+import Intro from '../../screens/Intro';
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +71,7 @@ const MyAppStack = () => {
 const MyAuthStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Intro" component={Intro} />
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} />

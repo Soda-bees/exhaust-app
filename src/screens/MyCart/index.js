@@ -28,6 +28,7 @@ export default function MyCart({ navigation, route }) {
 
   const userData = useSelector(selectUserData)
   const authToken = useSelector(selectAuthToken)
+  console.log(userData?.cart.length);
 
   const [quantity, setQuantity] = useState(0);
   const [quantityTwo, setQuantityTwo] = useState(0);
