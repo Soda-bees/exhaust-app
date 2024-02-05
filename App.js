@@ -6,10 +6,10 @@ import { Provider } from 'react-redux';
 import { persistor, store } from './src/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import SplashScreen from 'react-native-splash-screen';
+import socket from './src/services/config/Socket';
 
 export default function App() {
   
-
   useEffect(() => {
     LogBox.ignoreAllLogs();
     handleCheckServerConnection();

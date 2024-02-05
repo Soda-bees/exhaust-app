@@ -22,6 +22,7 @@ export default function TabNavigation() {
   return (
     <Tab.Navigator
       screenOptions={{
+        tabBarHideOnKeyboard:true,
         headerShown: false,
         tabBarStyle: {
           backgroundColor: colors.white,

@@ -9,6 +9,7 @@ import { colors, sizes } from '../../services'
 import formatToJSON from '../../services/utilities/JsonLog'
 import { selectAuthToken } from '../../store/authToken'
 import { getUserDetails } from '../../services/config/API'
+import socket from '../../services/config/Socket'
 
 export default function MyOrders({ navigation }) {
 
@@ -41,12 +42,23 @@ export default function MyOrders({ navigation }) {
     //     handleGetUserOrders()
     // }, [])
 
+    useEffect(() => {
+        const handleCustomEvent = data => {
+            console.log("my order socket-=-=-=",data);
+        };
+
+        socket.on('statusUpdateClient', handleCustomEvent);
+
+        return () => {
+            socket.off('statusUpdateClient', handleCustomEvent);
+        };
+    }, [socket]);
+
     const handleGetUserOrders = async () => {
         try {
             setLoader(true)
             const response = await getUserDetails(authToken)
             if (response.success) {
-                console.log(response.userData.orders.length);
                 setLoader(false)
                 const allorders = response.userData.orders
                 dispatch(updateOrdersRedux(allorders))

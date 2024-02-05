@@ -38,6 +38,7 @@ export default function OrderDetails({ navigation, route }) {
   const [error, setError] = useState('')
   const [isPermissionModal, setIsPermissionModal] = useState(false)
   const [modalLoader, setModalLoader] = useState(false)
+  const [orderId , setOrderId] = useState('')
 
 
   useEffect(() => {
@@ -48,6 +49,7 @@ export default function OrderDetails({ navigation, route }) {
     setPaymentMethod(orderData.paymentMethod)
     const totalAmount = calculateTotalAmount(orderData)
     settotalAmount(totalAmount)
+    setOrderId(orderData?._id?.toString()?.slice(0, 6))
   }, [orderData])
 
   const getOrderDate = (givenDate) => {
@@ -123,7 +125,10 @@ export default function OrderDetails({ navigation, route }) {
                 <Text style={styles.firstViewText1}>{orderStatus}</Text>
               {/* </TouchableOpacity> */}
             </View>
-            <Text style={styles.firstViewText2}>#59890045678</Text>
+            <Text style={styles.firstViewText2}>
+                {`# ${orderId}`}
+              {/* #59890045678 */}
+              </Text>
             <Text style={styles.firstViewText}>{date}</Text>
             <Text style={styles.firstViewText2}>
               {`${orderAddress?.city}, ${orderAddress?.zipCode}, ${orderAddress?.state}, ${orderAddress?.country}`}
@@ -155,15 +160,15 @@ export default function OrderDetails({ navigation, route }) {
             <View style={styles.horizontalLine}></View>
             <View style={styles.firstViewRow}>
               <Text style={styles.firstViewText}>Item Total</Text>
-              <TouchableOpacity>
+              {/* <TouchableOpacity> */}
                 <Text style={styles.firstViewText1}>{`$${totalAmount}.00`}</Text>
-              </TouchableOpacity>
+              {/* </TouchableOpacity> */}
             </View>
             <View style={styles.firstViewRow}>
               <Text style={styles.firstViewText}>Shipping</Text>
-              <TouchableOpacity>
+              {/* <TouchableOpacity> */}
                 <Text style={styles.firstViewText1}>{`$${shipping}.00`}</Text>
-              </TouchableOpacity>
+              {/* </TouchableOpacity> */}
             </View>
             <View style={styles.firstViewRow}>
               <Text style={styles.secondViewText}>Paid</Text>

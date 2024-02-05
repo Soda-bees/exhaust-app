@@ -166,7 +166,7 @@ export default function Checkout({ navigation, route }) {
       let products = []
       userData.cart.forEach(cartItem => {
         const productInfo = {
-          product: cartItem.product._id,
+          product: cartItem.product,
           qty: cartItem.qty,
         };
         products.push(productInfo);
@@ -174,7 +174,9 @@ export default function Checkout({ navigation, route }) {
       const obj = {
         shippingAddress: selectedAddress._id,
         status: 'Processing',
-        paymentMethod: 'master card'
+        paymentMethod: 'master card',
+        paid:totalAmount,
+        shipping
       }
       obj.products = products
       const response = await order(authToken, obj)
@@ -192,7 +194,6 @@ export default function Checkout({ navigation, route }) {
       setLoader(false)
       console.log(error);
     }
-
   }
 
   const handleFormatCardNumber = (text) => {
@@ -203,7 +204,7 @@ export default function Checkout({ navigation, route }) {
 
   const handleFormatExpiryDate = (text) => {
     const formattedText = text.replace(/[^0-9]/g, '');
-  
+
     if (formattedText.length > 2) {
       const formattedExpiryDate = formattedText.replace(/(\d{2})(\d{0,2})/, '$1/$2');
       setExpireDate(formattedExpiryDate);
