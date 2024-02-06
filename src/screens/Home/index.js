@@ -13,14 +13,17 @@ import {
 import images from '../../services/utilities/images';
 import { colors, sizes } from '../../services';
 import Modal from 'react-native-modal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectUserData } from '../../store/userData';
 import { selectProducts } from '../../store/products';
 import formatToJSON from '../../services/utilities/JsonLog';
 import { selectBrands } from '../../store/brands';
 import { selectAuthToken } from '../../store/authToken';
+import { socketService } from '../../services/config/Socket';
 
 export default function Home({ navigation }) {
+
+  const dispatch = useDispatch()
 
   const userData = useSelector(selectUserData)
   const products = useSelector(selectProducts)
@@ -39,6 +42,12 @@ export default function Home({ navigation }) {
       setSelectedBrand(brands)
     }
   }, [])
+
+  useEffect(() => {
+
+    socketService(dispatch);
+
+  }, [dispatch])
 
   const handleSelectInitialProduct = () => {
     const array = products.slice(0, 2)

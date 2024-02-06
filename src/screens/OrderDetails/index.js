@@ -38,7 +38,7 @@ export default function OrderDetails({ navigation, route }) {
   const [error, setError] = useState('')
   const [isPermissionModal, setIsPermissionModal] = useState(false)
   const [modalLoader, setModalLoader] = useState(false)
-  const [orderId , setOrderId] = useState('')
+  const [orderId, setOrderId] = useState('')
 
 
   useEffect(() => {
@@ -122,13 +122,13 @@ export default function OrderDetails({ navigation, route }) {
             <View style={styles.firstViewRow3}>
               <Text style={styles.firstViewText}>{date}</Text>
               {/* <TouchableOpacity> */}
-                <Text style={styles.firstViewText1}>{orderStatus}</Text>
+              <Text style={styles.firstViewText1}>{orderStatus}</Text>
               {/* </TouchableOpacity> */}
             </View>
             <Text style={styles.firstViewText2}>
-                {`# ${orderId}`}
+              {`# ${orderId}`}
               {/* #59890045678 */}
-              </Text>
+            </Text>
             <Text style={styles.firstViewText}>{date}</Text>
             <Text style={styles.firstViewText2}>
               {`${orderAddress?.city}, ${orderAddress?.zipCode}, ${orderAddress?.state}, ${orderAddress?.country}`}
@@ -161,13 +161,13 @@ export default function OrderDetails({ navigation, route }) {
             <View style={styles.firstViewRow}>
               <Text style={styles.firstViewText}>Item Total</Text>
               {/* <TouchableOpacity> */}
-                <Text style={styles.firstViewText1}>{`$${totalAmount}.00`}</Text>
+              <Text style={styles.firstViewText1}>{`$${totalAmount}.00`}</Text>
               {/* </TouchableOpacity> */}
             </View>
             <View style={styles.firstViewRow}>
               <Text style={styles.firstViewText}>Shipping</Text>
               {/* <TouchableOpacity> */}
-                <Text style={styles.firstViewText1}>{`$${shipping}.00`}</Text>
+              <Text style={styles.firstViewText1}>{`$${shipping}.00`}</Text>
               {/* </TouchableOpacity> */}
             </View>
             <View style={styles.firstViewRow}>
@@ -180,6 +180,18 @@ export default function OrderDetails({ navigation, route }) {
           <Text style={styles.errorText}>{error}</Text>
         </View>
         {
+          loader ?
+            <View style={styles.loaderContainer}>
+              <Loader />
+            </View>
+            : orderStatus === 'Processing' &&
+            <TouchableOpacity style={styles.bottomBtn}
+              onPress={() => setIsPermissionModal(true)}
+            >
+              <Text style={styles.bottomBtnText}>Cancel order</Text>
+            </TouchableOpacity>
+        }
+        {/* {
           orderStatus === 'Processing' &&
             loader ?
             <View style={styles.loaderContainer}>
@@ -191,7 +203,7 @@ export default function OrderDetails({ navigation, route }) {
             >
               <Text style={styles.bottomBtnText}>Cancel order</Text>
             </TouchableOpacity>
-        }
+        } */}
         <Modal isVisible={isPermissionModal} onBackdropPress={handleCloseModal}>
           <View style={styles.modalContainer}>
             <Image source={images.noOrders} style={styles.deleteCartImg} />

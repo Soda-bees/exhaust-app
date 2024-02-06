@@ -1,10 +1,10 @@
-import { View, Text, SafeAreaView, ImageBackground, ScrollView, TouchableOpacity, Image, RefreshControl } from 'react-native'
+import { View, Text, SafeAreaView, ImageBackground, ScrollView, TouchableOpacity, Image, RefreshControl, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/Header'
 import images from '../../services/utilities/images'
 import { styles } from './style'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUserData, updateOrdersRedux } from '../../store/userData'
+import { selectUserData, updateOrderStatusRedux, updateOrdersRedux } from '../../store/userData'
 import { colors, sizes } from '../../services'
 import formatToJSON from '../../services/utilities/JsonLog'
 import { selectAuthToken } from '../../store/authToken'
@@ -38,21 +38,22 @@ export default function MyOrders({ navigation }) {
         }
     }
 
-    // useEffect(() => {
-    //     handleGetUserOrders()
-    // }, [])
-
-    useEffect(() => {
-        const handleCustomEvent = data => {
-            console.log("my order socket-=-=-=",data);
-        };
-
-        socket.on('statusUpdateClient', handleCustomEvent);
-
-        return () => {
-            socket.off('statusUpdateClient', handleCustomEvent);
-        };
-    }, [socket]);
+    const handleGetUserOrdersWithoutLoader = async () => {
+        try {
+            const response = await getUserDetails(authToken)
+            if (response.success) {
+                setLoader(false)
+                const allorders = response.userData.orders
+                dispatch(updateOrdersRedux(allorders))
+            } else {
+                setLoader(false)
+                console.log(response.message);
+            }
+        } catch (error) {
+            setLoader(false)
+            console.log(error);
+        }
+    }
 
     const handleGetUserOrders = async () => {
         try {
@@ -71,6 +72,10 @@ export default function MyOrders({ navigation }) {
             console.log(error);
         }
     }
+
+    useEffect(() => {
+        handleGetUserOrdersWithoutLoader()
+    }, [])
 
     return (
         <SafeAreaView>

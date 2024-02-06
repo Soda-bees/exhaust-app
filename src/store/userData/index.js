@@ -147,7 +147,7 @@ const userDataSlice = createSlice({
         }
       }
     },
-    updateOrdersRedux: (state , action) => {
+    updateOrdersRedux: (state, action) => {
       state.userData.orders = action.payload
     },
     deleteOrderRedux: (state, action) => {
@@ -155,6 +155,14 @@ const userDataSlice = createSlice({
         state.userData.orders = state.userData.orders.filter(item => item._id !== action.payload._id);
       }
     },
+    updateOrderStatusRedux: (state, action) => {
+      const { _id, status } = action.payload
+      const index = state.userData.orders.findIndex(obj => obj._id === _id)
+      if (index !== -1) {
+        state.userData.orders[index].status = status
+        console.log("redux done");
+      }
+    }
   },
 });
 
@@ -179,7 +187,8 @@ export const {
   emptyCartRedux,
   updateProfileDataRedux,
   updateOrdersRedux,
-  deleteOrderRedux
+  deleteOrderRedux,
+  updateOrderStatusRedux
 } = userDataSlice.actions;
 
 export const selectUserData = (state) => state.userData.userData;

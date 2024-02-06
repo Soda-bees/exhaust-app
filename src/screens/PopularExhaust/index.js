@@ -47,14 +47,6 @@ export default function PopularrExhaust({ navigation }) {
     }
   }, [])
 
-  // const handleSelectBrand = index => {
-  //   setBrand(prevBrands => {
-  //     return prevBrands.map((brand, i) =>
-  //       i === index ? { ...brand, selected: !brand.selected } : brand,
-  //     );
-  //   });
-  // };
-
   const handleSelectBrand = (index) => {
     setBrand((prevBrands) => {
       const updatedBrands = prevBrands.map((brand, i) =>
@@ -106,6 +98,26 @@ export default function PopularrExhaust({ navigation }) {
     }
   }
 
+  const handleGetAllProductsWithoutLoader = async () => {
+    try {
+      const response = await getAllProduct(authToken)
+      if (response.success) {
+        console.log(formatToJSON(response.message));
+        const allProducts = response.products
+        handleSetBrand(allProducts)
+        dispatch(setProducts(allProducts))
+        setProductListing(allProducts)
+        setLoader(false)
+      } else {
+        console.log(response.message);
+        setLoader(false)
+      }
+    } catch (error) {
+      setLoader(false)
+      console.log(error);
+    }
+  }
+
   const handleSetBrand = (allProducts) => {
     const brandMap = {};
 
@@ -130,7 +142,9 @@ export default function PopularrExhaust({ navigation }) {
     setBrand(uniqueBrandsWithSelectedKey);
   };
 
-
+useEffect(() => {
+  handleGetAllProductsWithoutLoader()
+}, [])
 
 
 

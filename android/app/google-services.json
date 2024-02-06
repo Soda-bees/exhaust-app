@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "503500358813",
+    "project_id": "exhaust-74337",
+    "storage_bucket": "exhaust-74337.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503500358813:android:663592426230cae1bd8074",
+        "android_client_info": {
+          "package_name": "com.cszexhaust"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqQU8DJmZ8JjLGoOxyHhIMv_5g9wIPsq4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
