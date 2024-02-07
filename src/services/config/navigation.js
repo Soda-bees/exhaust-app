@@ -29,13 +29,16 @@ import MyOrders from '../../screens/MyOrders';
 import ProductsBrand from '../../screens/productsBrands';
 import AddToCartDetails from '../../screens/AddToCartDetails';
 import Intro from '../../screens/Intro';
+import NavigationService from './NavigationService';
 
 const Stack = createNativeStackNavigator();
 
 export default function MainNavigator() {
   const authToken = useSelector(selectAuthToken)
   return (
-    <NavigationContainer>
+    <NavigationContainer
+    ref={(ref) => NavigationService.setTopLevelNavigator(ref)}
+    >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {
           authToken ?

@@ -20,7 +20,9 @@ import { selectUserData, setUserData } from '../../store/userData';
 import { setProducts } from '../../store/products';
 import { setBrands } from '../../store/brands';
 
-export default function SignIn({ navigation }) {
+export default function SignIn({ navigation, route }) {
+
+  const { deviceToken } = route?.params
 
   const dispatch = useDispatch()
 
@@ -36,7 +38,7 @@ export default function SignIn({ navigation }) {
     setLoader(true)
     try {
       const loverEmail = email?.toLowerCase()
-      const response = await signin(loverEmail, password)
+      const response = await signin(loverEmail, password , deviceToken)
       if (response.success) {
         const products = response.products
         const userData = response.userData
@@ -94,7 +96,7 @@ export default function SignIn({ navigation }) {
     setEmail('')
     setPassword('')
     setError('')
-    navigation.navigate('SignUp')
+    navigation.navigate('SignUp', { deviceToken })
   }
 
   return (

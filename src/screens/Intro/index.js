@@ -1,9 +1,22 @@
 import { View, Text, SafeAreaView, ImageBackground, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import images from '../../services/utilities/images'
 import { styles } from './style'
+import { getFcmToken } from '../../services/config/NotificationService'
 
-export default function Intro({navigation}) {
+export default function Intro({ navigation }) {
+    const [deviceToken, setDeviceToken] = useState()
+
+    const getDeviceToken = async () => {
+        const token = await getFcmToken()
+        console.log("token landingPage", token);
+        setDeviceToken(token)
+    }
+
+    useEffect(() => {
+        getDeviceToken()
+    }, [])
+
     return (
         <SafeAreaView>
             <ImageBackground source={images.introBg} style={styles.bgImg}
@@ -18,10 +31,10 @@ export default function Intro({navigation}) {
                     enthusiasts like you, our systems redefine performance.
                 </Text>
                 <TouchableOpacity style={styles.btn}
-                onPress={() => navigation.replace('SignIn')}
+                    onPress={() => navigation.replace('SignIn', {deviceToken})}
                 >
                     <Text style={styles.btnText}>Get Started</Text>
-                    <Image source={images.introBtnImg}   style={styles.btnImg}/>
+                    <Image source={images.introBtnImg} style={styles.btnImg} />
                 </TouchableOpacity>
             </ImageBackground>
         </SafeAreaView>

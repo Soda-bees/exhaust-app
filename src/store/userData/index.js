@@ -162,7 +162,10 @@ const userDataSlice = createSlice({
         state.userData.orders[index].status = status
         console.log("redux done");
       }
-    }
+    },
+    updateNotificationRedux: (state, action) => {
+      state.userData.notifications = action.payload
+    },
   },
 });
 
@@ -188,7 +191,8 @@ export const {
   updateProfileDataRedux,
   updateOrdersRedux,
   deleteOrderRedux,
-  updateOrderStatusRedux
+  updateOrderStatusRedux,
+  updateNotificationRedux
 } = userDataSlice.actions;
 
 export const selectUserData = (state) => state.userData.userData;

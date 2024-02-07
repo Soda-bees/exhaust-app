@@ -28,7 +28,7 @@ export default function MyOrders({ navigation }) {
             return 'Just now';
         } else if (seconds < 60 * 60) {
             const minutes = Math.floor(seconds / 60);
-            return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+            return `${minutes} min${minutes > 1 ? 's' : ''} ago`;
         } else if (seconds < 60 * 60 * 24) {
             const hours = Math.floor(seconds / (60 * 60));
             return `${hours} hour${hours > 1 ? 's' : ''} ago`;

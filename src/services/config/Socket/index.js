@@ -15,7 +15,11 @@ const socketService = (dispatch) => {
     dispatch(updateOrderStatusRedux(data))
   };
 
+  const handleCheckEvent = data => {
+    console.log(data);
+  }
   socket.on('statusUpdateClient', handleCustomEvent);
+  socket.on('checkEvent', handleCheckEvent);
 }
 
 export { socket, socketService };

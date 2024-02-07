@@ -16,7 +16,10 @@ import formatToJSON from '../../services/utilities/JsonLog';
 import Loader from '../../components/Loader';
 import { checkExistingEmail } from '../../services/config/API';
 
-export default function SignUp({ navigation }) {
+export default function SignUp({ navigation, route }) {
+
+  const { deviceToken } = route?.params
+
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [eyeIconShow, setEyeIconShow] = useState(false);
   const [error, setError] = useState('');
@@ -34,6 +37,7 @@ export default function SignUp({ navigation }) {
     setLoader(true)
     try {
       const obj = {
+        deviceToken,
         name,
         email: email.toLowerCase(),
         phone: value,
@@ -108,29 +112,29 @@ export default function SignUp({ navigation }) {
                 withDarkTheme={false}
                 codeTextStyle={{
                   // backgroundColor:'red',
-                  height:sizes.screenHeight * 0.028,
-                  marginTop:sizes.screenHeight * 0.004,
+                  height: sizes.screenHeight * 0.028,
+                  marginTop: sizes.screenHeight * 0.004,
                   // position:'absolute'
-                  right:sizes.screenWidth * 0.025
+                  right: sizes.screenWidth * 0.025
                 }}
                 flagButtonStyle={{
                   backgroundColor: colors.bgLight,
                   height: sizes.screenHeight * 0.04,
                   width: sizes.screenHeight * 0.04,
                   alignSelf: 'center',
-                  marginTop:sizes.screenWidth * 0.01
+                  marginTop: sizes.screenWidth * 0.01
                 }}
                 containerStyle={{
                   height: sizes.screenHeight * 0.06,
                   width: sizes.screenHeight * 0.346,
-                  borderRadius:sizes.screenWidth * 0.05,
-                  marginBottom:sizes.screenWidth * 0.01,
+                  borderRadius: sizes.screenWidth * 0.05,
+                  marginBottom: sizes.screenWidth * 0.01,
                 }}
                 textInputStyle={{
                   height: sizes.screenHeight * 0.058,
-                color: colors.black,
-                top: sizes.screenHeight * 0.004,
-                right:sizes.screenWidth * 0.045
+                  color: colors.black,
+                  top: sizes.screenHeight * 0.004,
+                  right: sizes.screenWidth * 0.045
                 }}
                 textInputProps={{
                   placeholderTextColor: colors.disabledBg2,
