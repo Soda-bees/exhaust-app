@@ -18,11 +18,12 @@ const Tab = createBottomTabNavigator();
 export default function TabNavigation() {
 
   const userData = useSelector(selectUserData)
+  console.log(userData?.notifications.length);
 
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarHideOnKeyboard:true,
+        tabBarHideOnKeyboard: true,
         headerShown: false,
         tabBarStyle: {
           backgroundColor: colors.white,
@@ -37,7 +38,7 @@ export default function TabNavigation() {
       <Tab.Screen
         name="Home"
         component={Home}
-        
+
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
@@ -101,17 +102,41 @@ export default function TabNavigation() {
         component={Notification}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Image
-              source={focused ? images.notificationBlue : images.notificationTwo}
-              style={{
-                resizeMode: 'contain',
-                width: sizes.screenWidth * 0.19,
-                height: focused ? sizes.screenWidth * 0.08 : sizes.screenWidth * 0.05,
-                marginTop: sizes.screenHeight * 0.02,
-                // backgroundColor:colors.red
-                // tintColor: focused ? colors.btnBlue : colors.gray,
-              }}
-            />
+            <View>
+              {
+                userData.notifications.filter(notification => !notification.seen) &&
+                <View style={{
+                  width: sizes.screenWidth * 0.04,
+                  height: sizes.screenWidth * 0.04,
+                  borderRadius: sizes.screenWidth * 0.02,
+                  backgroundColor: 'red',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'absolute',
+                  left: sizes.screenWidth * 0.11,
+                  top: sizes.screenWidth * 0.022,
+                  zIndex: 1
+                }}>
+                  <Text style={{
+                    color: 'white',
+                    fontSize: fontSize.small,
+                    fontWeight: '600'
+                  }}></Text>
+                </View>
+              }
+              <Image
+                source={focused ? images.notificationBlue : images.notificationTwo}
+                style={{
+                  resizeMode: 'contain',
+                  width: sizes.screenWidth * 0.19,
+                  height: focused ? sizes.screenWidth * 0.08 : sizes.screenWidth * 0.05,
+                  marginTop: sizes.screenHeight * 0.02,
+                  // backgroundColor:colors.red
+                  // tintColor: focused ? colors.btnBlue : colors.gray,
+                }}
+              />
+            </View>
           ),
           tabBarLabel: ({ focused }) => <CustomTabLabel focused={focused} />,
         }}

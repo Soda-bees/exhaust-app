@@ -31,7 +31,10 @@ export default function Intro({ navigation }) {
                     enthusiasts like you, our systems redefine performance.
                 </Text>
                 <TouchableOpacity style={styles.btn}
-                    onPress={() => navigation.replace('SignIn', {deviceToken})}
+                    onPress={() => navigation.replace('SignIn'
+                        , { deviceToken }
+                    )
+                    }
                 >
                     <Text style={styles.btnText}>Get Started</Text>
                     <Image source={images.introBtnImg} style={styles.btnImg} />

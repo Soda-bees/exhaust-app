@@ -6,8 +6,8 @@ function setTopLevelNavigator(navigatorRef) {
     _navigator = navigatorRef;
 }
 
-function navigate(routeName, params) {
-    _navigator.navigate(routeName, params);
+function navigate(routeName) {
+    _navigator.navigate(routeName);
 }
 
 function goBack() {

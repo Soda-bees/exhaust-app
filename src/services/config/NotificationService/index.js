@@ -2,7 +2,6 @@ import React from "react";
 import messaging from "@react-native-firebase/messaging"
 import NavigationService from "../NavigationService";
 
-
 export async function requestUserPermission() {
     const authStatus = await messaging().requestPermission();
     const enabled =
@@ -27,58 +26,64 @@ export const getFcmToken = async () => {
 
 }
 
-// export async function notificationListners() {
+export async function notificationListners() {
 
-//     const unsubscribe = messaging().onMessage(async remoteMessage => {
-//         console.log("A new FCM message arrived!", remoteMessage);
-//     });
-
-//     messaging().onNotificationOpenedApp(remoteMessage => {
-//         console.log(
-//             'Notification caused app to open from background state:',
-//             remoteMessage,
-//         );
-//         // NavigationService.navigate('Notification')
-//     });
-
-//     // Check whether an initial notification is available
-//     messaging()
-//         .getInitialNotification()
-//         .then(remoteMessage => {
-//             if (remoteMessage) {
-//                 console.log(
-//                     'Notification caused app to open from quit state:',
-//                     formatToJSON(remoteMessage, remoteMessage)
-//                 );
-//                 // setTimeout(() => {
-//                 //     NavigationService.navigate('Notification')
-//                 // }, 3000)
-//             }
-//         });
-
-
-//     return unsubscribe;
-// }
-
-export const notificationListeners = async () => {
-    // Listener for notifications that cause the app to open from the background state
-    messaging().onNotificationOpenedApp(remoteMessage => {
-        console.log('Notification caused app to open from background state:', remoteMessage.notification);
-    });
-
-    // Listener for initial notifications received when the app is opened from the quit state
-    messaging().getInitialNotification()
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+        console.log('Received FCM Background Message', remoteMessage);
+      });
+  
+      // Listen for FCM messages when the app is in the foreground
+      const unsubscribe = messaging().onMessage(async remoteMessage => {
+        console.log('Received FCM Message', remoteMessage);
+      });
+  
+      // Listen for FCM messages when the app is in the background or closed
+      messaging().onNotificationOpenedApp(remoteMessage => {
+        console.log(
+          'Notification caused app to open from background state:',
+          remoteMessage,
+        );
+        NavigationService.navigate('Notification')
+        // You can navigate to a specific screen here
+      });
+  
+      // Check if the app was opened by a notification
+      messaging()
+        .getInitialNotification()
         .then(remoteMessage => {
-            if (remoteMessage) {
-                console.log('Notification caused app to open from quit state:', remoteMessage.notification);
-            }
+          if (remoteMessage) {
+            console.log(
+              'Notification caused app to open from quit state:',
+              remoteMessage,
+            );
+            // You can navigate to a specific screen here
+            setTimeout(() => {
+  
+              NavigationService.navigate('Notification')
+            }, 2000)
+          }
         });
+  
+      return unsubscribe;
+}
 
-    // Listener for notifications received while the app is in the foreground state
-    messaging().onMessage(async remoteMessage => {
-        console.log('Notification in foreground state:', remoteMessage);
-    });
-};
+// useEffect(() => {
+//     if (Platform.OS === 'android') {
+//       PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS).then((res) => {
+//         console.log('res===>', res);
+//         if (!!res && res === 'granted') {
+//           requestUserPermission()
+//            notificationListners()
+//         }
+//          notificationListners()
+//       }).catch((error) => {
+//         console.log('error in get permission in app.js')
+//       })
+//     } else {
+
+//     }
+//   }, [])
+
 
 
 

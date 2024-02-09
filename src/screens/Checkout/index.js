@@ -15,10 +15,10 @@ import Header from '../../components/Header';
 import Modal from 'react-native-modal';
 import { colors, sizes } from '../../services';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCardRedux, addNewOrderRedux, emptyCartRedux, removeOrderRedux, selectUserData, updateCardRedux } from '../../store/userData';
+import { addCardRedux, addNewOrderRedux, emptyCartRedux, removeOrderRedux, selectUserData, updateCardRedux, updateNotificationRedux } from '../../store/userData';
 import formatToJSON from '../../services/utilities/JsonLog';
 import Loader from '../../components/Loader';
-import { addCard, order, updateCard } from '../../services/config/API';
+import { addCard, getUserDetails, order, updateCard } from '../../services/config/API';
 import { selectAuthToken } from '../../store/authToken';
 
 export default function Checkout({ navigation, route }) {
@@ -160,7 +160,26 @@ export default function Checkout({ navigation, route }) {
     setIsModalVisisble(true)
   }
 
+  const handleGetUserNotificationWithoutLoader = async () => {
+    try {
+      const response = await getUserDetails(authToken)
+      if (response.success) {
+        // setLoader(false)
+        const allNotification = response.userData.notifications
+        dispatch(updateNotificationRedux(allNotification))
+        console.log("hogya dispatch ktm");
+      } else {
+        // setLoader(false)
+        console.log(response.message);
+      }
+    } catch (error) {
+      // setLoader(false)
+      console.log(error);
+    }
+  }
+  
   const handleConfirmOrder = async () => {
+    
     try {
       setLoader(true)
       let products = []
@@ -182,6 +201,7 @@ export default function Checkout({ navigation, route }) {
       const response = await order(authToken, obj)
       if (response.success) {
         const newOrder = response.newOrder
+        handleGetUserNotificationWithoutLoader()
         dispatch(addNewOrderRedux(newOrder))
         dispatch(emptyCartRedux())
         navigation.navigate("OrderConfirm")

@@ -109,9 +109,9 @@ export default function Notification({ navigation }) {
     }
   }
 
-  useEffect(() => {
-    handleGetUserNotificationWithoutLoader()
-  }, [])
+  // useEffect(() => {
+  //   handleGetUserNotificationWithoutLoader()
+  // }, [])
 
   return (
     <SafeAreaView>
