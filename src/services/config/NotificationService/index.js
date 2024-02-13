@@ -1,71 +1,82 @@
 import React from "react";
 import messaging from "@react-native-firebase/messaging"
 import NavigationService from "../NavigationService";
+import PushNotification from 'react-native-push-notification';
 
 export async function requestUserPermission() {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+  const authStatus = await messaging().requestPermission();
+  const enabled =
+    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-    if (enabled) {
-        console.log('Authorization status:', authStatus);
-        getFcmToken()
-    }
+  if (enabled) {
+    console.log('Authorization status:', authStatus);
+    getFcmToken()
+  }
 }
 
 export const getFcmToken = async () => {
-    try {
-        const token = await messaging().getToken()
-        console.log('fcm token ==>', token);
-        return token
-    } catch (error) {
-        console.log("error in generate token===>", error);
+  try {
+    const token = await messaging().getToken()
+    console.log('fcm token ==>', token);
+    return token
+  } catch (error) {
+    console.log("error in generate token===>", error);
 
-    }
+  }
 
 }
 
 export async function notificationListners() {
 
-    messaging().setBackgroundMessageHandler(async remoteMessage => {
-        console.log('Received FCM Background Message', remoteMessage);
-      });
-  
-      // Listen for FCM messages when the app is in the foreground
-      const unsubscribe = messaging().onMessage(async remoteMessage => {
-        console.log('Received FCM Message', remoteMessage);
-      });
-  
-      // Listen for FCM messages when the app is in the background or closed
-      messaging().onNotificationOpenedApp(remoteMessage => {
+  messaging().setBackgroundMessageHandler(async remoteMessage => {
+    console.log('Received FCM Background Message', remoteMessage);
+  });
+
+  // Listen for FCM messages when the app is in the foreground
+  const unsubscribe = messaging().onMessage(async remoteMessage => {
+    console.log('Received FCM Message', remoteMessage);
+  });
+
+  // Listen for FCM messages when the app is in the background or closed
+  messaging().onNotificationOpenedApp(remoteMessage => {
+    console.log(
+      'Notification caused app to open from background state:',
+      remoteMessage,
+    );
+    NavigationService.navigate('Notification')
+    // You can navigate to a specific screen here
+  });
+
+  // Check if the app was opened by a notification
+  messaging()
+    .getInitialNotification()
+    .then(remoteMessage => {
+      if (remoteMessage) {
         console.log(
-          'Notification caused app to open from background state:',
+          'Notification caused app to open from quit state:',
           remoteMessage,
         );
-        NavigationService.navigate('Notification')
         // You can navigate to a specific screen here
-      });
-  
-      // Check if the app was opened by a notification
-      messaging()
-        .getInitialNotification()
-        .then(remoteMessage => {
-          if (remoteMessage) {
-            console.log(
-              'Notification caused app to open from quit state:',
-              remoteMessage,
-            );
-            // You can navigate to a specific screen here
-            setTimeout(() => {
-  
-              NavigationService.navigate('Notification')
-            }, 2000)
-          }
-        });
-  
-      return unsubscribe;
+        setTimeout(() => {
+
+          NavigationService.navigate('Notification')
+        }, 1000)
+      }
+    });
+
+  return unsubscribe;
 }
+
+
+const showPushNotification = (notificationData) => {
+  console.log("push notification work");
+  PushNotification.localNotification({
+    channelId: 'channel-id-2', // Specify the channel ID
+    title: 'title',
+    message: 'body',
+  });
+};
 
 // useEffect(() => {
 //     if (Platform.OS === 'android') {

@@ -14,8 +14,8 @@ import { styles } from './style';
 import images from '../../services/utilities/images';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAuthToken } from '../../store/authToken';
-import { getUserDetails } from '../../services/config/API';
-import { selectUserData, updateNotificationRedux } from '../../store/userData';
+import { getUserDetails, setNotificationSeen } from '../../services/config/API';
+import { selectUserData, setNotificationTrue, updateNotificationRedux } from '../../store/userData';
 import { colors } from '../../services';
 import formatToJSON from '../../services/utilities/JsonLog';
 
@@ -109,9 +109,23 @@ export default function Notification({ navigation }) {
     }
   }
 
-  // useEffect(() => {
-  //   handleGetUserNotificationWithoutLoader()
-  // }, [])
+  const handleSetNotificationSeen = async () => {
+    try {
+      const response = await setNotificationSeen(authToken)
+      if (response.success) {
+        dispatch(setNotificationTrue())
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      handleSetNotificationSeen()
+    });
+  }, [navigation]);
+
 
   return (
     <SafeAreaView>
@@ -122,6 +136,7 @@ export default function Notification({ navigation }) {
         />
         <View style={styles.mainContainer}>
           <ScrollView
+            showsVerticalScrollIndicator={false}
             refreshControl={
               <RefreshControl
                 refreshing={loader}

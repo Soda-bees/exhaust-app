@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCartrRedux, increasPreviousQty, selectUserData } from '../../store/userData';
 import { addToCart } from '../../services/config/API';
 import { selectAuthToken } from '../../store/authToken';
+import Modal from "react-native-modal"
 
 export default function ExhaustItem({ route, navigation }) {
 
@@ -40,6 +41,7 @@ export default function ExhaustItem({ route, navigation }) {
   const [productQty, setProductQty] = useState()
   const [productImages, setProductImages] = useState([])
   const [loader, setLoader] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
   const { data } = route?.params;
 
@@ -138,34 +140,38 @@ export default function ExhaustItem({ route, navigation }) {
   }, [navigation]);
 
   const handleAddToCart = async () => {
-    setLoader(true)
-    try {
-
-      const productId = data?._id
-      const qty = quantity
-      const body = {
-        productId,
-        qty
-      }
-      const response = await addToCart(authToken, productId, qty)
-      if (response.success) {
-        if (response.message === 'Product added in cart successfully.') {
-          const cartItem = response.cartItem
-          dispatch(addToCartrRedux(cartItem))
-          setLoader(false)
+    if (quantity <= productQty) {
+      setLoader(true)
+      try {
+        const productId = data?._id
+        const qty = quantity
+        const body = {
+          productId,
+          qty
+        }
+        const response = await addToCart(authToken, productId, qty)
+        if (response.success) {
+          if (response.message === 'Product added in cart successfully.') {
+            const cartItem = response.cartItem
+            dispatch(addToCartrRedux(cartItem))
+            setLoader(false)
+          } else {
+            console.log(response.message);
+            dispatch(increasPreviousQty({ _id: productId, qty }))
+            setLoader(false)
+          }
         } else {
           console.log(response.message);
-          dispatch(increasPreviousQty({ _id: productId, qty }))
           setLoader(false)
         }
-      } else {
-        console.log(response.message);
+      } catch (error) {
+        console.log(error.message);
         setLoader(false)
       }
-    } catch (error) {
-      console.log(error.message);
-      setLoader(false)
+    } else {
+      setIsModalVisible(true)
     }
+
   }
 
   return (
@@ -176,107 +182,126 @@ export default function ExhaustItem({ route, navigation }) {
           backgroundColor:'red',
           height:sizes.screenHeight * 0.9
         }}> */}
-
         <ScrollView>
-        <ImageSLider productImages={productImages} />
-        <View style={styles.bottomContainer}>
-          <View style={styles.mainContainer}>
-            <View style={styles.row}>
-              <View>
-                <Text style={styles.rowText}>{data?.brand?.name}</Text>
-                <Text style={styles.rowText4}>{data?.name}</Text>
-              </View>
-              <View style={styles.quantityContainer}>
-                <TouchableOpacity
-                  onPress={() => quantity > 0 && !loader && setQuantity(quantity - 1)}
-                >
-                  <Text style={styles.textQuantityMinus}>_</Text>
-                </TouchableOpacity>
-                <Text style={styles.textQuantity}>
-                  {quantity}
-                </Text>
-                <TouchableOpacity
-                  onPress={() => !loader && setQuantity(quantity + 1)}
-                >
-                  <Text style={styles.textQuantityPlus}>+</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={styles.row}>
-              <Text style={styles.rowText2}>{data.label}</Text>
-              {
-                productQty > 1 &&
+          <ImageSLider productImages={productImages} />
+          <View style={styles.bottomContainer}>
+            <View style={styles.mainContainer}>
+              <View style={styles.row}>
                 <View>
-                  <Text style={styles.rowText3}>Available in stock</Text>
+                  <Text style={styles.rowText}>{data?.brand?.name}</Text>
+                  <Text style={styles.rowText4}>{data?.name}</Text>
                 </View>
-              }
-            </View>
-            {/* <View style={styles.row2}>
+                {
+                  productQty > 0 ?
+                    <View style={styles.quantityContainer}>
+                      <TouchableOpacity
+                        onPress={() => quantity > 0 && !loader && setQuantity(quantity - 1)}
+                      >
+                        <Text style={styles.textQuantityMinus}>_</Text>
+                      </TouchableOpacity>
+                      <Text style={styles.textQuantity}>
+                        {quantity}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => !loader && setQuantity(quantity + 1)}
+                      >
+                        <Text style={styles.textQuantityPlus}>+</Text>
+                      </TouchableOpacity>
+                    </View>
+                    :
+                    <Text
+                      style={styles.outOfStock}
+                    >Out of Stock</Text>
+                }
+
+              </View>
+              <View style={styles.row}>
+                <Text style={styles.rowText2}>{data.label}</Text>
+                {
+                  productQty > 1 &&
+                  <View>
+                    <Text style={styles.rowText3}>Available in stock</Text>
+                  </View>
+                }
+              </View>
+              {/* <View style={styles.row2}>
               <Image source={images.star} style={styles.starImg} />
               <Text style={styles.rowText3}>(320 Review)</Text>
             </View> */}
-            <Text style={styles.heading}>Sound Play</Text>
+              <Text style={styles.heading}>Sound Play</Text>
 
-            <View style={styles.progressBarView}>
-              <TouchableOpacity
-                onPress={() => {
-                  setSoundPlayBtn(!soundPlayBtn);
-                  handleSound();
-                }}>
-                <Image
-                  source={soundPlayBtn ? images.soundPause : images.soundPlay}
-                  style={styles.soundIconSty}
+              <View style={styles.progressBarView}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setSoundPlayBtn(!soundPlayBtn);
+                    handleSound();
+                  }}>
+                  <Image
+                    source={soundPlayBtn ? images.soundPause : images.soundPlay}
+                    style={styles.soundIconSty}
+                  />
+                </TouchableOpacity>
+                <ProgressBar
+                  progress={
+                    !noProgess && progress?.duration
+                      ? currentPosition / progress.duration
+                      : 0
+                  }
+                  color={colors.btnBlue}
+                  style={styles.progressBar}
                 />
-              </TouchableOpacity>
-              <ProgressBar
-                progress={
-                  !noProgess && progress?.duration
-                    ? currentPosition / progress.duration
-                    : 0
-                }
-                color={colors.btnBlue}
-                style={styles.progressBar}
-              />
-            </View>
-
-            <Text style={styles.heading}>Description</Text>
-            <Text style={styles.info}>{description}</Text>
-            <View style={styles.bottomRow}>
-              <View>
-                <Text style={styles.info2}>Total Price</Text>
-                <Text style={styles.rowText}>{price}</Text>
               </View>
-              <View style={styles.verticalLine}></View>
-              {
-                quantity > 0 ?
-                  loader ? <View style={styles.row3}
-                  // onPress={() => { quantity > 0 && !loader && handleAddToCart() }}
-                  //  onPress={() => navigation.navigate('MyCart')}
-                  >
-                    <ActivityIndicator color={"white"} />
-                    <Text style={styles.btnText}>Add to Cart</Text>
-                  </View> :
-                    <TouchableOpacity style={styles.row3}
-                      onPress={() => { quantity > 0 && !loader && handleAddToCart() }}
-                    //  onPress={() => navigation.navigate('MyCart')}
+
+              <Text style={styles.heading}>Description</Text>
+              <Text style={styles.info}>{description}</Text>
+              <View style={styles.bottomRow}>
+                <View>
+                  <Text style={styles.info2}>Total Price</Text>
+                  <Text style={styles.rowText}>{price}</Text>
+                </View>
+                <View style={styles.verticalLine}></View>
+                {
+                  quantity > 0 ?
+                    loader ? <View style={styles.row3}
+                    >
+                      <ActivityIndicator color={"white"} />
+                      <Text style={styles.btnText}>Add to Cart</Text>
+                    </View> :
+                      <TouchableOpacity style={styles.row3}
+                        onPress={() => { quantity > 0 && !loader && handleAddToCart() }}
+                      >
+                        <Image source={images.cartIconTwo} style={styles.cartImg} />
+                        <Text style={styles.btnText}>Add to Cart</Text>
+                      </TouchableOpacity>
+                    :
+                    <View style={styles.btnDis}
                     >
                       <Image source={images.cartIconTwo} style={styles.cartImg} />
                       <Text style={styles.btnText}>Add to Cart</Text>
-                    </TouchableOpacity>
-                  :
-                  <View style={styles.btnDis}
-                  >
-                    <Image source={images.cartIconTwo} style={styles.cartImg} />
-                    <Text style={styles.btnText}>Add to Cart</Text>
-                  </View>
-              }
+                    </View>
+                }
 
+              </View>
             </View>
           </View>
-        </View>
         </ScrollView>
         {/* </View> */}
-
+        <Modal
+          isVisible={isModalVisible}
+          onBackdropPress={() => setIsModalVisible(false)}
+          style={styles.modal}
+        >
+          <View style={styles.modalView}>
+            <Text
+              style={styles.text1}
+            >
+              {`Quantity Limit Exceeded`}
+            </Text>
+            <Text style={styles.text2}>
+              {`We currently have only ${productQty} product available. Your request for ${quantity} products exceeds our inventory. Please adjust the quantity and try again.\nFor assistance, contact support.\nThank you`}
+            </Text>
+          </View>
+        </Modal>
       </ImageBackground>
     </SafeAreaView>
   );

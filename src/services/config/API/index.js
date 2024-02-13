@@ -230,3 +230,12 @@ export const cancelOrder = async (token, orderId) => {
     const { data } = await apiInstance.post('cancelOrder', { orderId }, { headers })
     return data
 }
+
+export const setNotificationSeen = async (token) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+    const { data } = await apiInstance.post('setNotificationTrue', {}, { headers })
+    return data
+}

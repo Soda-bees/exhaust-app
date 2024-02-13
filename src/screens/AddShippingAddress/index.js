@@ -92,7 +92,6 @@ export default function AddShippingAddress({ navigation, route }) {
         number: phoneInput?.current?._reactInternals?.stateNode?.state?.number
       }
       const response = await addShippingAddress(authToken, obj)
-      console.log(response);
       if (response.success) {
         const newAddress = response.newAddress
         dispatch(addShippingAddressRedux(newAddress))
@@ -126,7 +125,6 @@ export default function AddShippingAddress({ navigation, route }) {
         countryCode: phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
         number: phoneInput?.current?._reactInternals?.stateNode?.state?.number
       }
-      console.log(formatToJSON(obj));
       const response = await updateShippingAddress(authToken, obj)
       console.log(response);
       if (response.success) {

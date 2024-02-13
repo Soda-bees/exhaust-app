@@ -45,9 +45,9 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
 
-    socketService(dispatch);
+    socketService(dispatch , authToken);
 
-  }, [dispatch])
+  }, [dispatch , authToken])
 
   const handleSelectInitialProduct = () => {
     const array = products.slice(0, 2)
@@ -155,7 +155,7 @@ export default function Home({ navigation }) {
                         </Text>
                         <View style={styles.plusImgView}>
                           <View
-                            >
+                          >
                             <Image
                               source={images.plusSign}
                               style={styles.plusSignImg}

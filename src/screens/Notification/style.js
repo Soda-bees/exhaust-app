@@ -10,8 +10,7 @@ export const styles = StyleSheet.create({
   mainContainer: {
     paddingHorizontal: sizes.screenWidth * 0.05,
     marginTop: sizes.screenHeight * 0.02,
-    // backgroundColor:'red',
-    height: sizes.screenHeight * 0.78
+    height: sizes.screenHeight * 0.84
   },
   row: {
     flexDirection: 'row'
@@ -29,7 +28,6 @@ export const styles = StyleSheet.create({
 
   itemDetails: {
     flexDirection: 'row',
-    // alignItems: 'center',
   },
 
   ferrariF12ExhaustContainer: {

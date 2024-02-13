@@ -166,6 +166,12 @@ const userDataSlice = createSlice({
     updateNotificationRedux: (state, action) => {
       state.userData.notifications = action.payload
     },
+    setNotificationTrue: (state) => {
+      state.userData.notifications = state.userData.notifications.map(notification => ({
+        ...notification,
+        seen: true
+      }))
+    },
   },
 });
 
@@ -192,7 +198,8 @@ export const {
   updateOrdersRedux,
   deleteOrderRedux,
   updateOrderStatusRedux,
-  updateNotificationRedux
+  updateNotificationRedux,
+  setNotificationTrue
 } = userDataSlice.actions;
 
 export const selectUserData = (state) => state.userData.userData;

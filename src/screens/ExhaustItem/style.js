@@ -40,7 +40,7 @@ export const styles = StyleSheet.create({
   bottomContainer: {
     backgroundColor: colors.white,
     marginTop: sizes.screenHeight * 0.02,
-    paddingBottom:sizes.screenHeight * 0.01,
+    paddingBottom: sizes.screenHeight * 0.01,
     // height: sizes.screenHeight,
     width: sizes.screenHeight * 0.5,
     // borderRadius: sizes.screenWidth * 0.06,
@@ -195,6 +195,29 @@ export const styles = StyleSheet.create({
     width: sizes.screenWidth,
     height: sizes.screenHeight * 0.2,
     // backgroundColor:'green'
+  },
+  modalView: {
+    backgroundColor: colors.white,
+    width: sizes.screenWidth * 0.8,
+    alignSelf: 'center',
+    borderRadius: sizes.screenWidth * 0.03,
+    padding: sizes.screenWidth * 0.04
+  },
+  text1: {
+    textAlign: 'center',
+    fontSize: fontSize.large,
+    fontWeight: '600',
+    marginBottom: sizes.screenWidth * 0.02,
+    color: colors.black
+  },
+  text2: {
+    fontSize: fontSize.smallM,
+    color: colors.black
+  },
+  outOfStock: {
+    color: colors.error,
+    fontSize: fontSize.smallM,
+    fontWeight: '500'
   }
 
 });

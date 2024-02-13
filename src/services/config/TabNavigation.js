@@ -18,7 +18,6 @@ const Tab = createBottomTabNavigator();
 export default function TabNavigation() {
 
   const userData = useSelector(selectUserData)
-  console.log(userData?.notifications.length);
 
   return (
     <Tab.Navigator
@@ -79,7 +78,9 @@ export default function TabNavigation() {
                     color: 'white',
                     fontSize: fontSize.small,
                     fontWeight: '600'
-                  }}>1</Text>
+                  }}>
+                    {userData?.cart?.length}
+                  </Text>
                 </View>
               }
 
@@ -104,7 +105,7 @@ export default function TabNavigation() {
           tabBarIcon: ({ focused }) => (
             <View>
               {
-                userData.notifications.filter(notification => !notification.seen) &&
+                !focused && userData.notifications.filter(notification => !notification.seen).length > 0 &&
                 <View style={{
                   width: sizes.screenWidth * 0.04,
                   height: sizes.screenWidth * 0.04,
@@ -114,15 +115,17 @@ export default function TabNavigation() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   position: 'absolute',
-                  left: sizes.screenWidth * 0.11,
+                  left: sizes.screenWidth * 0.10,
                   top: sizes.screenWidth * 0.022,
                   zIndex: 1
                 }}>
                   <Text style={{
                     color: 'white',
                     fontSize: fontSize.small,
-                    fontWeight: '600'
-                  }}></Text>
+                    fontWeight: '500'
+                  }}>
+                    {userData?.notifications?.filter(notification => !notification?.seen).length}
+                  </Text>
                 </View>
               }
               <Image
