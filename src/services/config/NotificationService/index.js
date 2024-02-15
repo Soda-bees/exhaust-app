@@ -18,7 +18,6 @@ export async function requestUserPermission() {
 export const getFcmToken = async () => {
   try {
     const token = await messaging().getToken()
-    console.log('fcm token ==>', token);
     return token
   } catch (error) {
     console.log("error in generate token===>", error);

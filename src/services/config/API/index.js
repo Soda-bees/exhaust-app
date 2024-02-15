@@ -10,8 +10,7 @@ export const checkServerConnection = async () => {
     return data
 }
 
-export const signin = async (email, password, deviceToken) => {
-    const body = { email, password, deviceToken }
+export const signin = async (body) => {
     const headers = {
         'Content-Type': 'application/json',
     }

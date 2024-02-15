@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageBackground,
   SafeAreaView,
@@ -14,11 +15,23 @@ import { colors, sizes } from '../../services';
 import PhoneInput from 'react-native-phone-number-input';
 import formatToJSON from '../../services/utilities/JsonLog';
 import Loader from '../../components/Loader';
-import { checkExistingEmail } from '../../services/config/API';
+import { checkExistingEmail, signup } from '../../services/config/API';
+import { getFcmToken } from '../../services/config/NotificationService';
+import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { useDispatch } from 'react-redux';
+import { setBrands } from '../../store/brands';
+import { setProducts } from '../../store/products';
+import { setUserData } from '../../store/userData';
+import { setAuthToken } from '../../store/authToken';
 
-export default function SignUp({ navigation, route }) {
+GoogleSignin.configure({
+  webClientId: '503500358813-8em4pvro5bvi7ib5309e93r0qo24vek7.apps.googleusercontent.com',
+});
 
-  const { deviceToken } = route?.params
+export default function SignUp({ navigation }) {
+
+  const dispatch = useDispatch()
 
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [eyeIconShow, setEyeIconShow] = useState(false);
@@ -32,6 +45,19 @@ export default function SignUp({ navigation, route }) {
   const [password, setPassword] = useState('')
   const [location, setLocation] = useState('')
   const [loader, setLoader] = useState(false)
+  const [deviceToken, setDeviceToken] = useState()
+  const [loaderG, setLoaderG] = useState(false)
+
+  const getDeviceToken = async () => {
+    const token = await getFcmToken()
+    setDeviceToken(token)
+  }
+
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      getDeviceToken()
+    });
+  }, [navigation]);
 
   const handleSignup = async () => {
     setLoader(true)
@@ -40,11 +66,11 @@ export default function SignUp({ navigation, route }) {
         deviceToken,
         name,
         email: email.toLowerCase(),
-        phone: value,
         location,
         password,
         countryCode: phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
-        number: phoneInput?.current?._reactInternals?.stateNode?.state?.number
+        number: phoneInput?.current?._reactInternals?.stateNode?.state?.number,
+        loginWith: 'none'
       }
       const response = await checkExistingEmail(obj)
       if (response.success) {
@@ -61,6 +87,112 @@ export default function SignUp({ navigation, route }) {
       setError(error.message)
     }
   }
+
+  // const handleGoogle = async () => {
+  //   if (Platform.OS == 'android') {
+  //     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+  //     const { idToken } = await GoogleSignin.signIn();
+  //     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+  //     return auth()
+  //       .signInWithCredential(googleCredential)
+  //       .then(() => {
+  //         let user = auth().currentUser;
+  //         console.log(user, '----->>');
+  //         alert(`Welcome ${user.displayName}`);
+  //       });
+  //   }
+
+  //   // IOS
+  //   else {
+  //     const { idToken } = await GoogleSignin.signIn();
+  //     console.log(idToken, '------->obj');
+  //     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+  //     const userSignIn = auth()
+  //       .signInWithCredential(googleCredential)
+  //       .then(() => {
+  //         let user = auth().currentUser;
+  //         console.log(user.displayName, '----->>');
+  //         alert(`Welcome ${user.displayName}`);
+  //       });
+  //   }
+  // };
+
+  const handleGoogle = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+        const { idToken } = await GoogleSignin.signIn();
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+        await auth().signInWithCredential(googleCredential);
+        let user = auth().currentUser;
+        setLoaderG(true)
+        return user;
+      } catch (error) {
+        console.error("Error signing in with Google:", error.message);
+        setError(error.message)
+        throw error;
+      }
+    }
+  };
+
+  const handleSignupWithGoogle = async () => {
+    try {
+      const userData = await handleGoogle()
+      const obj = {
+        deviceToken,
+        name: userData?.displayName,
+        email: userData?.email.toLowerCase(),
+        location: '',
+        password: '',
+        profile: userData?.photoURL,
+        countryCode: phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
+        number: '',
+        loginWith: 'google'
+      }
+      const response = await signup(obj)
+      if (response.success) {
+        setLoaderG(false)
+        console.log(response.message);
+        const products = response.products
+        const responseUserData = response.userData
+        const token = response.token
+        handleSetBrand(products)
+        dispatch(setProducts(products))
+        dispatch(setUserData(responseUserData))
+        dispatch(setAuthToken(token))
+      } else {
+        setLoaderG(false)
+        console.log(response.message);
+      }
+    } catch (error) {
+      setLoaderG(false)
+      setError(error.message)
+    }
+  }
+
+  const handleSetBrand = (allProducts) => {
+    const brandMap = {};
+
+    // Iterate through each product
+    allProducts.forEach((product) => {
+      const { brand } = product;
+
+      // Check if the brand name is already in the object
+      if (brand.name in brandMap) {
+        // If yes, increment the quantity count
+        brandMap[brand.name].quantity += 1;
+      } else {
+        // If not, add the brand to the object with initial quantity of 1
+        brandMap[brand.name] = { ...brand, quantity: 1, selected: false };
+      }
+    });
+
+    // Convert the object values to an array
+    const uniqueBrandsWithSelectedKey = Object.values(brandMap);
+
+    dispatch(setBrands(uniqueBrandsWithSelectedKey))
+  };
 
   return (
     <SafeAreaView>
@@ -197,10 +329,17 @@ export default function SignUp({ navigation, route }) {
             <Image style={styles.socialIcon} source={images.facebookIcon} />
             <Text style={styles.socialText}>Facebook</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.socialMediaBtn}>
-            <Image style={styles.social2Icon} source={images.googleIcon} />
-            <Text style={styles.socialText}>+ Google</Text>
-          </TouchableOpacity>
+          {
+            loaderG ?
+              <View style={styles.socialMediaBtn}>
+                <ActivityIndicator size={25} color={colors.btnBlue} />
+              </View>
+              :
+              <TouchableOpacity style={styles.socialMediaBtn} onPress={handleSignupWithGoogle}>
+                <Image style={styles.social2Icon} source={images.googleIcon} />
+                <Text style={styles.socialText}>+ Google</Text>
+              </TouchableOpacity>
+          }
         </View>
       </ImageBackground>
     </SafeAreaView>

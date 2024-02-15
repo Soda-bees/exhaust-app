@@ -105,7 +105,7 @@ export default function TabNavigation() {
           tabBarIcon: ({ focused }) => (
             <View>
               {
-                !focused && userData.notifications.filter(notification => !notification.seen).length > 0 &&
+                !focused && userData?.notifications?.filter(notification => !notification.seen).length > 0 &&
                 <View style={{
                   width: sizes.screenWidth * 0.04,
                   height: sizes.screenWidth * 0.04,

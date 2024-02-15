@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   Image,
   ImageBackground,
   SafeAreaView,
@@ -19,10 +20,15 @@ import { selectAuthToken, setAuthToken } from '../../store/authToken';
 import { selectUserData, setUserData } from '../../store/userData';
 import { setProducts } from '../../store/products';
 import { setBrands } from '../../store/brands';
+import { getFcmToken } from '../../services/config/NotificationService';
+import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
-export default function SignIn({ navigation, route }) {
+GoogleSignin.configure({
+  webClientId: '503500358813-8em4pvro5bvi7ib5309e93r0qo24vek7.apps.googleusercontent.com',
+});
 
-  const { deviceToken } = route?.params
+export default function SignIn({ navigation }) {
 
   const dispatch = useDispatch()
 
@@ -32,13 +38,33 @@ export default function SignIn({ navigation, route }) {
   const [password, setPassword] = useState()
   const [loader, setLoader] = useState(false)
   const [error, setError] = useState('')
+  const [deviceToken, setDeviceToken] = useState()
+  const [loaderG, setLoaderG] = useState(false)
+
+  const getDeviceToken = async () => {
+    const token = await getFcmToken()
+    setDeviceToken(token)
+  }
+
+
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      getDeviceToken()
+    });
+  }, [navigation]);
 
 
   const handleSignin = async () => {
     setLoader(true)
     try {
       const loverEmail = email?.toLowerCase()
-      const response = await signin(loverEmail, password , deviceToken)
+      const obj = {
+        email: loverEmail,
+        password,
+        deviceToken,
+        loginWith: 'none'
+      }
+      const response = await signin(obj)
       if (response.success) {
         const products = response.products
         const userData = response.userData
@@ -96,8 +122,66 @@ export default function SignIn({ navigation, route }) {
     setEmail('')
     setPassword('')
     setError('')
-    navigation.navigate('SignUp', { deviceToken })
+    navigation.navigate('SignUp')
   }
+
+  const handleGoogle = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+        const { idToken } = await GoogleSignin.signIn();
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+        await auth().signInWithCredential(googleCredential);
+        let user = auth().currentUser;
+        setLoaderG(true)
+        return user;
+      } catch (error) {
+        console.error("Error signing in with Google:", error.message);
+        setError(error.message)
+        throw error;
+      }
+    }
+  };
+
+  const handleGoogleSignin = async () => {
+    try {
+      const userData = await handleGoogle()
+      const obj = {
+        email: userData?.email.toLowerCase(),
+        deviceToken,
+        loginWith: 'google'
+      }
+      const response = await signin(obj)
+      if (response.success) {
+        const products = response.products
+        const userData = response.userData
+        const token = response.token
+        setError('')
+        handleSetBrand(products)
+        dispatch(setProducts(products))
+        dispatch(setUserData(userData))
+        dispatch(setAuthToken(token))
+        setLoaderG(false)
+      } else {
+        handleGoogleLogout()
+        setLoaderG(false)
+        console.log(response.message);
+        setError(response.message)
+      }
+    } catch (error) {
+      setLoaderG(false)
+      setError(error.message)
+    }
+  }
+
+  const handleGoogleLogout = async () => {
+    try {
+      await auth().signOut();
+      await GoogleSignin.revokeAccess();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <SafeAreaView>
@@ -180,16 +264,23 @@ export default function SignIn({ navigation, route }) {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.socialMediaBtnRow}>
-          <TouchableOpacity style={styles.socialMediaBtn}>
+        <View style={styles.socialMediaBtnRow} >
+          <TouchableOpacity style={styles.socialMediaBtn} onPress={handleGoogleLogout}>
             <Image style={styles.socialIcon} source={images.facebookIcon} />
             <Text style={styles.socialText}>Facebook</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity style={styles.socialMediaBtn}>
-            <Image style={styles.social2Icon} source={images.googleIcon} />
-            <Text style={styles.socialText}>+ Google</Text>
-          </TouchableOpacity>
+          {
+            loaderG ?
+              <View style={styles.socialMediaBtn}>
+                <ActivityIndicator size={25} color={colors.btnBlue} />
+              </View>
+              :
+              <TouchableOpacity style={styles.socialMediaBtn}
+                onPress={handleGoogleSignin}>
+                <Image style={styles.social2Icon} source={images.googleIcon} />
+                <Text style={styles.socialText}>+ Google</Text>
+              </TouchableOpacity>
+          }
         </View>
       </ImageBackground>
     </SafeAreaView>

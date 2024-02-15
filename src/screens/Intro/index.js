@@ -2,20 +2,8 @@ import { View, Text, SafeAreaView, ImageBackground, Image, TouchableOpacity } fr
 import React, { useEffect, useState } from 'react'
 import images from '../../services/utilities/images'
 import { styles } from './style'
-import { getFcmToken } from '../../services/config/NotificationService'
 
-export default function Intro({ navigation }) {
-    const [deviceToken, setDeviceToken] = useState()
-
-    const getDeviceToken = async () => {
-        const token = await getFcmToken()
-        console.log("token landingPage", token);
-        setDeviceToken(token)
-    }
-
-    useEffect(() => {
-        getDeviceToken()
-    }, [])
+export default function Intro({ navigation }) {    
 
     return (
         <SafeAreaView>
@@ -31,9 +19,7 @@ export default function Intro({ navigation }) {
                     enthusiasts like you, our systems redefine performance.
                 </Text>
                 <TouchableOpacity style={styles.btn}
-                    onPress={() => navigation.replace('SignIn'
-                        , { deviceToken }
-                    )
+                    onPress={() => navigation.replace('SignIn')
                     }
                 >
                     <Text style={styles.btnText}>Get Started</Text>
