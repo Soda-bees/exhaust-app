@@ -90,9 +90,13 @@ import noOrders from "../../../assets/noOrders.png"
 import introBg from "../../../assets/introBg.png"
 import introLogo from "../../../assets/introLogo.png"
 import introBtnImg from "../../../assets/introBtnImg.png"
+import changePass from "../../../assets/changePass.png"
+import successModalImg from "../../../assets/successModalImg.png"
 
 
 const images = {
+  successModalImg,
+  changePass,
   introBtnImg,
   introLogo,
   introBg,

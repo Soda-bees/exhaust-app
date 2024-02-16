@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">cszExhaust</string>
     <string name="default_notification_channel_id">channel-id-2</string>
+    <string name="facebook_app_id">957558725760366</string>
+    <string name="fb_login_protocol_scheme">fb957558725760366</string>
+    <string name="facebook_client_token">03b6a4ac1f185475109fee7af28b057b</string>
 </resources>

@@ -1,6 +1,5 @@
 import {StyleSheet} from 'react-native';
 import {colors, fontSize, sizes} from '../../services';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 export const styles = StyleSheet.create({
   topMainView: {
@@ -55,7 +54,7 @@ export const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems:'center',
     justifyContent:'space-between',
-    borderWidth: 0.7,
+    borderWidth: 1,
     width: sizes.screenWidth * 0.9,
     borderRadius: sizes.screenWidth * 0.3,
     paddingLeft: sizes.screenWidth * 0.05,
@@ -80,5 +79,5 @@ export const styles = StyleSheet.create({
     marginBottom: sizes.screenHeight * 0.01,
     fontWeight: '500',
     color: colors.error
-}
+},
 });

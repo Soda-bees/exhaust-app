@@ -23,6 +23,7 @@ import { setBrands } from '../../store/brands';
 import { getFcmToken } from '../../services/config/NotificationService';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { LoginManager , GraphRequest , GraphRequestManager } from "react-native-fbsdk";
 
 GoogleSignin.configure({
   webClientId: '503500358813-8em4pvro5bvi7ib5309e93r0qo24vek7.apps.googleusercontent.com',
@@ -183,6 +184,34 @@ export default function SignIn({ navigation }) {
     }
   };
 
+  const handleFacebook = async () => {
+    const result = await LoginManager.logInWithPermissions([
+      'public_profile',
+      'email',
+    ]);
+
+    if (result.isCancelled) {
+      throw 'User cancelled the login process';
+    }
+
+    // Once signed in, get the users AccessToken
+    const data = await AccessToken.getCurrentAccessToken();
+
+    if (!data) {
+      throw 'Something went wrong obtaining access token';
+    }
+
+    // Create a Firebase credential with the AccessToken
+    const facebookCredential = auth.FacebookAuthProvider.credential(
+      data.accessToken,
+    );
+
+    // Sign-in the user with the credential
+    let user = auth().currentUser;
+    console.log(user, '----->>');
+    return auth().signInWithCredential(facebookCredential);
+  };
+
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
@@ -265,7 +294,10 @@ export default function SignIn({ navigation }) {
         </View>
 
         <View style={styles.socialMediaBtnRow} >
-          <TouchableOpacity style={styles.socialMediaBtn} onPress={handleGoogleLogout}>
+          <TouchableOpacity style={styles.socialMediaBtn} 
+          // onPress={handleGoogleLogout}
+          onPress={handleFacebook}
+          >
             <Image style={styles.socialIcon} source={images.facebookIcon} />
             <Text style={styles.socialText}>Facebook</Text>
           </TouchableOpacity>

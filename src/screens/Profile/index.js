@@ -69,14 +69,6 @@ export default function Profile({ navigation }) {
     setContactNo(userData?.number);
   }, [userData]);
 
-
-  // useEffect(() => {
-  //   navigation.addListener('focus', () => {
-  //     setDefaultCountryCode(userData?.countryCode)
-  //     setContactNo(userData?.number)
-  //   });
-  // }, [navigation]);
-
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
@@ -202,7 +194,7 @@ export default function Profile({ navigation }) {
                   style={styles.bottonIconImgSty}
                 />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.bottomView}
+              {/* <TouchableOpacity style={styles.bottomView}
                 onPress={() => navigation.navigate('PaymentMethod')}
               >
                 <Image
@@ -214,7 +206,24 @@ export default function Profile({ navigation }) {
                   source={images.brownArrow}
                   style={styles.bottonIconImgSty}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+              {
+                userData.loginWith === 'none' &&
+                <TouchableOpacity style={styles.bottomView}
+                  onPress={() => navigation.navigate('ChangePassword')}
+                >
+                  <Image
+                    source={images.changePass}
+                    style={styles.iconImgStyBottom}
+                  />
+                  <Text style={styles.textStyling}>Change Password</Text>
+                  <Image
+                    source={images.brownArrow}
+                    style={styles.bottonIconImgSty}
+                  />
+                </TouchableOpacity>
+              }
+
               <View style={styles.bottomView}>
                 <Image
                   source={images.notification}

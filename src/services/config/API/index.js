@@ -238,3 +238,13 @@ export const setNotificationSeen = async (token) => {
     const { data } = await apiInstance.post('setNotificationTrue', {}, { headers })
     return data
 }
+
+export const changePassword = async (token, password) => {
+    const headers = {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+    }
+
+    const { data } = await apiInstance.post('auth/changePassword', { password }, { headers })
+    return data
+}

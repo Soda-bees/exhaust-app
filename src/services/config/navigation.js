@@ -30,6 +30,7 @@ import ProductsBrand from '../../screens/productsBrands';
 import AddToCartDetails from '../../screens/AddToCartDetails';
 import Intro from '../../screens/Intro';
 import NavigationService from './NavigationService';
+import ChangePassword from '../../screens/ChangePassword';
 
 const Stack = createNativeStackNavigator();
 
@@ -68,6 +69,7 @@ const MyAppStack = () => {
       <Stack.Screen name="OrderDetails" component={OrderDetails} />
       <Stack.Screen name="ExhaustItem" component={ExhaustItem} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
+      <Stack.Screen name="ChangePassword" component={ChangePassword} />
     </Stack.Navigator>
   );
 };

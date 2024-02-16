@@ -16,9 +16,9 @@ export const styles = StyleSheet.create({
   },
   imagesStylingRight: {
     resizeMode: 'contain',
-    width: sizes.screenWidth * 0.12,
-    height: sizes.screenWidth * 0.12,
-    borderRadius:sizes.screenWidth * 0.06
+    width: sizes.screenWidth * 0.1,
+    height: sizes.screenWidth * 0.1,
+    borderRadius:sizes.screenWidth * 0.06,
   },
   headingTextStyling: {
     marginTop: sizes.screenHeight * 0.04,
