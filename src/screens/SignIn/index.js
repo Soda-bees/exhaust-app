@@ -23,7 +23,8 @@ import { setBrands } from '../../store/brands';
 import { getFcmToken } from '../../services/config/NotificationService';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { LoginManager , GraphRequest , GraphRequestManager } from "react-native-fbsdk";
+import { LoginManager, AccessToken } from "react-native-fbsdk";
+import formatToJSON from '../../services/utilities/JsonLog';
 
 GoogleSignin.configure({
   webClientId: '503500358813-8em4pvro5bvi7ib5309e93r0qo24vek7.apps.googleusercontent.com',
@@ -179,38 +180,80 @@ export default function SignIn({ navigation }) {
     try {
       await auth().signOut();
       await GoogleSignin.revokeAccess();
+      alert('log out')
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleFacebook = async () => {
-    const result = await LoginManager.logInWithPermissions([
-      'public_profile',
-      'email',
-    ]);
+    try {
+      // Attempt login with permissions
+      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
 
-    if (result.isCancelled) {
-      throw 'User cancelled the login process';
+      if (result.isCancelled) {
+        throw 'User cancelled the login process';
+      }
+
+      // Once signed in, get the users AccessToken
+      const data = await AccessToken.getCurrentAccessToken();
+
+      if (!data) {
+        throw 'Something went wrong obtaining access token';
+      }
+
+      // Create a Firebase credential with the AccessToken
+      const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+
+      // Sign-in the user with the credential
+      const userCredential = await auth().signInWithCredential(facebookCredential);
+
+      // Access user information from the userCredential object
+      const user = userCredential.user;
+      // console.log(formatToJSON(user));
+
+      // Return the user data
+      return user;
+    } catch (error) {
+      console.error("Error signing in with Facebook:", error);
+      throw error;
+      setError(error.message)
     }
+  }
 
-    // Once signed in, get the users AccessToken
-    const data = await AccessToken.getCurrentAccessToken();
+  // async function handleLogout() {
+  //   try {
+  //     // Sign out the user from Firebase
+  //     await auth().signOut();
+  //     console.log("User signed out successfully");
+  //     alert("You have been signed out successfully.");
 
-    if (!data) {
-      throw 'Something went wrong obtaining access token';
+  //   } catch (error) {
+  //     console.error("Error signing out:", error);
+  //     throw error;
+  //   }
+  // }
+
+  const handleFacebookLogout = async () => {
+    try {
+      await auth().signOut();
+      alert('log out')
+    } catch (error) {
+      console.error(error);
     }
-
-    // Create a Firebase credential with the AccessToken
-    const facebookCredential = auth.FacebookAuthProvider.credential(
-      data.accessToken,
-    );
-
-    // Sign-in the user with the credential
-    let user = auth().currentUser;
-    console.log(user, '----->>');
-    return auth().signInWithCredential(facebookCredential);
   };
+
+
+  const handleFacebookSignin = async () => {
+    try {
+      const userData = await handleFacebook()
+      console.log(formatToJSON(userData));
+
+    } catch (error) {
+      console.log(error.message);
+      setError(error.message);
+    }
+  }
 
   return (
     <SafeAreaView>
@@ -294,9 +337,9 @@ export default function SignIn({ navigation }) {
         </View>
 
         <View style={styles.socialMediaBtnRow} >
-          <TouchableOpacity style={styles.socialMediaBtn} 
-          // onPress={handleGoogleLogout}
-          onPress={handleFacebook}
+          <TouchableOpacity style={styles.socialMediaBtn}
+            // onPress={handleGoogleLogout}
+            onPress={handleFacebookSignin}
           >
             <Image style={styles.socialIcon} source={images.facebookIcon} />
             <Text style={styles.socialText}>Facebook</Text>
@@ -314,6 +357,12 @@ export default function SignIn({ navigation }) {
               </TouchableOpacity>
           }
         </View>
+        <TouchableOpacity style={styles.socialMediaBtn}
+          onPress={handleFacebookLogout}
+        >
+          <Image style={styles.social2Icon} source={images.facebookIcon} />
+          <Text style={styles.socialText}> Log Out</Text>
+        </TouchableOpacity>
       </ImageBackground>
     </SafeAreaView>
   );

@@ -24,6 +24,7 @@ import { setBrands } from '../../store/brands';
 import { setProducts } from '../../store/products';
 import { setUserData } from '../../store/userData';
 import { setAuthToken } from '../../store/authToken';
+import { LoginManager, AccessToken } from "react-native-fbsdk";
 
 GoogleSignin.configure({
   webClientId: '503500358813-8em4pvro5bvi7ib5309e93r0qo24vek7.apps.googleusercontent.com',
@@ -47,6 +48,7 @@ export default function SignUp({ navigation }) {
   const [loader, setLoader] = useState(false)
   const [deviceToken, setDeviceToken] = useState()
   const [loaderG, setLoaderG] = useState(false)
+  
 
   const getDeviceToken = async () => {
     const token = await getFcmToken()
@@ -136,6 +138,41 @@ export default function SignUp({ navigation }) {
     }
   };
 
+  const handleFacebook = async () => {
+    try {
+      // Attempt login with permissions
+      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+
+      if (result.isCancelled) {
+        throw 'User cancelled the login process';
+      }
+
+      // Once signed in, get the users AccessToken
+      const data = await AccessToken.getCurrentAccessToken();
+
+      if (!data) {
+        throw 'Something went wrong obtaining access token';
+      }
+
+      // Create a Firebase credential with the AccessToken
+      const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+
+      // Sign-in the user with the credential
+      const userCredential = await auth().signInWithCredential(facebookCredential);
+
+      // Access user information from the userCredential object
+      const user = userCredential.user;
+      // console.log(formatToJSON(user));
+
+      // Return the user data
+      return user;
+    } catch (error) {
+      console.error("Error signing in with Facebook:", error);
+      throw error;
+      setError(error.message)
+    }
+  }
+
   const handleSignupWithGoogle = async () => {
     try {
       const userData = await handleGoogle()
@@ -167,6 +204,28 @@ export default function SignUp({ navigation }) {
       }
     } catch (error) {
       setLoaderG(false)
+      setError(error.message)
+    }
+  }
+
+  const handleSignupWithFacebook = async () => {
+    try {
+        const userData = await handleFacebook()
+        console.log(formatToJSON(userData));
+        const obj = {
+          deviceToken,
+          name: userData?.displayName,
+          email: userData?.email.toLowerCase(),
+          location: '',
+          password: '',
+          profile: userData?.photoURL,
+          countryCode: phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
+          number: '',
+          loginWith: 'facebook'
+        }
+        console.log("-=-=", formatToJSON(obj));
+    } catch (error) {
+      console.log(error.message);
       setError(error.message)
     }
   }
@@ -325,7 +384,9 @@ export default function SignUp({ navigation }) {
           </TouchableOpacity>
         </View>
         <View style={styles.socialMediaBtnRow}>
-          <TouchableOpacity style={styles.socialMediaBtn}>
+          <TouchableOpacity style={styles.socialMediaBtn}
+          onPress={handleSignupWithFacebook}
+          >
             <Image style={styles.socialIcon} source={images.facebookIcon} />
             <Text style={styles.socialText}>Facebook</Text>
           </TouchableOpacity>
