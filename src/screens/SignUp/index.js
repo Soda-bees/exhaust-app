@@ -48,7 +48,8 @@ export default function SignUp({ navigation }) {
   const [loader, setLoader] = useState(false)
   const [deviceToken, setDeviceToken] = useState()
   const [loaderG, setLoaderG] = useState(false)
-  
+  const [loaderF, setLoaderF] = useState(false)
+
 
   const getDeviceToken = async () => {
     const token = await getFcmToken()
@@ -90,36 +91,6 @@ export default function SignUp({ navigation }) {
     }
   }
 
-  // const handleGoogle = async () => {
-  //   if (Platform.OS == 'android') {
-  //     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-  //     const { idToken } = await GoogleSignin.signIn();
-  //     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-  //     return auth()
-  //       .signInWithCredential(googleCredential)
-  //       .then(() => {
-  //         let user = auth().currentUser;
-  //         console.log(user, '----->>');
-  //         alert(`Welcome ${user.displayName}`);
-  //       });
-  //   }
-
-  //   // IOS
-  //   else {
-  //     const { idToken } = await GoogleSignin.signIn();
-  //     console.log(idToken, '------->obj');
-  //     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-  //     const userSignIn = auth()
-  //       .signInWithCredential(googleCredential)
-  //       .then(() => {
-  //         let user = auth().currentUser;
-  //         console.log(user.displayName, '----->>');
-  //         alert(`Welcome ${user.displayName}`);
-  //       });
-  //   }
-  // };
-
   const handleGoogle = async () => {
     if (Platform.OS === 'android') {
       try {
@@ -140,6 +111,7 @@ export default function SignUp({ navigation }) {
 
   const handleFacebook = async () => {
     try {
+      setLoaderF(true)
       // Attempt login with permissions
       const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
 
@@ -165,11 +137,13 @@ export default function SignUp({ navigation }) {
       // console.log(formatToJSON(user));
 
       // Return the user data
+      
       return user;
     } catch (error) {
       console.error("Error signing in with Facebook:", error);
       throw error;
       setError(error.message)
+      setLoaderF(false)
     }
   }
 
@@ -201,6 +175,7 @@ export default function SignUp({ navigation }) {
       } else {
         setLoaderG(false)
         console.log(response.message);
+        setError(response.message)
       }
     } catch (error) {
       setLoaderG(false)
@@ -210,23 +185,37 @@ export default function SignUp({ navigation }) {
 
   const handleSignupWithFacebook = async () => {
     try {
-        const userData = await handleFacebook()
-        console.log(formatToJSON(userData));
-        const obj = {
-          deviceToken,
-          name: userData?.displayName,
-          email: userData?.email.toLowerCase(),
-          location: '',
-          password: '',
-          profile: userData?.photoURL,
-          countryCode: phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
-          number: '',
-          loginWith: 'facebook'
-        }
-        console.log("-=-=", formatToJSON(obj));
+      const userData = await handleFacebook()
+      const obj = {
+        deviceToken,
+        name: userData?.displayName,
+        email: userData?.email.toLowerCase(),
+        location: '',
+        password: '',
+        profile: userData?.photoURL,
+        countryCode: phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
+        number: '',
+        loginWith: 'facebook'
+      }
+      const response = await signup(obj)
+      if (response.success) {
+        const products = response.products
+        const responseUserData = response.userData
+        const token = response.token
+        handleSetBrand(products)
+        dispatch(setProducts(products))
+        dispatch(setUserData(responseUserData))
+        dispatch(setAuthToken(token))
+        setLoaderF(false)
+      } else {
+        console.log(error.message);
+        setError(response.message)
+        setLoaderF(false)
+      }
     } catch (error) {
       console.log(error.message);
       setError(error.message)
+      setLoaderF(false)
     }
   }
 
@@ -384,12 +373,19 @@ export default function SignUp({ navigation }) {
           </TouchableOpacity>
         </View>
         <View style={styles.socialMediaBtnRow}>
-          <TouchableOpacity style={styles.socialMediaBtn}
-          onPress={handleSignupWithFacebook}
-          >
-            <Image style={styles.socialIcon} source={images.facebookIcon} />
-            <Text style={styles.socialText}>Facebook</Text>
-          </TouchableOpacity>
+          {
+            loaderF ?
+              <View style={styles.socialMediaBtn}>
+                <ActivityIndicator size={25} color={colors.btnBlue} />
+              </View>
+              :
+              <TouchableOpacity style={styles.socialMediaBtn}
+                onPress={handleSignupWithFacebook}
+              >
+                <Image style={styles.socialIcon} source={images.facebookIcon} />
+                <Text style={styles.socialText}>Facebook</Text>
+              </TouchableOpacity>
+          }
           {
             loaderG ?
               <View style={styles.socialMediaBtn}>

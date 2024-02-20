@@ -42,6 +42,7 @@ export default function SignIn({ navigation }) {
   const [error, setError] = useState('')
   const [deviceToken, setDeviceToken] = useState()
   const [loaderG, setLoaderG] = useState(false)
+  const [loaderF, setLoaderF] = useState(false)
 
   const getDeviceToken = async () => {
     const token = await getFcmToken()
@@ -189,6 +190,7 @@ export default function SignIn({ navigation }) {
   const handleFacebook = async () => {
     try {
       // Attempt login with permissions
+      setLoaderF(true)
       const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
 
       if (result.isCancelled) {
@@ -221,19 +223,6 @@ export default function SignIn({ navigation }) {
     }
   }
 
-  // async function handleLogout() {
-  //   try {
-  //     // Sign out the user from Firebase
-  //     await auth().signOut();
-  //     console.log("User signed out successfully");
-  //     alert("You have been signed out successfully.");
-
-  //   } catch (error) {
-  //     console.error("Error signing out:", error);
-  //     throw error;
-  //   }
-  // }
-
   const handleFacebookLogout = async () => {
     try {
       await auth().signOut();
@@ -243,15 +232,34 @@ export default function SignIn({ navigation }) {
     }
   };
 
-
   const handleFacebookSignin = async () => {
     try {
       const userData = await handleFacebook()
-      console.log(formatToJSON(userData));
-
+      const obj = {
+        email: userData?.email.toLowerCase(),
+        deviceToken,
+        loginWith: 'facebook'
+      }
+      const response = await signin(obj)
+      if (response.success) {
+        const products = response.products
+        const userData = response.userData
+        const token = response.token
+        setError('')
+        handleSetBrand(products)
+        dispatch(setProducts(products))
+        dispatch(setUserData(userData))
+        dispatch(setAuthToken(token))
+        setLoaderF(false)
+      } else {
+        handleGoogleLogout()
+        setLoaderF(false)
+        setError(response.message)
+      }
     } catch (error) {
       console.log(error.message);
       setError(error.message);
+      setLoaderF(false)
     }
   }
 
@@ -337,13 +345,20 @@ export default function SignIn({ navigation }) {
         </View>
 
         <View style={styles.socialMediaBtnRow} >
-          <TouchableOpacity style={styles.socialMediaBtn}
-            // onPress={handleGoogleLogout}
-            onPress={handleFacebookSignin}
-          >
-            <Image style={styles.socialIcon} source={images.facebookIcon} />
-            <Text style={styles.socialText}>Facebook</Text>
-          </TouchableOpacity>
+          {
+            loaderF ?
+              <View style={styles.socialMediaBtn}>
+                <ActivityIndicator size={25} color={colors.btnBlue} />
+              </View>
+              :
+              <TouchableOpacity style={styles.socialMediaBtn}
+                onPress={handleFacebookSignin}
+              >
+                <Image style={styles.socialIcon} source={images.facebookIcon} />
+                <Text style={styles.socialText}>Facebook</Text>
+              </TouchableOpacity>
+          }
+
           {
             loaderG ?
               <View style={styles.socialMediaBtn}>
@@ -357,12 +372,6 @@ export default function SignIn({ navigation }) {
               </TouchableOpacity>
           }
         </View>
-        <TouchableOpacity style={styles.socialMediaBtn}
-          onPress={handleFacebookLogout}
-        >
-          <Image style={styles.social2Icon} source={images.facebookIcon} />
-          <Text style={styles.socialText}> Log Out</Text>
-        </TouchableOpacity>
       </ImageBackground>
     </SafeAreaView>
   );
