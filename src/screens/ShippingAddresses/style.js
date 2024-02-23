@@ -131,6 +131,21 @@ export const styles = StyleSheet.create({
     width: sizes.screenHeight * 0.46,
     marginBottom: sizes.screenHeight * 0.02
   },
+  bottomBtnIOS: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginLeft: sizes.screenWidth * 0.04,
+    paddingHorizontal: sizes.screenWidth * 0.03,
+    borderRadius: sizes.screenWidth * 0.1,
+    height: sizes.screenHeight * 0.065,
+    backgroundColor: colors.btnBlue,
+    width: sizes.screenHeight * 0.42,
+    position:'absolute',
+    bottom:sizes.screenHeight * 0.1,
+    alignSelf:'center'
+    // marginBottom: sizes.screenHeight * 0.02,
+  },
   bottomBtnText: {
     color: colors.white,
     fontSize: fontSize.medium,

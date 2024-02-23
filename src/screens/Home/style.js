@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     width: sizes.screenWidth * 0.1,
     height: sizes.screenWidth * 0.1,
-    borderRadius:sizes.screenWidth * 0.06,
+    borderRadius: sizes.screenWidth * 0.06,
   },
   headingTextStyling: {
     marginTop: sizes.screenHeight * 0.04,
@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
   textFieldStyling: {
     marginTop: sizes.screenWidth * 0.01,
     width: sizes.screenWidth * 0.65,
-    color:colors.black
+    color: colors.black,
   },
   filerNameStyling: {
     fontSize: fontSize.small,
@@ -79,12 +79,12 @@ export const styles = StyleSheet.create({
     paddingVertical: sizes.screenHeight * 0.004,
     borderColor: colors.black,
     textAlign: 'center',
-    textAlignVertical:'center'
+    textAlignVertical: 'center',
   },
   filterView: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop:sizes.screenHeight * 0.01
+    marginTop: sizes.screenHeight * 0.01,
   },
   trendingTextStyling: {
     marginTop: sizes.screenWidth * 0.02,
@@ -179,9 +179,19 @@ export const styles = StyleSheet.create({
     },
     shadowOpacity: 0.9,
     shadowRadius: 0,
-
     elevation: 8,
     backgroundColor: colors.white,
+  },
+  lastLeftViewIOS: {
+    borderRadius: sizes.screenWidth * 0.04,
+    padding: sizes.screenWidth * 0.015,
+    width: sizes.screenWidth * 0.42,
+    backgroundColor: colors.white,
+    shadowColor: '#000',
+    shadowOffset: {width: 5, height: 5},
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 12,
   },
 
   lastLeftViewImg: {
@@ -197,6 +207,11 @@ export const styles = StyleSheet.create({
   plusSignImg: {
     resizeMode: 'contain',
     width: sizes.screenWidth * 0.09,
+    height: sizes.screenHeight * 0.05,
+  },
+  plusSignImgIOS: {
+    resizeMode: 'contain',
+    width: sizes.screenWidth * 0.1,
     height: sizes.screenHeight * 0.05,
   },
   lastLeftViewTextHeading: {
@@ -222,16 +237,16 @@ export const styles = StyleSheet.create({
   bg: {
     backgroundColor: 'transparent',
     width: sizes.screenWidth * 0.42,
-    marginTop:sizes.screenHeight * 0.02
+    marginTop: sizes.screenHeight * 0.02,
   },
   productMainView: {
     flexDirection: 'row',
-    alignItems:'center',
+    alignItems: 'center',
     flexWrap: 'wrap',
-    justifyContent:'space-between',
+    justifyContent: 'space-between',
     // backgroundColor:'red',
-    width:sizes.screenWidth * 0.86,
-    marginLeft:sizes.screenWidth * 0.02,
+    width: sizes.screenWidth * 0.86,
+    marginLeft: sizes.screenWidth * 0.02,
     // marginTop:sizes.screenWidth * 0.02,
   },
   plusImgView: {
@@ -318,12 +333,12 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: fontSize.medium,
   },
-  brandModal:{
+  brandModal: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
     width: sizes.screenWidth * 0.9,
     alignSelf: 'center',
-},
+  },
 });

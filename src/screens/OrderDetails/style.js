@@ -73,6 +73,18 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: sizes.screenHeight * 0.02
   },
+  bottomBtnIOS: {
+    // marginLeft: sizes.screenWidth * 0.01,
+    borderRadius: sizes.screenWidth * 0.1,
+    height: sizes.screenHeight * 0.07,
+    backgroundColor: colors.btnBlue,
+    width: sizes.screenHeight * 0.42,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    position:'absolute',
+    bottom:sizes.screenHeight * 0.1
+    // marginBottom: sizes.screenHeight * 0.02
+  },
   bottomBtnText: {
     color: colors.white,
     fontSize: fontSize.medium,

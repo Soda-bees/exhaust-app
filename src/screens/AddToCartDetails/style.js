@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { colors, fontSize, sizes } from '../../services';
+import {StyleSheet} from 'react-native';
+import {colors, fontSize, sizes} from '../../services';
 
 export const styles = StyleSheet.create({
   container: {
@@ -12,15 +12,15 @@ export const styles = StyleSheet.create({
     marginTop: sizes.screenHeight * 0.02,
   },
   rowText: {
-    fontSize: fontSize.h5, 
+    fontSize: fontSize.h5,
     color: colors.black,
     fontWeight: 'bold',
   },
   qtyText: {
-    fontSize: fontSize.h5, 
+    fontSize: fontSize.h5,
     color: colors.black,
     fontWeight: 'bold',
-    textAlign:'center'
+    textAlign: 'center',
   },
   rowText4: {
     fontSize: fontSize.medium,
@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
   bottomContainer: {
     backgroundColor: colors.white,
     marginTop: sizes.screenHeight * 0.02,
-    paddingBottom:sizes.screenHeight * 0.01,
+    paddingBottom: sizes.screenHeight * 0.01,
     // height: sizes.screenHeight,
     width: sizes.screenHeight * 0.5,
     // borderRadius: sizes.screenWidth * 0.06,
@@ -59,6 +59,21 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.17,
     shadowRadius: 3.05,
     elevation: 4,
+  },
+  bottomContainerIOS: {
+    backgroundColor: colors.white,
+    marginTop: sizes.screenHeight * 0.02,
+    paddingBottom: sizes.screenHeight * 0.01,
+    width: sizes.screenHeight * 0.46,
+    borderTopLeftRadius: sizes.screenWidth * 0.06,
+    borderTopRightRadius: sizes.screenWidth * 0.06,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: -2},
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 12,
+    // marginBottom:sizes.screenHeight * 0.1
+    // alignSelf:'center',
   },
   row: {
     flexDirection: 'row',
@@ -118,6 +133,7 @@ export const styles = StyleSheet.create({
   },
   info2: {
     color: colors.gray,
+    // marginBottom:sizes.screenHeight * 0.02
   },
   verticalLine: {
     width: sizes.screenWidth * 0.002,
@@ -175,11 +191,10 @@ export const styles = StyleSheet.create({
   },
   imageSlider: {
     width: sizes.screenWidth,
-    height: sizes.screenHeight * 0.2
+    height: sizes.screenHeight * 0.2,
   },
   sliderImg: {
     width: sizes.screenWidth,
     height: sizes.screenHeight * 0.2,
-  }
-
+  },
 });

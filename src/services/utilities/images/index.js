@@ -92,6 +92,8 @@ import introLogo from "../../../assets/introLogo.png"
 import introBtnImg from "../../../assets/introBtnImg.png"
 import changePass from "../../../assets/changePass.png"
 import successModalImg from "../../../assets/successModalImg.png"
+import plusImg from "../../../assets/plusImg.png"
+import exhaustLogo from "../../../assets/exhaustLogo.png"
 
 
 const images = {
@@ -188,7 +190,9 @@ const images = {
   forwardIcon2,
   orders,
   emptyCart,
-  deleteCart
+  deleteCart,
+  plusImg,
+  exhaustLogo,
 };
 
 

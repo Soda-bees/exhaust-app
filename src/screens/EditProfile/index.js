@@ -6,44 +6,45 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  Platform,
 } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import { styles } from './style';
+import React, {useEffect, useRef, useState} from 'react';
+import {styles} from './style';
 import images from '../../services/utilities/images';
 import Header from '../../components/Header';
-import { colors, sizes } from '../../services';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUserData, updateProfileDataRedux } from '../../store/userData';
+import {colors, sizes} from '../../services';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectUserData, updateProfileDataRedux} from '../../store/userData';
 import PhoneInput from 'react-native-phone-number-input';
 import formatToJSON from '../../services/utilities/JsonLog';
 import Loader from '../../components/Loader';
-import { launchImageLibrary } from 'react-native-image-picker';
-import { updateProfile, uploadProfile } from '../../services/config/API';
-import { selectAuthToken } from '../../store/authToken';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {updateProfile, uploadProfile} from '../../services/config/API';
+import {selectAuthToken} from '../../store/authToken';
 
+export default function EditProfile({navigation}) {
+  const phoneInput = useRef(null);
+  const dispatch = useDispatch();
 
-export default function EditProfile({ navigation }) {
+  const userData = useSelector(selectUserData);
+  const authToken = useSelector(selectAuthToken);
 
-  const phoneInput = useRef(null)
-  const dispatch = useDispatch()
-
-  const userData = useSelector(selectUserData)
-  const authToken = useSelector(selectAuthToken)
-
-  const [defaultCountryCode, setDefaultCountryCode] = useState(userData ? userData.countryCode : '')
+  const [defaultCountryCode, setDefaultCountryCode] = useState(
+    userData ? userData.countryCode : '',
+  );
   const [contactNo, setContactNo] = useState(userData ? userData.number : '');
   const [value, setValue] = useState('');
-  const [name, setName] = useState('')
-  const [location, setLocation] = useState('')
-  const [profile, setProfile] = useState('')
-  const [loader, setLoader] = useState(false)
-  const [error, setError] = useState('')
+  const [name, setName] = useState('');
+  const [location, setLocation] = useState('');
+  const [profile, setProfile] = useState('');
+  const [loader, setLoader] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    setName(userData?.name)
-    setLocation(userData?.location)
-    setProfile(userData.profile)
-  }, [userData])
+    setName(userData?.name);
+    setLocation(userData?.location);
+    setProfile(userData.profile);
+  }, [userData]);
 
   const handleUploadPhoto = () => {
     let options = {
@@ -70,8 +71,8 @@ export default function EditProfile({ navigation }) {
     });
   };
 
-  const handleUploadProfile = async (image) => {
-    setLoader(true)
+  const handleUploadProfile = async image => {
+    setLoader(true);
     try {
       const img = {
         uri: image.uri,
@@ -85,65 +86,67 @@ export default function EditProfile({ navigation }) {
         name: img.fileName,
       });
 
-      const response = await uploadProfile(formData)
-      console.log("-=-=-=9098" , response);
+      const response = await uploadProfile(formData);
+      console.log('-=-=-=9098', response);
       if (response.success) {
-        setError('')
-        setProfile(response.url)
-        setLoader(false)
+        setError('');
+        setProfile(response.url);
+        setLoader(false);
       } else {
-        setError(response.message)
-        setLoader(false)
+        setError(response.message);
+        setLoader(false);
         console.log(response.message);
       }
     } catch (error) {
-      setError(error.message)
-      setLoader(false)
+      setError(error.message);
+      setLoader(false);
       console.log(error);
     }
-  }
+  };
 
   const handleSave = async () => {
     try {
       const obj = {
         name,
         location,
-        countryCode: phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
+        countryCode:
+          phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
         number: phoneInput?.current?._reactInternals?.stateNode?.state?.number,
-        profile
-      }
-      setLoader(true)
-      const response = await updateProfile(authToken, obj)
+        profile,
+      };
+      setLoader(true);
+      const response = await updateProfile(authToken, obj);
       if (response.success) {
-        const userData = response.userData
-        dispatch(updateProfileDataRedux(userData))
-        setLoader(false)
-        setError('')
-        navigation.navigate('Profile')
+        const userData = response.userData;
+        dispatch(updateProfileDataRedux(userData));
+        setLoader(false);
+        setError('');
+        navigation.navigate('Profile');
         // navigation.goBack()
       } else {
-        setLoader(false)
-        setError(response.message)
+        setLoader(false);
+        setError(response.message);
       }
     } catch (error) {
-      setLoader(false)
+      setLoader(false);
       console.log(error);
-      setError(error.message)
+      setError(error.message);
     }
-
-  }
+  };
 
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
         <View>
-
           <Header title={'Profile'} backImage={images.backIcon} />
           <View style={styles.mainContainer}>
-            <Image source={profile ? { uri: profile } : images.profileImg} style={styles.profileImgSty} />
-            <TouchableOpacity style={styles.editImgView}
-              onPress={handleUploadPhoto}
-            >
+            <Image
+              source={profile ? {uri: profile} : images.profileImg}
+              style={styles.profileImgSty}
+            />
+            <TouchableOpacity
+              style={styles.editImgView}
+              onPress={handleUploadPhoto}>
               <Image source={images.editPencil} style={styles.editImgSty} />
             </TouchableOpacity>
             <View>
@@ -155,7 +158,7 @@ export default function EditProfile({ navigation }) {
                   placeholder="Your Name"
                   placeholderTextColor={colors.lightGrey}
                   style={styles.textSty}
-                  onChangeText={(text) => setName(text)}
+                  onChangeText={text => setName(text)}
                   value={name}
                 />
               </View>
@@ -182,7 +185,7 @@ export default function EditProfile({ navigation }) {
                   placeholder="Your Location"
                   placeholderTextColor={colors.lightGrey}
                   style={styles.textSty}
-                  onChangeText={(text) => setLocation(text)}
+                  onChangeText={text => setLocation(text)}
                   value={location}
                 />
               </View>
@@ -206,10 +209,13 @@ export default function EditProfile({ navigation }) {
                 withDarkTheme={false}
                 codeTextStyle={{
                   // backgroundColor:'red',
-                  height:sizes.screenHeight * 0.028,
-                  marginTop:sizes.screenHeight * 0.004,
+                  height: sizes.screenHeight * 0.028,
+                  marginTop:
+                    Platform.OS == 'android'
+                      ? sizes.screenHeight * 0.004
+                      : sizes.screenHeight * 0.015,
                   // position:'absolute'
-                  right:sizes.screenWidth * 0.025
+                  right: sizes.screenWidth * 0.025,
                 }}
                 flagButtonStyle={{
                   backgroundColor: 'transparent',
@@ -227,7 +233,10 @@ export default function EditProfile({ navigation }) {
                   height: sizes.screenHeight * 0.058,
                   color: colors.black,
                   top: sizes.screenHeight * 0.004,
-                  right:sizes.screenWidth * 0.045
+                  right:
+                    Platform.OS == 'android'
+                      ? sizes.screenWidth * 0.045
+                      : sizes.screenWidth * 0.037,
                 }}
                 textInputProps={{
                   placeholderTextColor: colors.disabledBg2,
@@ -237,24 +246,24 @@ export default function EditProfile({ navigation }) {
                 }}
               />
             </View>
-
           </View>
           <Text style={styles.errorText}>{error}</Text>
         </View>
-        {
-          loader ?
-            <View style={styles.loaderContainer}>
-              <Loader />
-            </View>
-            :
-            <TouchableOpacity
-              style={styles.bottomBtn}
-              onPress={handleSave}
+        {loader ? (
+          <View style={Platform.OS == 'android' ? styles.loaderContainer : styles.bottomBtnIOS}>
+            <Loader />
+          </View>
+        ) : (
+          <TouchableOpacity
+            style={
+              Platform.OS == 'android' ? styles.bottomBtn : styles.bottomBtnIOS
+            }
+            onPress={handleSave}
             // onPress={() => navigation.navigate('MyTabs')}
-            >
-              <Text style={styles.bottomBtnText}>Save</Text>
-            </TouchableOpacity>
-        }
+          >
+            <Text style={styles.bottomBtnText}>Save</Text>
+          </TouchableOpacity>
+        )}
       </ImageBackground>
     </SafeAreaView>
   );

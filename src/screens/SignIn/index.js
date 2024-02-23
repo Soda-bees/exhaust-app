@@ -268,8 +268,8 @@ export default function SignIn({ navigation }) {
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
         <View style={styles.logoRow}>
-          <Image source={images.logo} style={styles.logoSizing} />
-          <Text style={styles.logoText}>CSZ EXHAUST</Text>
+          <Image source={images.exhaustLogo} style={styles.logoSizing} />
+          {/* <Text style={styles.logoText}>CSZ EXHAUST</Text> */}
         </View>
         <View style={styles.body}>
           <View style={styles.signInSection}>

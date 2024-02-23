@@ -77,10 +77,10 @@ export default function Profile({ navigation }) {
           style={styles.mainContainer}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Image source={userData ? { uri: userData?.profile } : images.profileImg} style={styles.profileImgSty} />
-            <View style={styles.inputField}>
+            <View style={Platform.OS == 'android' ? styles.inputField : styles.inputFieldIOS}>
               <Image style={styles.icon} source={images.friends} />
               <View style={styles.verticalLine}></View>
-              <Text style={styles.placeholder}>Name</Text>
+              <Text style={Platform.OS == 'android' ? styles.placeholder : styles.placeholderIOS}>Name</Text> 
               <TextInput
                 placeholder={userData?.name}
                 placeholderTextColor={colors.black}
@@ -88,10 +88,10 @@ export default function Profile({ navigation }) {
                 editable={false}
               />
             </View>
-            <View style={styles.inputField}>
+            <View style={Platform.OS == 'android' ? styles.inputField : styles.inputFieldIOS}>
               <Image style={styles.icon} source={images.email} />
               <View style={styles.verticalLine}></View>
-              <Text style={styles.placeholder}>Email</Text>
+              <Text style={Platform.OS == 'android' ? styles.placeholder : styles.placeholderIOS}>Email</Text> 
               <TextInput
                 placeholder={userData?.email}
                 placeholderTextColor={colors.black}
@@ -99,8 +99,8 @@ export default function Profile({ navigation }) {
                 editable={false}
               />
             </View>
-            <View style={styles.MainCartView2}>
-              <Text style={styles.placeholderPhone}>Phone</Text>
+            <View style={Platform.OS == 'android' ? styles.MainCartView2 : styles.MainCartView2IOS}>
+              <Text style={Platform.OS == 'android' ? styles.placeholderPhone : styles.placeholderPhoneIOS}>Phone</Text>
               <View style={styles.verticalLine2}></View>
               <PhoneInput
                 disabled
@@ -114,8 +114,8 @@ export default function Profile({ navigation }) {
                 textContainerStyle={styles.inputFieldBackground}
                 codeTextStyle={{
                   height: sizes.screenHeight * 0.028,
-                  marginTop: sizes.screenHeight * 0.004,
-                  right: sizes.screenWidth * 0.025
+                  marginTop: Platform.OS == 'android' ? sizes.screenHeight * 0.004 : sizes.screenHeight * 0.015,
+                  right: sizes.screenWidth * 0.025,
                 }}
                 value={contactNo}
                 withDarkTheme={false}
@@ -137,7 +137,7 @@ export default function Profile({ navigation }) {
                   height: sizes.screenHeight * 0.058,
                   color: colors.black,
                   top: sizes.screenHeight * 0.004,
-                  right: sizes.screenWidth * 0.045
+                  right:Platform.OS == 'android' ? sizes.screenWidth * 0.045 : sizes.screenWidth * 0.037, 
                 }}
                 textInputProps={{
                   placeholderTextColor: colors.disabledBg2,
@@ -145,8 +145,8 @@ export default function Profile({ navigation }) {
               />
             </View>
 
-            <Text style={styles.bottomHeading}>Settings</Text>
-            <View style={styles.bottomMainView}>
+            <Text style={styles.bottomHeading}>Settings</Text> 
+            <View style={Platform.OS == 'android' ? styles.bottomMainView : styles.bottomMainViewIOS}>
               <TouchableOpacity
                 style={styles.bottomView}
                 onPress={() => navigation.navigate('EditProfile')}>
@@ -240,7 +240,7 @@ export default function Profile({ navigation }) {
                 </TouchableOpacity>
               </View>
             </View>
-            <TouchableOpacity style={styles.bottomBtn}
+            <TouchableOpacity style={Platform.OS == 'android' ? styles.bottomBtn : styles.bottomBtnIOS} 
               onPress={handleLogout}
             >
               <Image source={images.logout} style={styles.forwardIcon} />

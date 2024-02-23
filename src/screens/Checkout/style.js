@@ -35,6 +35,21 @@ export const styles = StyleSheet.create({
     borderColor: colors.btnBlue,
     backgroundColor: colors.lightBlue,
   },
+  topTextSty2IOS: {
+    fontSize: fontSize.small,
+    color: colors.btnBlue,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+  addressViewIOS: {
+    borderWidth: 1,
+    borderRadius: sizes.screenWidth * 0.3,
+    width: sizes.screenWidth * 0.34,
+    height: sizes.screenHeight * 0.03,
+    borderColor: colors.btnBlue,
+    backgroundColor: colors.lightBlue,
+    justifyContent:'center'
+  },
   MainCartView: {
     // borderWidth:1,
     padding: sizes.screenWidth * 0.03,
@@ -100,6 +115,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: sizes.screenWidth * 0.07,
   },
+
   pricesStyling2: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -136,6 +152,21 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.btnBlue,
     width: sizes.screenHeight * 0.46,
   },
+  bottomBtnIOS: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // marginLeft: sizes.screenWidth * 0.04,
+    paddingHorizontal: sizes.screenWidth * 0.03,
+    marginTop: sizes.screenHeight * 0.02,
+    // borderWidth: 1,
+    borderRadius: sizes.screenWidth * 0.1,
+    height: sizes.screenHeight * 0.06,
+    backgroundColor: colors.btnBlue,
+    width: sizes.screenHeight * 0.42,
+    alignSelf:'center'
+  },
+
   bottomBtnDisable: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -148,6 +179,19 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.gray,
     width: sizes.screenHeight * 0.46,
   },
+  bottomBtnDisableIOS: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // marginLeft: sizes.screenWidth * 0.04,
+    paddingHorizontal: sizes.screenWidth * 0.03,
+    marginTop: sizes.screenHeight * 0.02,
+    borderRadius: sizes.screenWidth * 0.1,
+    height: sizes.screenHeight * 0.06,
+    backgroundColor: colors.gray,
+    width: sizes.screenHeight * 0.42,
+    alignSelf:'center'
+  },
   modalBottomBtn: {
     textAlignVertical: 'center',
     textAlign: 'center',
@@ -159,6 +203,18 @@ export const styles = StyleSheet.create({
     width: sizes.screenHeight * 0.46,
     alignItems: 'center',
     paddingTop: sizes.screenHeight * 0.015
+  },
+  modalBottomBtnIOS: {
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    marginLeft: sizes.screenWidth * 0.04,
+    marginTop: sizes.screenHeight * 0.05,
+    borderRadius: sizes.screenWidth * 0.1,
+    height: sizes.screenHeight * 0.06,
+    backgroundColor: colors.btnBlue,
+    width: sizes.screenHeight * 0.42,
+    alignItems: 'center',
+    paddingTop: sizes.screenHeight * 0.018
   },
   forwardIcon: {
     resizeMode: 'contain',
@@ -267,5 +323,9 @@ export const styles = StyleSheet.create({
   errorText: {
     color: colors.red,
     // marginTop:sizes.screenHeight * 0.03
-  }
+  },
+
+  marginBtm:{
+    bottom:sizes.screenHeight * 0.12
+  },
 });

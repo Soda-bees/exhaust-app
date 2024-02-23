@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, TouchableOpacity, Image, SafeAreaView, ScrollView, ActivityIndicator } from 'react-native'
+import { View, Text, ImageBackground, TouchableOpacity, Image, SafeAreaView, ScrollView, ActivityIndicator, Platform } from 'react-native'
 import { useState } from 'react'
 import Header from '../../components/Header'
 import { styles } from './style'
@@ -165,7 +165,7 @@ export default function ShippingAddresses({ navigation }) {
           </View>
         </View>
         <TouchableOpacity
-          style={styles.bottomBtn}
+          style={Platform.OS == 'android' ? styles.bottomBtn : styles.bottomBtnIOS}
           onPress={() => navigation.navigate('AddShippingAddress')}>
           <Text style={styles.bottomBtnText}>Add new address</Text>
           <Image source={images.forwardIcon} style={styles.forwardIcon} />

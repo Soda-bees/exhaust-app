@@ -5,7 +5,8 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
-  BackHandler
+  BackHandler,
+  Platform
 } from 'react-native';
 import React, { useEffect } from 'react';
 import { styles } from './style';
@@ -41,7 +42,7 @@ export default function OrderConfirm({ navigation }) {
             confirm your recent order with us. Below are the details of your
             purchase:
           </Text>
-          <TouchableOpacity style={styles.bottomBtn1} onPress={() => navigation.push('MyTabs')}>
+          <TouchableOpacity style={Platform.OS == 'android' ? styles.bottomBtn1 : styles.bottomBtn1IOS} onPress={() => navigation.push('MyTabs')}>
             <Text style={styles.bottomBtnText}>Back to Home</Text>
           </TouchableOpacity>
         </View>

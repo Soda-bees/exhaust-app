@@ -10,6 +10,7 @@ import {
   Button,
   ScrollView,
   RefreshControl,
+  Platform,
 } from 'react-native';
 import images from '../../services/utilities/images';
 import { colors, sizes } from '../../services';
@@ -187,9 +188,11 @@ useEffect(() => {
             .filter(item => item.selected)
             .map((selectedBrand, index) => {
               return (
-                <Text style={styles.filerNameStyling} key={index}>
+                <View style={Platform.OS == 'ios' && styles.selectedCartView}>
+                <Text style={Platform.OS == 'android' ? styles.filerNameStyling : styles.filerNameStylingIOS} key={index}>
                   {selectedBrand.name}
                 </Text>
+                </View>
               );
             })
           }
@@ -216,9 +219,7 @@ useEffect(() => {
                     return (
                       <View key={index}
                       >
-                        <View style={{
-                          backgroundColor: colors.white, borderRadius: sizes.screenWidth * 0.03,
-                        }}>
+                        <View style={styles.productCartStyle}>
 
                           <TouchableOpacity
                             onPress={() =>
@@ -240,19 +241,22 @@ useEffect(() => {
                                 {item.description}
                               </Text>
                               <View style={styles.priceAndPlusSignView}>
-                                <Text style={styles.lastLeftViewTextHeading1}>
+                                <Text style={Platform.OS == 'android' ? styles.lastLeftViewTextHeading1 : styles.lastLeftViewTextHeading1IOS}>
                                   {`$${item.price}.00`}
                                 </Text>
-                                <View style={styles.plusImgView}>
-                                  <View
-
-                                  >
-                                    <Image
-                                      source={images.plusSign}
-                                      style={styles.plusSignImg}
-                                    />
+                                {Platform.OS == 'android' ? (
+                                      <View style={styles.plusImgView}>
+                                      <Image
+                                        source={images.plusSign}
+                                        style={styles.plusSignImg}
+                                      />
                                   </View>
-                                </View>
+                                ) : (
+                                  <View style={styles.cartPlusBtnStyleIOS} >
+                                    <Image source={images.plusImg} style={styles.plusImgStyle} />
+                                  </View>
+                                )}
+                            
                               </View>
                             </View>
                           </TouchableOpacity>
@@ -263,7 +267,7 @@ useEffect(() => {
               }
             </View>
           </ScrollView>
-          {/* <View style={{marginBottom:sizes.screenHeight * 0.01}}></View> */}
+          <View style={Platform.OS == 'ios' && styles.margin}></View>
         </View>
       </View>
       <Modal
@@ -285,12 +289,21 @@ useEffect(() => {
                   onPress={() => {
                     handleSelectBrand(index);
                   }}>
-                  <Text
-                    style={
-                      item.selected ? styles.carNameSelected : styles.carName
-                    }>
-                    {item.name}
-                  </Text>
+                    {Platform.OS == 'android' ? (
+                          <Text
+                          style={
+                            item.selected ? styles.carNameSelected : styles.carName
+                          }>
+                          {item.name}
+                        </Text>
+                    ) : (
+                      <Text
+                      style={
+                        item.selected ? styles.carNameSelectedIOS : styles.carNameIOS
+                      }>
+                      {item.name}
+                    </Text>
+                    )}
                 </TouchableOpacity>
               );
             })}

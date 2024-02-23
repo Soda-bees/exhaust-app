@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { styles } from './style';
@@ -181,11 +182,11 @@ export default function OrderDetails({ navigation, route }) {
         </View>
         {
           loader ?
-            <View style={styles.loaderContainer}>
+            <View style={Platform.OS == 'android' ? styles.loaderContainer : styles.bottomBtnIOS}> 
               <Loader />
             </View>
             : orderStatus === 'Processing' &&
-            <TouchableOpacity style={styles.bottomBtn}
+            <TouchableOpacity style={Platform.OS == 'android' ? styles.bottomBtn : styles.bottomBtnIOS}
               onPress={() => setIsPermissionModal(true)}
             >
               <Text style={styles.bottomBtnText}>Cancel order</Text>

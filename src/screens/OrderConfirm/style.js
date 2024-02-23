@@ -54,6 +54,16 @@ export const styles = StyleSheet.create({
         width: sizes.screenHeight * 0.44,
         justifyContent:'center'
       },
+      bottomBtn1IOS: {
+        // marginLeft: sizes.screenWidth * 0.01,
+        marginTop: sizes.screenHeight * 0.1,
+        borderRadius:sizes.screenWidth * 0.1,    
+        height: sizes.screenHeight * 0.07,
+        backgroundColor:colors.btnBlue,
+        width: sizes.screenHeight * 0.42,
+        justifyContent:'center',
+        alignSelf:'center'
+      },
       bottomBtnText:{
         color:colors.white,
         fontSize:fontSize.medium,

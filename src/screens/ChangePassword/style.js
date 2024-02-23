@@ -64,6 +64,21 @@ export const styles = StyleSheet.create({
     color: colors.black,
     // backgroundColor:'red'
   },
+  inputFieldRowIOS:{
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
+    borderWidth: 1,
+    width: sizes.screenWidth * 0.9,
+    borderRadius: sizes.screenWidth * 0.3,
+    paddingLeft: sizes.screenWidth * 0.05,
+    borderColor: colors.black,
+    marginTop: sizes.screenHeight * 0.01,
+    marginBottom: sizes.screenHeight * 0.01,
+    color: colors.black,
+    height:sizes.screenHeight * 0.06
+    // backgroundColor:'red'
+  },
   icon2: {
     resizeMode: 'contain',
     height: sizes.screenWidth * 0.04,

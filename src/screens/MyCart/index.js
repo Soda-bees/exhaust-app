@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Image,
   ImageBackground,
+  Platform,
   RefreshControl,
   SafeAreaView,
   ScrollView,
@@ -226,13 +227,14 @@ export default function MyCart({ navigation, route }) {
                   }
                 </ScrollView>
               </View>
-              <View style={styles.promoSty}>
+              <View style={Platform.OS == 'android' ? styles.promoSty : styles.promoStyIOS}>
                 <TextInput
                   placeholder="Promo Code"
                   placeholderTextColor={colors.disabledBg3}
+                  style={styles.inputFieldIOS}
                 />
                 <TouchableOpacity>
-                  <Text style={styles.promoSty2}>Apply</Text>
+                  <Text style={Platform.OS == 'android' ? styles.promoSty2 : styles.promoSty2IOS}>Apply</Text>
                 </TouchableOpacity>
               </View>
               <View>
@@ -250,7 +252,7 @@ export default function MyCart({ navigation, route }) {
                 </View>
               </View>
               <TouchableOpacity
-                style={styles.bottomBtn}
+                style={Platform.OS == 'android' ? styles.bottomBtn : styles.bottomBtnIOS}
                 onPress={() => navigation.navigate('Checkout')}>
                 <Text style={styles.bottomBtnText}>Proceed to Checkout</Text>
                 <Image source={images.forwardIcon} style={styles.forwardIcon} />

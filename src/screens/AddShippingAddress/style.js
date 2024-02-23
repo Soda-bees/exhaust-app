@@ -98,6 +98,18 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: sizes.screenHeight * 0.03
   },
+  bottomBtnIOS: {
+    marginLeft: sizes.screenWidth * 0.01,
+    // marginTop: sizes.screenHeight * 0.22,
+    borderRadius: sizes.screenWidth * 0.07,
+    height: sizes.screenHeight * 0.065,
+    backgroundColor: colors.btnBlue,
+    width: sizes.screenHeight * 0.42,
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginBottom: sizes.screenHeight * 0.1,
+    // alignSelf:'center'
+  },
   bottomBtnText: {
     color: colors.white,
     fontSize: fontSize.medium,

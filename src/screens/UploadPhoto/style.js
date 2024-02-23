@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     height: sizes.screenHeight * 0.8,
     justifyContent: 'center',
+  
   },
   profileImgSiz: {
     resizeMode: 'contain',
@@ -63,5 +64,5 @@ export const styles = StyleSheet.create({
     marginBottom: sizes.screenHeight * 0.01,
     fontWeight: '500',
     color: colors.error
-  }
+  },
 });

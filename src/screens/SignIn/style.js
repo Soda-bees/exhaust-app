@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
 
   heading: {
     fontSize: fontSize.h4,
-    fontWeight: '600',
+    fontWeight: '700',
     color: colors.black,
     margin: sizes.screenHeight * 0.04,
   },
@@ -113,7 +113,7 @@ export const styles = StyleSheet.create({
 
   blueBtnText: {
     color: colors.white,
-    fontWeight: '600',
+    fontWeight: '700',
   },
 
   signUpText: {
@@ -183,13 +183,13 @@ export const styles = StyleSheet.create({
     padding: sizes.screenHeight * 0.02,
   },
   logoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    // flexDirection: 'row',
+    // alignItems: 'center',
     marginBottom: sizes.screenHeight * 0.03
   },
   logoSizing: {
-    resizeMode: 'contain',
-    width: sizes.screenWidth * 0.15,
+    // resizeMode: 'contain',
+    width: sizes.screenWidth * 0.7,
     height: sizes.screenHeight * 0.07,
     // backgroundColor:'red'
   },

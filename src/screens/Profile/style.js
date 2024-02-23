@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     height: sizes.screenWidth * 0.23,
     marginTop: sizes.screenHeight * 0.03,
     marginLeft: sizes.screenHeight * 0.16,
-    borderRadius: sizes.screenWidth * 0.02
+    borderRadius: sizes.screenWidth * 0.02,
   },
   iconImgSty: {
     resizeMode: 'contain',
@@ -80,6 +80,16 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.white,
     paddingBottom:sizes.screenWidth * 0.04
   },
+  bottomMainViewIOS: {
+    paddingHorizontal: sizes.screenWidth * 0.04,
+    borderWidth: 1,
+    borderRadius: sizes.screenWidth * 0.04,
+    borderColor: colors.disabledBg2,
+    backgroundColor: colors.white,
+    paddingBottom:sizes.screenWidth * 0.04,
+    width:sizes.screenWidth * 0.92,
+    alignSelf:'center'
+  },
   bottomView: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -114,16 +124,19 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: fontSize.large
   },
+
   btnIconImgSty: {
     resizeMode: 'contain',
     width: sizes.screenWidth * 0.08,
     height: sizes.screenWidth * 0.04,
     marginLeft: sizes.screenWidth * 0.04,
   },
+
   btnIconView: {
     position: 'absolute',
     right: 0,
   },
+  
   bottomBtn: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -135,6 +148,19 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.btnBlue,
     width: sizes.screenHeight * 0.45,
     marginBottom: sizes.screenHeight*0.02
+  },
+  bottomBtnIOS: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: sizes.screenWidth * 0.03,
+    marginTop: sizes.screenHeight * 0.02,
+    borderRadius: sizes.screenWidth * 0.1,
+    height: sizes.screenHeight * 0.06,
+    backgroundColor: colors.btnBlue,
+    width: sizes.screenHeight * 0.42,
+    marginBottom: sizes.screenHeight * 0.08,
+    alignSelf:'center'
   },
   forwardIcon: {
     resizeMode: 'contain',
@@ -157,6 +183,18 @@ export const styles = StyleSheet.create({
     paddingLeft: sizes.screenWidth * 0.05,
     marginTop: sizes.screenHeight * 0.02
   },
+  inputFieldIOS: {
+    width: sizes.screenWidth * 0.9,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: sizes.screenHeight * 0.08,
+    borderColor: colors.borderGrey,
+    paddingLeft: sizes.screenWidth * 0.05,
+    marginTop: sizes.screenHeight * 0.02,
+    height:sizes.screenHeight * 0.06,
+    alignSelf:'center'
+  },
   icon: {
     resizeMode: 'contain',
     height: sizes.screenWidth * 0.04,
@@ -175,10 +213,28 @@ export const styles = StyleSheet.create({
     paddingHorizontal: sizes.screenHeight * 0.01,
     fontSize: fontSize.small
   },
+  placeholderIOS: {
+    position: 'absolute',
+    left: sizes.screenWidth * 0.12,
+    bottom: sizes.screenWidth * 0.11,
+    backgroundColor: '#F3F5F8',
+    color: colors.black,
+    paddingHorizontal: sizes.screenHeight * 0.01,
+    fontSize: fontSize.small
+  },
   placeholderPhone: {
     position: 'absolute',
     left: sizes.screenWidth * 0.12,
     bottom: sizes.screenWidth * 0.1,
+    backgroundColor: '#F3F5F8',
+    color: colors.black,
+    paddingHorizontal: sizes.screenHeight * 0.01,
+    fontSize: fontSize.small
+  },
+  placeholderPhoneIOS: {
+    position: 'absolute',
+    left: sizes.screenWidth * 0.12,
+    bottom: sizes.screenWidth * 0.115,
     backgroundColor: '#F3F5F8',
     color: colors.black,
     paddingHorizontal: sizes.screenHeight * 0.01,
@@ -191,6 +247,16 @@ export const styles = StyleSheet.create({
     borderRadius: sizes.screenWidth * 0.2,
     borderColor: colors.borderGrey,
     borderWidth: 1,
+  },
+  MainCartView2IOS: {
+    paddingHorizontal: sizes.screenWidth * 0.06,
+    paddingVertical: sizes.screenHeight * 0.005,
+    marginTop: sizes.screenHeight * 0.02,
+    borderRadius: sizes.screenWidth * 0.2,
+    borderColor: colors.borderGrey,
+    borderWidth: 1,
+    width:sizes.screenHeight * 0.416,
+    alignSelf:'center'
   },
   inputFieldBackground: {
     borderTopRightRadius: sizes.screenWidth * 0.08,

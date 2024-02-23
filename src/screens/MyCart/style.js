@@ -210,6 +210,25 @@ export const styles = StyleSheet.create({
     marginTop: sizes.screenWidth * 0.1,
     marginBottom: sizes.screenWidth * 0.07,
   },
+  promoStyIOS: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    paddingHorizontal: sizes.screenWidth * 0.03,
+    marginHorizontal: sizes.screenWidth * 0.06,
+    alignItems: 'center',
+    color: colors.black,
+    backgroundColor: colors.white,
+    borderRadius: sizes.screenWidth * 0.02,
+    marginTop: sizes.screenWidth * 0.03,
+    marginBottom: sizes.screenWidth * 0.07,
+    height:sizes.screenHeight * 0.06
+  },
+
+  inputFieldIOS:{
+    color:colors.black,
+    width:sizes.screenWidth * 0.3,
+  },
+
   promoSty2: {
     backgroundColor: colors.btnBlue,
     color: colors.white,
@@ -218,6 +237,19 @@ export const styles = StyleSheet.create({
     width: sizes.screenWidth * 0.18,
     height: sizes.screenHeight * 0.04,
     borderRadius: sizes.screenWidth * 0.02,
+    fontWeight:'600',
+  },
+  promoSty2IOS: {
+    backgroundColor: colors.btnBlue,
+    color: colors.white,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    paddingTop:10,
+    width: sizes.screenWidth * 0.18,
+    height: sizes.screenHeight * 0.04,
+    borderRadius: sizes.screenWidth * 0.02,
+    overflow:'hidden',
+    fontWeight:'600'
   },
   pricesStyling: {
     flexDirection: 'row',
@@ -258,6 +290,19 @@ export const styles = StyleSheet.create({
     height: sizes.screenHeight * 0.06,
     backgroundColor: colors.btnBlue,
     width: sizes.screenHeight * 0.46,
+  },
+  bottomBtnIOS: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginLeft: sizes.screenWidth * 0.04,
+    // alignSelf:'center',
+    paddingHorizontal: sizes.screenWidth * 0.03,
+    marginTop: sizes.screenHeight * 0.02,
+    borderRadius: sizes.screenWidth * 0.1,
+    height: sizes.screenHeight * 0.06,
+    backgroundColor: colors.btnBlue,
+    width: sizes.screenHeight * 0.42,
   },
   forwardIcon: {
     resizeMode: 'contain',

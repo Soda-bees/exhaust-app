@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform
 } from 'react-native';
 import { useState } from 'react';
 import { styles } from './style';
@@ -167,7 +168,7 @@ export default function PaymentMethod({ navigation }) {
           </View>
         </View>
         <TouchableOpacity
-          style={styles.bottomBtn}
+          style={Platform.OS == 'android' ? styles.bottomBtn : styles.bottomBtnIOS}
           // onPress={() => navigation.navigate('Checkout', { item: { isEdit: true, data: 'some data' } })}
           onPress={() => navigation.navigate('Checkout', { item: { isEdit: false } })}
         >

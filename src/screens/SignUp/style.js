@@ -34,13 +34,13 @@ export const styles = StyleSheet.create({
 
   heading: {
     fontSize: fontSize.h4,
-    fontWeight: '600',
+    fontWeight: '700',
     color: colors.black,
     margin: sizes.screenHeight * 0.04,
   },
   headingIOS: {
     fontSize: fontSize.h4,
-    fontWeight: '600',
+    fontWeight: '700',
     color: colors.black,
     margin: sizes.screenHeight * 0.02,
   },
@@ -150,7 +150,7 @@ export const styles = StyleSheet.create({
 
   blueBtnText: {
     color: colors.white,
-    fontWeight: '600',
+    fontWeight: '700',
   },
 
   signUpText: {
@@ -161,7 +161,7 @@ export const styles = StyleSheet.create({
   blueText: {
     color: colors.btnBlue,
     fontSize: fontSize.smallM,
-    fontWeight: '600',
+    fontWeight: '700',
   },
 
   socialMediaBtnRow: {
@@ -233,8 +233,8 @@ export const styles = StyleSheet.create({
     // marginTop: sizes.screenHeight * 0.03,
   },
   logoSizing: {
-    resizeMode: 'contain',
-    width: sizes.screenWidth * 0.15,
+    // resizeMode: 'contain',
+    width: sizes.screenWidth * 0.7,
     height: sizes.screenHeight * 0.07,
     // backgroundColor:'red'
   },

@@ -7,7 +7,8 @@ import {
   Button,
   TouchableOpacity,
   SafeAreaView,
-  Image
+  Image,
+  Platform
 } from 'react-native';
 import { colors } from '../../services';
 import images from '../../services/utilities/images';
@@ -64,7 +65,7 @@ export default function ResetPassword({ navigation, route }) {
             password on your account.
           </Text>
           <View style={styles.textInputFieldStyling}>
-            <View style={styles.inputFieldRow}>
+            <View style={Platform.OS == 'android' ? styles.inputFieldRow : styles.inputFieldRowIOS}>
               <TextInput
                 style={styles.textStylingStyling}
                 placeholder="Enter New Password"
@@ -80,7 +81,7 @@ export default function ResetPassword({ navigation, route }) {
                 />
               </TouchableOpacity>
             </View>
-            <View style={styles.inputFieldRow}>
+            <View style={Platform.OS == 'android' ? styles.inputFieldRow : styles.inputFieldRowIOS}>
               <TextInput
                 style={styles.textStylingStyling}
                 placeholder="Re-enter Password"

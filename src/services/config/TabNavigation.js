@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { sizes } from '../utilities/sizes';
 import { colors } from '../utilities/colors';
 import images from '../utilities/images';
-import { Image, Text, View } from 'react-native';
+import { Image, Platform, Text, View } from 'react-native';
 import { fontSize } from '../utilities/fonts';
 import Home from '../../screens/Home';
 import PopularrExhaust from '../../screens/PopularExhaust';
@@ -27,8 +27,8 @@ export default function TabNavigation() {
         tabBarStyle: {
           backgroundColor: colors.white,
           width: sizes.screenWidth,
-          height: sizes.screenHeight * 0.08,
-          paddingTop: sizes.screenHeight * 0.01,
+          height: Platform.OS == 'android' ? sizes.screenHeight * 0.08 : sizes.screenHeight * 0.09,
+          paddingTop: Platform.OS == 'android' ? sizes.screenHeight * 0.01 : sizes.screenHeight * 0.02,
           paddingHorizontal: sizes.screenWidth * 0.04,
           borderTopRightRadius: sizes.screenWidth * 0.07,
           borderTopLeftRadius: sizes.screenWidth * 0.07,

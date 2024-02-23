@@ -1,5 +1,5 @@
-import { StyleProp, StyleSheet } from 'react-native';
-import { colors, fontSize, sizes } from '../../services';
+import {StyleProp, StyleSheet} from 'react-native';
+import {colors, fontSize, sizes} from '../../services';
 
 export const styles = StyleSheet.create({
   topMainContainer: {
@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
     width: sizes.screenWidth * 0.12,
     height: sizes.screenWidth * 0.12,
-    borderRadius: sizes.screenWidth * 0.06
+    borderRadius: sizes.screenWidth * 0.06,
   },
 
   searchFilterView: {
@@ -57,20 +57,21 @@ export const styles = StyleSheet.create({
     marginRight: sizes.screenWidth * 0.02,
   },
   filterImgStyling: {
+    resizeMode: 'contain',
     width: sizes.screenWidth * 0.1,
     height: sizes.screenWidth * 0.1,
   },
   textFieldStyling: {
     marginTop: sizes.screenWidth * 0.01,
     width: sizes.screenWidth * 0.65,
-    color: colors.black
+    color: colors.black,
   },
   popularheadingLeft: {
     color: colors.black,
     fontWeight: 'bold',
     fontSize: fontSize.large,
     marginTop: sizes.screenWidth * 0.03,
-    paddingBottom: sizes.screenHeight * 0.01
+    paddingBottom: sizes.screenHeight * 0.01,
   },
   lastMainView: {
     flexDirection: 'row',
@@ -111,6 +112,25 @@ export const styles = StyleSheet.create({
     width: sizes.screenWidth * 0.1,
     height: sizes.screenHeight * 0.05,
   },
+  cartPlusBtnStyleIOS: {
+    width: sizes.screenWidth * 0.12,
+    height: sizes.screenHeight * 0.056,
+    backgroundColor: colors.btnBlue,
+    borderTopLeftRadius: sizes.screenWidth * 0.07,
+    borderBottomRightRadius: sizes.screenWidth * 0.037,
+    position: 'absolute',
+    left: sizes.screenWidth * 0.265,
+    top: sizes.screenHeight * 0.01,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  plusImgStyle: {
+    resizeMode: 'contain',
+    width: sizes.screenWidth * 0.04,
+    height: sizes.screenHeight * 0.03,
+  },
+
   lastLeftViewTextHeading: {
     fontSize: fontSize.extraLarge,
     fontWeight: 'bold',
@@ -123,6 +143,13 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: colors.black,
     marginTop: sizes.screenWidth * 0.02,
+  },
+  lastLeftViewTextHeading1IOS: {
+    fontSize: fontSize.large,
+    fontWeight: 'bold',
+    color: colors.black,
+    marginTop: sizes.screenWidth * 0.02,
+    marginBottom: sizes.screenWidth * 0.05,
   },
   lastLeftViewTextPara: {
     fontSize: fontSize.small,
@@ -191,6 +218,19 @@ export const styles = StyleSheet.create({
     marginLeft: sizes.screenWidth * 0.02,
     marginTop: sizes.screenHeight * 0.01,
   },
+  carNameIOS: {
+    color: colors.black,
+    borderWidth: 1,
+    paddingHorizontal: sizes.screenWidth * 0.09,
+    paddingVertical: sizes.screenHeight * 0.01,
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    borderRadius: sizes.screenWidth * 0.05,
+    fontSize: fontSize.smallM,
+    marginLeft: sizes.screenWidth * 0.02,
+    marginTop: sizes.screenHeight * 0.01,
+    overflow: 'hidden',
+  },
   carNameSelected: {
     color: colors.white,
     paddingHorizontal: sizes.screenWidth * 0.09,
@@ -202,6 +242,19 @@ export const styles = StyleSheet.create({
     marginLeft: sizes.screenWidth * 0.02,
     marginTop: sizes.screenHeight * 0.01,
     backgroundColor: colors.btnBlue,
+  },
+  carNameSelectedIOS: {
+    color: colors.white,
+    paddingHorizontal: sizes.screenWidth * 0.09,
+    paddingVertical: sizes.screenHeight * 0.01,
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    borderRadius: sizes.screenWidth * 0.05,
+    fontSize: fontSize.smallM,
+    marginLeft: sizes.screenWidth * 0.02,
+    marginTop: sizes.screenHeight * 0.01,
+    backgroundColor: colors.btnBlue,
+    overflow: 'hidden',
   },
   btnView: {
     alignSelf: 'center',
@@ -230,8 +283,29 @@ export const styles = StyleSheet.create({
     paddingVertical: sizes.screenHeight * 0.004,
     borderColor: colors.black,
     textAlign: 'center',
-    textAlignVertical: 'center'
+    textAlignVertical: 'center',
   },
+  filerNameStylingIOS: {
+    fontSize: fontSize.small,
+    color: colors.black,
+    fontWeight: '500',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+
+  selectedCartView: {
+    borderRadius: sizes.screenWidth * 0.3,
+    overflow: 'hidden',
+    marginTop: sizes.screenWidth * 0.01,
+    borderWidth: 1,
+    borderColor: colors.black,
+    marginLeft: sizes.screenWidth * 0.02,
+    marginBottom: sizes.screenWidth * 0.01,
+    paddingHorizontal: sizes.screenWidth * 0.05,
+    paddingVertical: sizes.screenHeight * 0.005,
+    backgroundColor: 'white',
+  },
+
   filterView: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -252,12 +326,26 @@ export const styles = StyleSheet.create({
     gap: sizes.screenWidth * 0.03,
     width: sizes.screenWidth * 0.9,
     marginLeft: sizes.screenWidth * 0.025,
-    marginVertical: sizes.screenHeight * 0.02
+    marginVertical: sizes.screenHeight * 0.02,
   },
   scrollViewParent: {
     height: sizes.screenHeight * 0.65,
   },
   scrollViewParent2: {
     height: sizes.screenHeight * 0.58,
-  }
+  },
+
+  productCartStyle: {
+    backgroundColor: colors.white,
+    borderRadius: sizes.screenWidth * 0.03,
+    shadowColor: '#000',
+    shadowOffset: {width: 5, height: 5},
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 12,
+  },
+
+  margin: {
+    marginBottom: sizes.screenHeight * 0.05,
+  },
 });

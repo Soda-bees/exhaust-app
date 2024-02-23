@@ -91,6 +91,20 @@ export const styles = StyleSheet.create({
     width: sizes.screenHeight * 0.45,
     marginBottom: sizes.screenHeight * 0.02
   },
+  bottomBtnIOS: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // marginLeft: sizes.screenWidth * 0.044,
+    paddingHorizontal: sizes.screenWidth * 0.03,
+    // marginTop: sizes.screenHeight * 0.15,
+    borderRadius: sizes.screenWidth * 0.1,
+    height: sizes.screenHeight * 0.06,
+    backgroundColor: colors.btnBlue,
+    width: sizes.screenHeight * 0.42,
+    marginBottom: sizes.screenHeight * 0.1,
+    alignSelf:'center'
+  },
   forwardIcon: {
     resizeMode: 'contain',
     width: sizes.screenWidth * 0.05,

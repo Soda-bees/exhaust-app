@@ -258,9 +258,9 @@ export default function SignUp({navigation}) {
   return (
     <SafeAreaView>
       <ImageBackground style={Platform.OS == 'android' ? styles.container : styles.containerIOS} source={images.bg}>
-        <View style={Platform.OS == 'android' ? styles.logoRow : styles.logoRowIOS}>
-          <Image source={images.logo} style={styles.logoSizing} />
-          <Text style={styles.logoText}>CSZ EXHAUST</Text>
+      <View style={styles.logoRow}>
+          <Image source={images.exhaustLogo} style={styles.logoSizing} />
+          {/* <Text style={styles.logoText}>CSZ EXHAUST</Text> */}
         </View>
           <View style={styles.body}>
             <View style={styles.signInSection}>

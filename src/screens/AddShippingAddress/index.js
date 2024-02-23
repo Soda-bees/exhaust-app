@@ -6,29 +6,35 @@ import {
   Image,
   SafeAreaView,
   TextInput,
+  Platform,
 } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import { styles } from './style';
+import React, {useEffect, useRef, useState} from 'react';
+import {styles} from './style';
 import images from '../../services/utilities/images';
 import Header from '../../components/Header';
-import { colors, fontSize, sizes } from '../../services';
+import {colors, fontSize, sizes} from '../../services';
 import CountryPicker from 'react-native-country-picker-modal';
 import PhoneInput from 'react-native-phone-number-input';
 import formatToJSON from '../../services/utilities/JsonLog';
-import { useDispatch, useSelector } from 'react-redux';
-import { addShippingAddressRedux, selectUserData, updateAddressRedux } from '../../store/userData';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  addShippingAddressRedux,
+  selectUserData,
+  updateAddressRedux,
+} from '../../store/userData';
 import Loader from '../../components/Loader';
-import { selectAuthToken } from '../../store/authToken';
-import { addShippingAddress, updateShippingAddress } from '../../services/config/API';
+import {selectAuthToken} from '../../store/authToken';
+import {
+  addShippingAddress,
+  updateShippingAddress,
+} from '../../services/config/API';
 
-export default function AddShippingAddress({ navigation, route }) {
-
-  const dispatch = useDispatch()
+export default function AddShippingAddress({navigation, route}) {
+  const dispatch = useDispatch();
   const item = route.params?.item;
 
-
-  const userData = useSelector(selectUserData)
-  const authToken = useSelector(selectAuthToken)
+  const userData = useSelector(selectUserData);
+  const authToken = useSelector(selectAuthToken);
   // console.log(formatToJSON(userData.shippingAddress.length));
 
   const [address, setAddress] = useState('');
@@ -39,14 +45,22 @@ export default function AddShippingAddress({ navigation, route }) {
   const [isCountryPickerVisible, setCountryPickerVisibility] = useState(false);
   const [value, setValue] = useState('');
   const [formattedValue, setFormattedValue] = useState('');
-  const phoneInput = useRef(null)
+  const phoneInput = useRef(null);
   // const [contactNo, setContactNo] = useState(userData ? userData.number : '');
-  const [contactNo, setContactNo] = useState(route.params && item ? item?.number : userData ? userData.number : '');
-  const [loader, setLoader] = useState(false)
-  const [error, setError] = useState('')
-  const [isEdit, setIsEdit] = useState(false)
-  const [addressId, setAddressId] = useState('')
-  const [defaultCountryCode, setDefaultCountryCode] = useState(route.params && item ? item?.countryCode : userData ? userData.countryCode : '')
+  const [contactNo, setContactNo] = useState(
+    route.params && item ? item?.number : userData ? userData.number : '',
+  );
+  const [loader, setLoader] = useState(false);
+  const [error, setError] = useState('');
+  const [isEdit, setIsEdit] = useState(false);
+  const [addressId, setAddressId] = useState('');
+  const [defaultCountryCode, setDefaultCountryCode] = useState(
+    route.params && item
+      ? item?.countryCode
+      : userData
+      ? userData.countryCode
+      : '',
+  );
 
   // useEffect(() => {
   //   if (userData) {
@@ -57,15 +71,15 @@ export default function AddShippingAddress({ navigation, route }) {
 
   useEffect(() => {
     if (route.params && item) {
-      setIsEdit(true)
-      setAddress(item?.address)
-      setCity(item?.city)
-      setState(item?.state)
+      setIsEdit(true);
+      setAddress(item?.address);
+      setCity(item?.city);
+      setState(item?.state);
       setSelectedCountry(item?.country);
-      setZipCode(String(item?.zipCode))
-      setAddressId(item?._id)
+      setZipCode(String(item?.zipCode));
+      setAddressId(item?._id);
     } else {
-      setIsEdit(false)
+      setIsEdit(false);
     }
   }, [route.params]);
 
@@ -79,8 +93,7 @@ export default function AddShippingAddress({ navigation, route }) {
   };
 
   const handleAddShippingAddress = async () => {
-
-    setLoader(true)
+    setLoader(true);
     try {
       const obj = {
         address,
@@ -88,31 +101,32 @@ export default function AddShippingAddress({ navigation, route }) {
         state,
         zipCode,
         country: selectedCountry,
-        countryCode: phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
-        number: phoneInput?.current?._reactInternals?.stateNode?.state?.number
-      }
-      const response = await addShippingAddress(authToken, obj)
+        countryCode:
+          phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
+        number: phoneInput?.current?._reactInternals?.stateNode?.state?.number,
+      };
+      const response = await addShippingAddress(authToken, obj);
       if (response.success) {
-        const newAddress = response.newAddress
-        dispatch(addShippingAddressRedux(newAddress))
-        setError('')
-        setLoader(false)
-        navigation.navigate('ShippingAddresses')
+        const newAddress = response.newAddress;
+        dispatch(addShippingAddressRedux(newAddress));
+        setError('');
+        setLoader(false);
+        navigation.navigate('ShippingAddresses');
       } else {
-        setError(response.message)
-        setLoader(false)
+        setError(response.message);
+        setLoader(false);
       }
-      setLoader(false)
+      setLoader(false);
     } catch (error) {
-      setLoader(false)
+      setLoader(false);
       console.log(error.message);
-      setError(error.message)
+      setError(error.message);
     }
-  }
+  };
 
   const handleEditShippingAddress = async () => {
     try {
-      setLoader(true)
+      setLoader(true);
       const obj = {
         addressId,
         address,
@@ -122,28 +136,28 @@ export default function AddShippingAddress({ navigation, route }) {
         country: selectedCountry,
         selected: item?.selected,
         userId: item?.userId,
-        countryCode: phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
-        number: phoneInput?.current?._reactInternals?.stateNode?.state?.number
-      }
-      const response = await updateShippingAddress(authToken, obj)
+        countryCode:
+          phoneInput?.current?._reactInternals?.stateNode?.state?.countryCode,
+        number: phoneInput?.current?._reactInternals?.stateNode?.state?.number,
+      };
+      const response = await updateShippingAddress(authToken, obj);
       console.log(response);
       if (response.success) {
-        const updatedAddress = response.updatedAddress
-        dispatch(updateAddressRedux(updatedAddress))
-        setError('')
-        setLoader(false)
-        navigation.navigate('ShippingAddresses')
+        const updatedAddress = response.updatedAddress;
+        dispatch(updateAddressRedux(updatedAddress));
+        setError('');
+        setLoader(false);
+        navigation.navigate('ShippingAddresses');
       } else {
-        setError(response.message)
-        setLoader(false)
+        setError(response.message);
+        setLoader(false);
       }
     } catch (error) {
       console.log(error.message);
-      setError(error.message)
-      setLoader(false)
+      setError(error.message);
+      setLoader(false);
     }
-
-  }
+  };
 
   return (
     <SafeAreaView>
@@ -208,11 +222,12 @@ export default function AddShippingAddress({ navigation, route }) {
                   withFlag
                   withCountryNameButton
                   withAlphaFilter
-                  placeholder={selectedCountry ? selectedCountry : 'Select Country'}
+                  placeholder={
+                    selectedCountry ? selectedCountry : 'Select Country'
+                  }
                   onSelect={onCountrySelect}
                   visible={isCountryPickerVisible}
                   onClose={() => setCountryPickerVisibility(false)}
-
                 />
               </View>
             </View>
@@ -233,9 +248,12 @@ export default function AddShippingAddress({ navigation, route }) {
                 value={contactNo}
                 withDarkTheme={false}
                 codeTextStyle={{
-                  height:sizes.screenHeight * 0.028,
-                  marginTop:sizes.screenHeight * 0.004,
-                  right:sizes.screenWidth * 0.025
+                  height: sizes.screenHeight * 0.028,
+                  marginTop:
+                    Platform.OS == 'android'
+                      ? sizes.screenHeight * 0.004
+                      : sizes.screenHeight * 0.015,
+                  right: sizes.screenWidth * 0.025,
                 }}
                 flagButtonStyle={{
                   backgroundColor: colors.bgLight,
@@ -251,7 +269,10 @@ export default function AddShippingAddress({ navigation, route }) {
                   height: sizes.screenHeight * 0.058,
                   color: colors.black,
                   top: sizes.screenHeight * 0.004,
-                  right:sizes.screenWidth * 0.045
+                  right:
+                    Platform.OS == 'android'
+                      ? sizes.screenWidth * 0.045
+                      : sizes.screenWidth * 0.037,
                 }}
                 textInputProps={{
                   placeholderTextColor: colors.disabledBg2,
@@ -265,24 +286,32 @@ export default function AddShippingAddress({ navigation, route }) {
           </View>
         </View>
         <View>
-          {
-            loader ?
-              <View style={styles.loaderView}>
-                <Loader />
-              </View>
-              :
-              <TouchableOpacity
-                style={styles.bottomBtn}
-                onPress={() => {
-                  isEdit ?
-                    handleEditShippingAddress()
-                    :
-                    handleAddShippingAddress()
-                }}
-              >
-                <Text style={styles.bottomBtnText}>{isEdit ? 'Update address' : 'Save Address'}</Text>
-              </TouchableOpacity>
-          }
+          {loader ? (
+            <View
+              style={
+                Platform.OS == 'android'
+                  ? styles.loaderView
+                  : styles.bottomBtnIOS
+              }>
+              <Loader />
+            </View>
+          ) : (
+            <TouchableOpacity
+              style={
+                Platform.OS == 'android'
+                  ? styles.bottomBtn
+                  : styles.bottomBtnIOS
+              }
+              onPress={() => {
+                isEdit
+                  ? handleEditShippingAddress()
+                  : handleAddShippingAddress();
+              }}>
+              <Text style={styles.bottomBtnText}>
+                {isEdit ? 'Update address' : 'Save Address'}
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </ImageBackground>
     </SafeAreaView>

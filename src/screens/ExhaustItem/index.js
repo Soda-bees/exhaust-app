@@ -6,52 +6,56 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { styles } from './style';
+import React, {useEffect, useState} from 'react';
+import {styles} from './style';
 import images from '../../services/utilities/images';
 import Header from '../../components/Header';
-import TrackPlayer, { useProgress, Event } from 'react-native-track-player';
-import { ProgressBar } from 'react-native-paper';
-import { colors, sizes } from '../../services';
+import TrackPlayer, {useProgress, Event} from 'react-native-track-player';
+import {ProgressBar} from 'react-native-paper';
+import {colors, sizes} from '../../services';
 import formatToJSON from '../../services/utilities/JsonLog';
 import ImageSLider from '../../components/ExhaustItemImageSlider';
-import { useDispatch, useSelector } from 'react-redux';
-import { addToCartrRedux, increasPreviousQty, selectUserData } from '../../store/userData';
-import { addToCart } from '../../services/config/API';
-import { selectAuthToken } from '../../store/authToken';
-import Modal from "react-native-modal"
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  addToCartrRedux,
+  increasPreviousQty,
+  selectUserData,
+} from '../../store/userData';
+import {addToCart} from '../../services/config/API';
+import {selectAuthToken} from '../../store/authToken';
+import Modal from 'react-native-modal';
 
-export default function ExhaustItem({ route, navigation }) {
+export default function ExhaustItem({route, navigation}) {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
-
-  const userData = useSelector(selectUserData)
-  const authToken = useSelector(selectAuthToken)
+  const userData = useSelector(selectUserData);
+  const authToken = useSelector(selectAuthToken);
 
   const [soundPlayBtn, setSoundPlayBtn] = useState(false);
   const [quantity, setQuantity] = useState(0);
   const [currentPosition, setCurrentPosition] = useState(0);
   const [noProgess, setNoProgess] = useState(false);
   const [audioData, setAudioData] = useState();
-  const [sound, setSound] = useState()
-  const [description, setDescription] = useState()
-  const [price, setPrice] = useState()
-  const [productQty, setProductQty] = useState()
-  const [productImages, setProductImages] = useState([])
-  const [loader, setLoader] = useState(false)
-  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [sound, setSound] = useState();
+  const [description, setDescription] = useState();
+  const [price, setPrice] = useState();
+  const [productQty, setProductQty] = useState();
+  const [productImages, setProductImages] = useState([]);
+  const [loader, setLoader] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const { data } = route?.params;
+  const {data} = route?.params;
 
   useEffect(() => {
-    setSound(data?.sound)
-    setDescription(data?.description)
-    setPrice(`$${data?.price}.00`)
-    setProductQty(data?.quantity)
-    setProductImages(data?.images)
-  }, [data])
+    setSound(data?.sound);
+    setDescription(data?.description);
+    setPrice(`$${data?.price}.00`);
+    setProductQty(data?.quantity);
+    setProductImages(data?.images);
+  }, [data]);
 
   useEffect(() => {
     if (Math.ceil(progress.buffered) == Math.ceil(progress.position)) {
@@ -71,9 +75,8 @@ export default function ExhaustItem({ route, navigation }) {
   const progress = useProgress();
 
   useEffect(() => {
-
     TrackPlayer.setupPlayer().then(() => {
-      TrackPlayer.addEventListener(Event.PlaybackState, ({ state }) => {
+      TrackPlayer.addEventListener(Event.PlaybackState, ({state}) => {
         if (state === TrackPlayer.STATE_ENDED) {
           setIsPlaying(false);
         }
@@ -81,7 +84,7 @@ export default function ExhaustItem({ route, navigation }) {
     });
 
     return () => {
-      TrackPlayer?.removeEventListener(Event.PlaybackState);
+      // TrackPlayer?.removeEventListener(Event.PlaybackState);
     };
   }, []);
 
@@ -109,7 +112,7 @@ export default function ExhaustItem({ route, navigation }) {
           console.log('works------------------->>>');
           await TrackPlayer.reset();
           await TrackPlayer.add({
-            url: sound
+            url: sound,
             // url: 'https://res.cloudinary.com/doohobw9k/video/upload/v1703142572/Exhaust/Sounds/tjcgdru9vkz4xduv26fv.mp3',
           });
         }
@@ -122,8 +125,7 @@ export default function ExhaustItem({ route, navigation }) {
   };
 
   useEffect(() => {
-    const unsubscribeFocus = navigation.addListener('focus', () => {
-    });
+    const unsubscribeFocus = navigation.addListener('focus', () => {});
 
     const unsubscribeBlur = navigation.addListener('blur', () => {
       TrackPlayer.stop();
@@ -141,88 +143,89 @@ export default function ExhaustItem({ route, navigation }) {
 
   const handleAddToCart = async () => {
     if (quantity <= productQty) {
-      setLoader(true)
+      setLoader(true);
       try {
-        const productId = data?._id
-        const qty = quantity
+        const productId = data?._id;
+        const qty = quantity;
         const body = {
           productId,
-          qty
-        }
-        const response = await addToCart(authToken, productId, qty)
+          qty,
+        };
+        const response = await addToCart(authToken, productId, qty);
         if (response.success) {
           if (response.message === 'Product added in cart successfully.') {
-            const cartItem = response.cartItem
-            dispatch(addToCartrRedux(cartItem))
-            setLoader(false)
+            const cartItem = response.cartItem;
+            dispatch(addToCartrRedux(cartItem));
+            setLoader(false);
           } else {
             console.log(response.message);
-            dispatch(increasPreviousQty({ _id: productId, qty }))
-            setLoader(false)
+            dispatch(increasPreviousQty({_id: productId, qty}));
+            setLoader(false);
           }
         } else {
           console.log(response.message);
-          setLoader(false)
+          setLoader(false);
         }
       } catch (error) {
         console.log(error.message);
-        setLoader(false)
+        setLoader(false);
       }
     } else {
-      setIsModalVisible(true)
+      setIsModalVisible(true);
     }
-
-  }
+  };
 
   return (
     <SafeAreaView>
       <ImageBackground style={styles.container} source={images.bg}>
-        <Header backImage={images.backIcon} addToCartImage={images.cartIcon} navigate={'Store'} />
+        <Header
+          backImage={images.backIcon}
+          addToCartImage={images.cartIcon}
+          navigate={'Store'}
+        />
         {/* <View style={{
           backgroundColor:'red',
           height:sizes.screenHeight * 0.9
         }}> */}
         <ScrollView>
           <ImageSLider productImages={productImages} />
-          <View style={styles.bottomContainer}>
+          <View
+            style={
+              Platform.OS == 'android'
+                ? styles.bottomContainer
+                : styles.bottomContainerIOS
+            }>
             <View style={styles.mainContainer}>
               <View style={styles.row}>
                 <View>
                   <Text style={styles.rowText}>{data?.brand?.name}</Text>
                   <Text style={styles.rowText4}>{data?.name}</Text>
                 </View>
-                {
-                  productQty > 0 ?
-                    <View style={styles.quantityContainer}>
-                      <TouchableOpacity
-                        onPress={() => quantity > 0 && !loader && setQuantity(quantity - 1)}
-                      >
-                        <Text style={styles.textQuantityMinus}>_</Text>
-                      </TouchableOpacity>
-                      <Text style={styles.textQuantity}>
-                        {quantity}
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => !loader && setQuantity(quantity + 1)}
-                      >
-                        <Text style={styles.textQuantityPlus}>+</Text>
-                      </TouchableOpacity>
-                    </View>
-                    :
-                    <Text
-                      style={styles.outOfStock}
-                    >Out of Stock</Text>
-                }
-
+                {productQty > 0 ? (
+                  <View style={styles.quantityContainer}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        quantity > 0 && !loader && setQuantity(quantity - 1)
+                      }>
+                      <Text style={styles.textQuantityMinus}>_</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.textQuantity}>{quantity}</Text>
+                    <TouchableOpacity
+                      onPress={() => !loader && setQuantity(quantity + 1)}>
+                      <Text style={styles.textQuantityPlus}>+</Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <Text style={styles.outOfStock}>Out of Stock</Text>
+                )}
               </View>
               <View style={styles.row}>
                 <Text style={styles.rowText2}>{data.label}</Text>
-                {
-                  productQty > 1 &&
+                {productQty > 1 && (
                   <View>
                     <Text style={styles.rowText3}>Available in stock</Text>
                   </View>
-                }
+                )}
               </View>
               {/* <View style={styles.row2}>
               <Image source={images.star} style={styles.starImg} />
@@ -260,43 +263,43 @@ export default function ExhaustItem({ route, navigation }) {
                   <Text style={styles.rowText}>{price}</Text>
                 </View>
                 <View style={styles.verticalLine}></View>
-                {
-                  quantity > 0 ?
-                    loader ? <View style={styles.row3}
-                    >
-                      <ActivityIndicator color={"white"} />
-                      <Text style={styles.btnText}>Add to Cart</Text>
-                    </View> :
-                      <TouchableOpacity style={styles.row3}
-                        onPress={() => { quantity > 0 && !loader && handleAddToCart() }}
-                      >
-                        <Image source={images.cartIconTwo} style={styles.cartImg} />
-                        <Text style={styles.btnText}>Add to Cart</Text>
-                      </TouchableOpacity>
-                    :
-                    <View style={styles.btnDis}
-                    >
-                      <Image source={images.cartIconTwo} style={styles.cartImg} />
+                {quantity > 0 ? (
+                  loader ? (
+                    <View style={styles.row3}>
+                      <ActivityIndicator color={'white'} />
                       <Text style={styles.btnText}>Add to Cart</Text>
                     </View>
-                }
-
+                  ) : (
+                    <TouchableOpacity
+                      style={styles.row3}
+                      onPress={() => {
+                        quantity > 0 && !loader && handleAddToCart();
+                      }}>
+                      <Image
+                        source={images.cartIconTwo}
+                        style={styles.cartImg}
+                      />
+                      <Text style={styles.btnText}>Add to Cart</Text>
+                    </TouchableOpacity>
+                  )
+                ) : (
+                  <View style={styles.btnDis}>
+                    <Image source={images.cartIconTwo} style={styles.cartImg} />
+                    <Text style={styles.btnText}>Add to Cart</Text>
+                  </View>
+                )}
               </View>
             </View>
           </View>
         </ScrollView>
+        {/* <View style={Platform.OS == 'ios' && styles.margin}/> */}
         {/* </View> */}
         <Modal
           isVisible={isModalVisible}
           onBackdropPress={() => setIsModalVisible(false)}
-          style={styles.modal}
-        >
+          style={styles.modal}>
           <View style={styles.modalView}>
-            <Text
-              style={styles.text1}
-            >
-              {`Quantity Limit Exceeded`}
-            </Text>
+            <Text style={styles.text1}>{`Quantity Limit Exceeded`}</Text>
             <Text style={styles.text2}>
               {`We currently have only ${productQty} product available. Your request for ${quantity} products exceeds our inventory. Please adjust the quantity and try again.\nFor assistance, contact support.\nThank you`}
             </Text>

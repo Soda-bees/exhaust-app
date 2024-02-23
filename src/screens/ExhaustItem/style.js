@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { colors, fontSize, sizes } from '../../services';
+import { white } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -54,6 +55,21 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.17,
     shadowRadius: 3.05,
     elevation: 4,
+  },
+  bottomContainerIOS: {
+    backgroundColor: colors.white,
+    marginTop: sizes.screenHeight * 0.02,
+    marginBottom: sizes.screenHeight * 0.06,
+    paddingBottom: sizes.screenHeight * 0.045,
+    borderTopLeftRadius: sizes.screenWidth * 0.06,
+    borderTopRightRadius: sizes.screenWidth * 0.06,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 12,
+    alignSelf:'center',
+    width:sizes.screenWidth * 1,
   },
   row: {
     flexDirection: 'row',
@@ -218,6 +234,11 @@ export const styles = StyleSheet.create({
     color: colors.error,
     fontSize: fontSize.smallM,
     fontWeight: '500'
-  }
+  },
+
+  // margin:{
+  //   height:sizes.screenHeight * 0.08,
+  //   backgroundColor:'white'
+  // }
 
 });

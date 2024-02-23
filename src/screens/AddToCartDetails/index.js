@@ -6,7 +6,8 @@ import {
     Image,
     TouchableOpacity,
     ScrollView,
-    ActivityIndicator
+    ActivityIndicator,
+    Platform
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { styles } from './style';
@@ -14,7 +15,7 @@ import images from '../../services/utilities/images';
 import Header from '../../components/Header';
 import TrackPlayer, { useProgress, Event } from 'react-native-track-player';
 import { ProgressBar } from 'react-native-paper';
-import { colors } from '../../services';
+import { colors, sizes } from '../../services';
 import formatToJSON from '../../services/utilities/JsonLog';
 import ImageSLider from '../../components/ExhaustItemImageSlider';
 import { useDispatch, useSelector } from 'react-redux';
@@ -176,7 +177,7 @@ export default function AddToCartDetails({ route, navigation }) {
                 <ScrollView>
 
                 <ImageSLider productImages={productImages} />
-                <View style={styles.bottomContainer}>
+                <View style={Platform.OS == 'android' ? styles.bottomContainer : styles.bottomContainerIOS}>
                     <View style={styles.mainContainer}>
                         <View style={styles.row}>
                             <View>
@@ -230,6 +231,7 @@ export default function AddToCartDetails({ route, navigation }) {
                             </View>
                         </View>
                     </View>
+                    <View style={Platform.OS == 'ios' && {marginBottom:sizes.screenHeight * 0.07}} />
                 </View>
                 </ScrollView>
 

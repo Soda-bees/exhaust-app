@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   TextInput,
   Button,
-  ScrollView
+  ScrollView,
+  Platform
 } from 'react-native';
 import images from '../../services/utilities/images';
 import { colors, sizes } from '../../services';
@@ -134,7 +135,7 @@ export default function Home({ navigation }) {
             return (
               <View key={index}>
                 <View style={styles.bg}>
-                  <TouchableOpacity style={styles.lastLeftView}
+                  <TouchableOpacity style={Platform.OS == 'android' ? styles.lastLeftView : styles.lastLeftViewIOS}
                     onPress={() =>
                       navigation.navigate('ExhaustItem', {
                         data: item,
@@ -158,7 +159,7 @@ export default function Home({ navigation }) {
                           >
                             <Image
                               source={images.plusSign}
-                              style={styles.plusSignImg}
+                              style={Platform.OS == 'android' ? styles.plusSignImg : styles.plusSignImgIOS}
                             />
                           </View>
                         </View>
