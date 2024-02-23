@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ImageBackground, Image, TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView, ImageBackground, Image, TouchableOpacity, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import images from '../../services/utilities/images'
 import { styles } from './style'
@@ -10,7 +10,7 @@ export default function Intro({ navigation }) {
             <ImageBackground source={images.introBg} style={styles.bgImg}
             >
                 <Image source={images.introLogo} style={styles.logo} />
-                <Text style={styles.text1}>
+                <Text style={Platform.OS == 'android' ? styles.text1 : styles.text1IOS}>
                     Exhaust {'\n'}Power {'\n'}Unleashed {'\n'}Here
                 </Text>
                 <Text style={styles.text2}>

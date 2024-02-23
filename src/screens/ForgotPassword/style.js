@@ -30,6 +30,7 @@ export const styles = StyleSheet.create({
         fontSize: fontSize.small,
         fontWeight:'600'
     },
+    
     textStylingStyling: {
         borderWidth: 1,
         width: sizes.screenWidth * 0.9,
@@ -37,7 +38,18 @@ export const styles = StyleSheet.create({
         paddingLeft: sizes.screenWidth * 0.05,
         borderColor: colors.borderGrey,
         marginTop: sizes.screenHeight * 0.005,
-        color: colors.black
+        color: colors.black,
+    },
+
+    textStylingStylingIOS: {
+        borderWidth: 1,
+        width: sizes.screenWidth * 0.9,
+        borderRadius: sizes.screenWidth * 0.3,
+        paddingLeft: sizes.screenWidth * 0.05,
+        borderColor: colors.borderGrey,
+        marginTop: sizes.screenHeight * 0.005,
+        color: colors.black,
+        height:sizes.screenHeight * 0.06
     },
     continueBtnStyling: {
         marginTop: sizes.screenHeight * 0.12,

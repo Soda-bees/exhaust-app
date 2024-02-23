@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 import { colors } from '../../services';
 import { styles } from '../ForgotPassword/style';
@@ -49,7 +50,7 @@ export default function ForgotPassword({ navigation }) {
         </Text>
         <Text style={styles.emailLabelStyling}>Email</Text>
         <TextInput
-          style={styles.textStylingStyling}
+          style={Platform.OS == 'android' ? styles.textStylingStyling : styles.textStylingStylingIOS}
           placeholder="xyz@gmail.com"
           placeholderTextColor={colors.lightGrey}
           value={email}

@@ -22,6 +22,12 @@ export const styles = StyleSheet.create({
         color: colors.black,
         marginTop: sizes.screenHeight * 0.02
     },
+    text1IOS: {
+        fontSize: fontSize.h2,
+        fontWeight: '700',
+        color: colors.black,
+        marginTop: sizes.screenHeight * 0.04
+    },
     text2: {
         width: sizes.screenWidth * 0.5,
         marginTop: sizes.screenHeight * 0.03,

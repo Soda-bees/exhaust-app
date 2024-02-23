@@ -46,8 +46,19 @@ export const styles = StyleSheet.create({
     paddingLeft: sizes.screenWidth * 0.05,
     marginBottom: sizes.screenHeight * 0.024,
   },
+  inputFieldIOS: {
+    width: sizes.screenWidth * 0.8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: sizes.screenHeight * 0.08,
+    borderColor: colors.borderGrey,
+    paddingLeft: sizes.screenWidth * 0.05,
+    marginBottom: sizes.screenHeight * 0.024,
+    height:sizes.screenHeight * 0.06
+  },
 
-  icon: {
+  icon:{
     resizeMode: 'contain',
     height: sizes.screenWidth * 0.05,
     width: sizes.screenWidth * 0.06,
@@ -60,8 +71,10 @@ export const styles = StyleSheet.create({
   },
 
   inputText: {
-    color: colors.textGreyDark,
+    color: colors.black,
     width: sizes.screenWidth * 0.58,
+    paddingLeft:sizes.screenWidth * 0.01,
+    marginTop:sizes.screenHeight * 0.004,
   },
 
   rememberMeRow: {

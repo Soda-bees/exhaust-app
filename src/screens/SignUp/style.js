@@ -10,6 +10,14 @@ export const styles = StyleSheet.create({
     width: sizes.screenWidth,
     height: sizes.screenHeight,
   },
+  containerIOS: {
+    backgroundColor: '#E5E8EA',
+    alignItems: 'center',
+    // justifyContent: 'center',
+    width: sizes.screenWidth,
+    height: sizes.screenHeight,
+    marginTop:sizes.screenHeight * 0.04
+  },
 
   body: {
     width: sizes.screenWidth * 0.9,
@@ -30,6 +38,12 @@ export const styles = StyleSheet.create({
     color: colors.black,
     margin: sizes.screenHeight * 0.04,
   },
+  headingIOS: {
+    fontSize: fontSize.h4,
+    fontWeight: '600',
+    color: colors.black,
+    margin: sizes.screenHeight * 0.02,
+  },
 
   icon2: {
     resizeMode: 'contain',
@@ -49,6 +63,18 @@ export const styles = StyleSheet.create({
     marginBottom: sizes.screenHeight * 0.024,
   },
 
+  inputFieldIOS: {
+    width: sizes.screenWidth * 0.8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: sizes.screenHeight * 0.08,
+    borderColor: colors.borderGrey,
+    paddingLeft: sizes.screenWidth * 0.05,
+    marginBottom: sizes.screenHeight * 0.024,
+    height:sizes.screenHeight * 0.06
+  },
+
   inputFieldBackground: {
     borderTopRightRadius: sizes.screenWidth * 0.08,
     borderBottomRightRadius: sizes.screenWidth * 0.08,
@@ -65,6 +91,17 @@ export const styles = StyleSheet.create({
     borderColor: colors.borderGrey,
     paddingLeft: sizes.screenWidth * 0.05,
     marginBottom: sizes.screenHeight * 0.01,
+  },
+  passwordInputFieldIOS: {
+    width: sizes.screenWidth * 0.8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: sizes.screenHeight * 0.08,
+    borderColor: colors.borderGrey,
+    paddingLeft: sizes.screenWidth * 0.05,
+    marginBottom: sizes.screenHeight * 0.01,
+    height:sizes.screenHeight * 0.06
   },
 
   icon: {
@@ -179,10 +216,21 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: sizes.screenHeight * 0.02,
   },
+  rowIOS: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    // padding: sizes.screenHeight * 0.02,
+  },
   logoRow: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: sizes.screenHeight * 0.03
+  },
+  logoRowIOS: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: sizes.screenHeight * 0.03,
+    // marginTop: sizes.screenHeight * 0.03,
   },
   logoSizing: {
     resizeMode: 'contain',
@@ -201,5 +249,23 @@ export const styles = StyleSheet.create({
     marginBottom: sizes.screenHeight * 0.01,
     fontWeight: '500',
     color: colors.error
+  },
+
+  marginBtm:{
+    marginBottom:sizes.screenHeight * 0.1
+  },
+
+  libraryTextInputStyle:{
+    height: sizes.screenHeight * 0.058,
+    color: colors.black,
+    top: sizes.screenHeight * 0.004,
+    right: sizes.screenWidth * 0.045,
+  },
+
+  libraryTextInputStyleIOS:{
+    height: sizes.screenHeight * 0.058,
+    color: colors.black,
+    top: sizes.screenHeight * 0.002,
+    right: sizes.screenWidth * 0.03,
   },
 });

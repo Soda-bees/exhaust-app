@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Platform
 } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { styles } from './style';
@@ -273,7 +274,7 @@ export default function SignIn({ navigation }) {
         <View style={styles.body}>
           <View style={styles.signInSection}>
             <Text style={styles.heading}>Sign In</Text>
-            <View style={styles.inputField}>
+            <View style={Platform.OS == 'android' ? styles.inputField : styles.inputFieldIOS}>
               <Image style={styles.icon} source={images.userIcon} />
               <TextInput
                 placeholder="Email"
@@ -283,7 +284,7 @@ export default function SignIn({ navigation }) {
                 value={email}
               />
             </View>
-            <View style={styles.inputField}>
+            <View style={Platform.OS == 'android' ? styles.inputField : styles.inputFieldIOS}>
               <Image style={styles.icon} source={images.lockIcon} />
               <TextInput
                 secureTextEntry={!eyeIconShow ? true : false}
