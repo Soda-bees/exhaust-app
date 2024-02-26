@@ -208,7 +208,7 @@ export default function OrderDetails({ navigation, route }) {
         <Modal isVisible={isPermissionModal} onBackdropPress={handleCloseModal}>
           <View style={styles.modalContainer}>
             <Image source={images.noOrders} style={styles.deleteCartImg} />
-            <Text style={styles.modalText}>Are you sure you want to delete this order?</Text>
+            <Text style={styles.modalText}>Are you sure you want to cancel this order?</Text>
             <View style={styles.modalBtnContainer}>
               {
                 modalLoader ?

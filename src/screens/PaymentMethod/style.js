@@ -14,10 +14,10 @@ export const styles = StyleSheet.create({
   },
   headingSty: {
     color: colors.black,
-    fontWeight: '600',
+    fontWeight: '500',
     marginTop: sizes.screenHeight * 0.03,
     marginLeft: sizes.screenWidth * 0.06,
-    marginBottom: sizes.screenHeight * 0.02
+    fontSize:fontSize.medium
   },
   headingSty2: {
     color: colors.black,

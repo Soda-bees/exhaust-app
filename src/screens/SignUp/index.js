@@ -95,21 +95,21 @@ export default function SignUp({navigation}) {
 
   const handleGoogle = async () => {
     // if (Platform.OS === 'android') {
-      try {
-        await GoogleSignin.hasPlayServices({
-          showPlayServicesUpdateDialog: true,
-        });
-        const {idToken} = await GoogleSignin.signIn();
-        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-        await auth().signInWithCredential(googleCredential);
-        let user = auth().currentUser;
-        setLoaderG(true);
-        return user;
-      } catch (error) {
-        console.error('Error signing in with Google:', error.message);
-        setError(error.message);
-        throw error;
-      }
+    try {
+      await GoogleSignin.hasPlayServices({
+        showPlayServicesUpdateDialog: true,
+      });
+      const {idToken} = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      await auth().signInWithCredential(googleCredential);
+      let user = auth().currentUser;
+      setLoaderG(true);
+      return user;
+    } catch (error) {
+      console.error('Error signing in with Google:', error.message);
+      setError(error.message);
+      throw error;
+    }
     // }
   };
 
@@ -257,14 +257,24 @@ export default function SignUp({navigation}) {
 
   return (
     <SafeAreaView>
-      <ImageBackground style={Platform.OS == 'android' ? styles.container : styles.containerIOS} source={images.bg}>
-      <View style={styles.logoRow}>
+      <ImageBackground
+        style={
+          Platform.OS == 'android' ? styles.container : styles.containerIOS
+        }
+        source={images.bg}>
+        <View style={styles.logoRow}>
           <Image source={images.exhaustLogo} style={styles.logoSizing} />
           {/* <Text style={styles.logoText}>CSZ EXHAUST</Text> */}
         </View>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.body}>
             <View style={styles.signInSection}>
-              <Text style={ Platform.OS == 'android' ? styles.heading : styles.headingIOS}>Sign Up</Text>
+              <Text
+                style={
+                  Platform.OS == 'android' ? styles.heading : styles.headingIOS
+                }>
+                Sign Up
+              </Text>
 
               <View
                 style={
@@ -316,7 +326,10 @@ export default function SignUp({navigation}) {
                   codeTextStyle={{
                     // backgroundColor:'red',
                     height: sizes.screenHeight * 0.028,
-                    marginTop: Platform.OS == 'android' ? sizes.screenHeight * 0.004 : sizes.screenHeight * 0.012,
+                    marginTop:
+                      Platform.OS == 'android'
+                        ? sizes.screenHeight * 0.004
+                        : sizes.screenHeight * 0.012,
                     // position:'absolute'
                     right: sizes.screenWidth * 0.025,
                   }}
@@ -336,7 +349,11 @@ export default function SignUp({navigation}) {
                     borderRadius: sizes.screenWidth * 0.05,
                     marginBottom: sizes.screenWidth * 0.01,
                   }}
-                  textInputStyle={Platform.OS == 'android' ? styles.libraryTextInputStyle : styles.libraryTextInputStyleIOS}
+                  textInputStyle={
+                    Platform.OS == 'android'
+                      ? styles.libraryTextInputStyle
+                      : styles.libraryTextInputStyleIOS
+                  }
                   textInputProps={{
                     placeholderTextColor: colors.disabledBg2,
                   }}
@@ -426,6 +443,7 @@ export default function SignUp({navigation}) {
               </TouchableOpacity>
             )}
           </View>
+        </ScrollView>
       </ImageBackground>
     </SafeAreaView>
   );

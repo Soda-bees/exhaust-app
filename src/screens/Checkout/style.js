@@ -231,7 +231,7 @@ export const styles = StyleSheet.create({
     height: sizes.screenHeight,
     width: sizes.screenWidth,
     alignSelf: 'center',
-    justifyContent: 'flex-end',
+    marginTop:sizes.screenHeight * 0.6
   },
 
   modalMainView: {

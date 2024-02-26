@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
   },
   textFieldStyling: {
     marginTop: sizes.screenWidth * 0.01,
-    width: sizes.screenWidth * 0.65,
+    width: sizes.screenWidth * 0.62,
     color: colors.black,
   },
   filerNameStyling: {
@@ -101,7 +101,7 @@ export const styles = StyleSheet.create({
     paddingVertical: sizes.screenHeight * 0.005,
     backgroundColor: 'white',
   },
-  
+
   filterView: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -213,6 +213,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 12,
+    height:sizes.screenHeight * 0.26
   },
 
   lastLeftViewImg: {
@@ -274,6 +275,26 @@ export const styles = StyleSheet.create({
     left: sizes.screenWidth * 0.015,
     top: sizes.screenWidth * 0.02,
   },
+
+  cartPlusBtnStyleIOS: {
+    width: sizes.screenWidth * 0.12,
+    height: sizes.screenHeight * 0.054,
+    backgroundColor: colors.btnBlue,
+    borderTopLeftRadius: sizes.screenWidth * 0.08,
+    borderBottomRightRadius: sizes.screenWidth * 0.037,
+    position: 'absolute',
+    left: sizes.screenWidth * 0.285,
+    top: sizes.screenHeight * 0.01,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  plusImgStyle: {
+    resizeMode: 'contain',
+    width: sizes.screenWidth * 0.04,
+    height: sizes.screenHeight * 0.03,
+  },
+
   modalMainView: {
     alignSelf: 'center',
     width: sizes.screenWidth * 1,

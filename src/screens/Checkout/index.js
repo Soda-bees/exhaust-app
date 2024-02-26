@@ -392,7 +392,7 @@ export default function Checkout({navigation, route}) {
             setCardNumber('');
             setExpireDate('');
             setCvv('');
-            setIsModalVisisble(false);
+            setIsModalVisisble(!isModalVisisble);
           }}>
           <View style={styles.modalBody}>
             <View style={styles.modalMainView}>

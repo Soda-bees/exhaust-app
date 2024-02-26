@@ -171,6 +171,7 @@ export const styles = StyleSheet.create({
     width: sizes.screenWidth * 0.9,
     marginTop: sizes.screenHeight * 0.02,
     marginBottom: sizes.screenHeight * 0.03,
+    paddingBottom:sizes.screenHeight * 0.1
   },
 
   socialMediaBtn: {

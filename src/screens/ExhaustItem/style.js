@@ -228,7 +228,8 @@ export const styles = StyleSheet.create({
   },
   text2: {
     fontSize: fontSize.smallM,
-    color: colors.black
+    color: colors.black,
+    textAlign:'center'
   },
   outOfStock: {
     color: colors.error,

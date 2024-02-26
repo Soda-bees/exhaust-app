@@ -8,6 +8,8 @@ import {
   ScrollView,
   ActivityIndicator,
   Platform,
+  Animated,
+  Easing,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {styles} from './style';
@@ -188,7 +190,7 @@ export default function ExhaustItem({route, navigation}) {
           height:sizes.screenHeight * 0.9
         }}> */}
         <ScrollView>
-          <ImageSLider productImages={productImages} />
+            <ImageSLider productImages={productImages} />
           <View
             style={
               Platform.OS == 'android'

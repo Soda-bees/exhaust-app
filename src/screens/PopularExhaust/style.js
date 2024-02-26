@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
   },
   textFieldStyling: {
     marginTop: sizes.screenWidth * 0.01,
-    width: sizes.screenWidth * 0.65,
+    width: sizes.screenWidth * 0.62,
     color: colors.black,
   },
   popularheadingLeft: {
@@ -90,7 +90,6 @@ export const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 0,
-
     elevation: 8,
     backgroundColor: colors.white,
   },
@@ -116,7 +115,7 @@ export const styles = StyleSheet.create({
     width: sizes.screenWidth * 0.12,
     height: sizes.screenHeight * 0.056,
     backgroundColor: colors.btnBlue,
-    borderTopLeftRadius: sizes.screenWidth * 0.07,
+    borderTopLeftRadius: sizes.screenWidth * 0.08,
     borderBottomRightRadius: sizes.screenWidth * 0.037,
     position: 'absolute',
     left: sizes.screenWidth * 0.265,

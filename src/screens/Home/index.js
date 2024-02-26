@@ -176,18 +176,21 @@ export default function Home({navigation}) {
                         <Text style={styles.lastLeftViewTextHeading1}>
                           {`$${item.price}.00`}
                         </Text>
-                        <View style={styles.plusImgView}>
-                          <View>
+                        {Platform.OS == 'android' ? (
+                          <View style={styles.plusImgView}>
                             <Image
                               source={images.plusSign}
-                              style={
-                                Platform.OS == 'android'
-                                  ? styles.plusSignImg
-                                  : styles.plusSignImgIOS
-                              }
+                              style={styles.plusSignImg}
                             />
                           </View>
-                        </View>
+                        ) : (
+                          <View style={styles.cartPlusBtnStyleIOS}>
+                            <Image
+                              source={images.plusImg}
+                              style={styles.plusImgStyle}
+                            />
+                          </View>
+                        )}
                       </View>
                     </View>
                   </TouchableOpacity>

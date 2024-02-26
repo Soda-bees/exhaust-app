@@ -248,7 +248,6 @@ export default function Profile({ navigation }) {
             </TouchableOpacity>
           </ScrollView>
         </View>
-
       </ImageBackground>
     </SafeAreaView>
   );
