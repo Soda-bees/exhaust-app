@@ -40,7 +40,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     width: sizes.screenWidth * 0.9,
     borderRadius: sizes.screenWidth * 0.3,
-    paddingLeft: sizes.screenWidth * 0.05,
+    // paddingLeft: sizes.screenWidth * 0.05,
     borderColor: colors.borderGrey,
     height: sizes.screenWidth * 0.13,
     alignItems: 'center',

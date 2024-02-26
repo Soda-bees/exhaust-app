@@ -291,7 +291,7 @@ export default function AddShippingAddress({navigation, route}) {
               style={
                 Platform.OS == 'android'
                   ? styles.loaderView
-                  : styles.bottomBtnIOS
+                  : styles.loaderViewIOS
               }>
               <Loader />
             </View>

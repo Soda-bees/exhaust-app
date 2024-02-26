@@ -250,7 +250,7 @@ export default function EditProfile({navigation}) {
           <Text style={styles.errorText}>{error}</Text>
         </View>
         {loader ? (
-          <View style={Platform.OS == 'android' ? styles.loaderContainer : styles.bottomBtnIOS}>
+          <View style={Platform.OS == 'android' ? styles.loaderContainer : styles.loaderContainerIOS}>
             <Loader />
           </View>
         ) : (

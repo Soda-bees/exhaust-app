@@ -182,7 +182,7 @@ export default function OrderDetails({ navigation, route }) {
         </View>
         {
           loader ?
-            <View style={Platform.OS == 'android' ? styles.loaderContainer : styles.bottomBtnIOS}> 
+            <View style={Platform.OS == 'android' ? styles.loaderContainer : styles.loaderContainerIOS}> 
               <Loader />
             </View>
             : orderStatus === 'Processing' &&

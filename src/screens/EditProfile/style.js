@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     height: sizes.screenWidth * 0.23,
     marginTop: sizes.screenHeight * 0.03,
     marginLeft: sizes.screenHeight * 0.16,
-    borderRadius: sizes.screenWidth * 0.03
+    borderRadius: sizes.screenWidth * 0.03,
   },
   editImgView: {
     position: 'absolute',
@@ -153,6 +153,11 @@ export const styles = StyleSheet.create({
   },
   loaderContainer: {
     alignSelf: 'center'
+  },
+  loaderContainerIOS: {
+    alignSelf: 'center',
+    position:'absolute',
+    bottom:sizes.screenHeight * 0.085
   },
   errorText: {
     color:colors.red,

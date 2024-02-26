@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { styles } from './style';
+import React, {useEffect, useState} from 'react';
+import {styles} from './style';
 import {
   View,
   Text,
@@ -9,56 +9,53 @@ import {
   TextInput,
   Button,
   ScrollView,
-  Platform
+  Platform,
 } from 'react-native';
 import images from '../../services/utilities/images';
-import { colors, sizes } from '../../services';
+import {colors, sizes} from '../../services';
 import Modal from 'react-native-modal';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUserData } from '../../store/userData';
-import { selectProducts } from '../../store/products';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectUserData} from '../../store/userData';
+import {selectProducts} from '../../store/products';
 import formatToJSON from '../../services/utilities/JsonLog';
-import { selectBrands } from '../../store/brands';
-import { selectAuthToken } from '../../store/authToken';
-import { socketService } from '../../services/config/Socket';
+import {selectBrands} from '../../store/brands';
+import {selectAuthToken} from '../../store/authToken';
+import {socketService} from '../../services/config/Socket';
 
-export default function Home({ navigation }) {
+export default function Home({navigation}) {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
-
-  const userData = useSelector(selectUserData)
-  const products = useSelector(selectProducts)
-  const brands = useSelector(selectBrands)
-  const authToken = useSelector(selectAuthToken)
+  const userData = useSelector(selectUserData);
+  const products = useSelector(selectProducts);
+  const brands = useSelector(selectBrands);
+  const authToken = useSelector(selectAuthToken);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [productListing, setProductListing] = useState([]);
-  const [selectedBrand, setSelectedBrand] = useState([])
+  const [selectedBrand, setSelectedBrand] = useState([]);
 
   useEffect(() => {
     if (products) {
-      handleSelectInitialProduct()
+      handleSelectInitialProduct();
     }
     if (brands) {
-      setSelectedBrand(brands)
+      setSelectedBrand(brands);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-
-    socketService(dispatch , authToken);
-
-  }, [dispatch , authToken])
+    socketService(dispatch, authToken);
+  }, [dispatch, authToken]);
 
   const handleSelectInitialProduct = () => {
-    const array = products.slice(0, 2)
-    setProductListing(array)
-  }
+    const array = products.slice(0, 2);
+    setProductListing(array);
+  };
 
   const handleSelectBrand = index => {
     setSelectedBrand(prevBrands => {
       return prevBrands.map((brand, i) =>
-        i === index ? { ...brand, selected: !brand.selected } : brand,
+        i === index ? {...brand, selected: !brand.selected} : brand,
       );
     });
   };
@@ -74,13 +71,19 @@ export default function Home({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
             <Image
-              source={userData?.profile ? { uri: userData?.profile } : images.headerFaceIcon}
+              source={
+                userData?.profile
+                  ? {uri: userData?.profile}
+                  : images.headerFaceIcon
+              }
               style={styles.imagesStylingRight}
             />
           </TouchableOpacity>
         </View>
         <Text style={styles.headingTextStyling}>Welcome,</Text>
-        <Text style={styles.subHeadingTextStyling}>{userData?.name || "CSZ EXHAUST"}</Text>
+        <Text style={styles.subHeadingTextStyling}>
+          {userData?.name || 'CSZ EXHAUST'}
+        </Text>
         <View style={styles.searchFilterView}>
           <View style={styles.inputContainetr}>
             <Image source={images.search} style={styles.searchImgStyling} />
@@ -95,15 +98,24 @@ export default function Home({ navigation }) {
           </TouchableOpacity>
         </View>
         <View style={styles.filterView}>
-          {selectedBrand && selectedBrand
-            .filter(item => item.selected)
-            .map((selectedBrand, index) => {
-              return (
-                <Text style={styles.filerNameStyling} key={index}>
-                  {selectedBrand.name}
-                </Text>
-              );
-            })}
+          {selectedBrand &&
+            selectedBrand
+              .filter(item => item.selected)
+              .map((selectedBrand, index) => {
+                return (
+                  <View style={Platform.OS == 'ios' && styles.selectedCartView}>
+                    <Text
+                      style={
+                        Platform.OS == 'android'
+                          ? styles.filerNameStyling
+                          : styles.filerNameStylingIOS
+                      }
+                      key={index}>
+                      {selectedBrand.name}
+                    </Text>
+                  </View>
+                );
+              })}
         </View>
         <Text style={styles.trendingTextStyling}>Trendings</Text>
         <View style={styles.bottomView}>
@@ -111,9 +123,10 @@ export default function Home({ navigation }) {
             <Text style={styles.bottomViewHeading}>15% OFF</Text>
             <Text style={styles.bottomViewPara}>On everything today</Text>
             <Text style={styles.bottomViewCode}>with code : CSZEXHAUST</Text>
-            <TouchableOpacity onPress={() => {
-              console.log(authToken);
-            }}>
+            <TouchableOpacity
+              onPress={() => {
+                console.log(authToken);
+              }}>
               <View style={styles.bottomViewbutton}>
                 <Text style={styles.bottomViewbuttonText}>Get Now</Text>
               </View>
@@ -135,19 +148,28 @@ export default function Home({ navigation }) {
             return (
               <View key={index}>
                 <View style={styles.bg}>
-                  <TouchableOpacity style={Platform.OS == 'android' ? styles.lastLeftView : styles.lastLeftViewIOS}
+                  <TouchableOpacity
+                    style={
+                      Platform.OS == 'android'
+                        ? styles.lastLeftView
+                        : styles.lastLeftViewIOS
+                    }
                     onPress={() =>
                       navigation.navigate('ExhaustItem', {
                         data: item,
                       })
-                    }
-                  >
-                    <Image source={{ uri: item?.images[0] }} style={styles.lastLeftViewImg} />
+                    }>
+                    <Image
+                      source={{uri: item?.images[0]}}
+                      style={styles.lastLeftViewImg}
+                    />
                     <View>
                       <Text style={styles.lastLeftViewTextHeading}>
                         {item.brand.name}
                       </Text>
-                      <Text style={styles.lastLeftViewTextPara} numberOfLines={1}>
+                      <Text
+                        style={styles.lastLeftViewTextPara}
+                        numberOfLines={1}>
                         {item.description}
                       </Text>
                       <View style={styles.priceAndPlusSignView}>
@@ -155,11 +177,14 @@ export default function Home({ navigation }) {
                           {`$${item.price}.00`}
                         </Text>
                         <View style={styles.plusImgView}>
-                          <View
-                          >
+                          <View>
                             <Image
                               source={images.plusSign}
-                              style={Platform.OS == 'android' ? styles.plusSignImg : styles.plusSignImgIOS}
+                              style={
+                                Platform.OS == 'android'
+                                  ? styles.plusSignImg
+                                  : styles.plusSignImgIOS
+                              }
                             />
                           </View>
                         </View>
@@ -184,22 +209,36 @@ export default function Home({ navigation }) {
             </TouchableOpacity>
           </View>
           <View style={styles.brandModal}>
-            {selectedBrand && selectedBrand.map((item, index) => {
-              return (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => {
-                    handleSelectBrand(index);
-                  }}>
-                  <Text
-                    style={
-                      item.selected ? styles.carNameSelected : styles.carName
-                    }>
-                    {item.name}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
+            {selectedBrand &&
+              selectedBrand.map((item, index) => {
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => {
+                      handleSelectBrand(index);
+                    }}>
+                    {Platform.OS == 'android' ? (
+                      <Text
+                        style={
+                          item.selected
+                            ? styles.carNameSelected
+                            : styles.carName
+                        }>
+                        {item.name}
+                      </Text>
+                    ) : (
+                      <Text
+                        style={
+                          item.selected
+                            ? styles.carNameSelectedIOS
+                            : styles.carNameIOS
+                        }>
+                        {item.name}
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                );
+              })}
           </View>
           <TouchableOpacity
             style={styles.btnView}

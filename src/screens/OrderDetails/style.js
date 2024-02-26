@@ -76,7 +76,7 @@ export const styles = StyleSheet.create({
   bottomBtnIOS: {
     // marginLeft: sizes.screenWidth * 0.01,
     borderRadius: sizes.screenWidth * 0.1,
-    height: sizes.screenHeight * 0.07,
+    height: sizes.screenHeight * 0.06,
     backgroundColor: colors.btnBlue,
     width: sizes.screenHeight * 0.42,
     justifyContent: 'center',
@@ -92,6 +92,10 @@ export const styles = StyleSheet.create({
   },
   loaderContainer: {
     alignSelf: 'center'
+  },
+  loaderContainerIOS: {
+    alignSelf: 'center',
+    marginBottom:sizes.screenHeight * 0.085
   },
   errorText:{
     width: sizes.screenWidth * 0.75,

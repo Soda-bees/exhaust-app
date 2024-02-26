@@ -81,6 +81,27 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
   },
+  filerNameStylingIOS: {
+    fontSize: fontSize.small,
+    color: colors.black,
+    fontWeight: '500',
+    textAlignVertical: 'center',
+    textAlign: 'center',
+  },
+
+  selectedCartView: {
+    borderRadius: sizes.screenWidth * 0.3,
+    overflow: 'hidden',
+    marginTop: sizes.screenWidth * 0.01,
+    borderWidth: 1,
+    borderColor: colors.black,
+    marginLeft: sizes.screenWidth * 0.02,
+    marginBottom: sizes.screenWidth * 0.01,
+    paddingHorizontal: sizes.screenWidth * 0.05,
+    paddingVertical: sizes.screenHeight * 0.005,
+    backgroundColor: 'white',
+  },
+  
   filterView: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -319,6 +340,35 @@ export const styles = StyleSheet.create({
     marginTop: sizes.screenHeight * 0.01,
     backgroundColor: colors.btnBlue,
   },
+
+  carNameSelectedIOS: {
+    color: colors.white,
+    paddingHorizontal: sizes.screenWidth * 0.09,
+    paddingVertical: sizes.screenHeight * 0.01,
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    borderRadius: sizes.screenWidth * 0.05,
+    fontSize: fontSize.smallM,
+    marginLeft: sizes.screenWidth * 0.02,
+    marginTop: sizes.screenHeight * 0.01,
+    backgroundColor: colors.btnBlue,
+    overflow: 'hidden',
+  },
+
+  carNameIOS: {
+    color: colors.black,
+    borderWidth: 1,
+    paddingHorizontal: sizes.screenWidth * 0.09,
+    paddingVertical: sizes.screenHeight * 0.01,
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    borderRadius: sizes.screenWidth * 0.05,
+    fontSize: fontSize.smallM,
+    marginLeft: sizes.screenWidth * 0.02,
+    marginTop: sizes.screenHeight * 0.01,
+    overflow: 'hidden',
+  },
+
   btnView: {
     alignSelf: 'center',
     marginTop: sizes.screenHeight * 0.04,

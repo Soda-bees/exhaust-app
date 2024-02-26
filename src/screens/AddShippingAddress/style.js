@@ -99,16 +99,14 @@ export const styles = StyleSheet.create({
     marginBottom: sizes.screenHeight * 0.03
   },
   bottomBtnIOS: {
-    marginLeft: sizes.screenWidth * 0.01,
-    // marginTop: sizes.screenHeight * 0.22,
+    // marginLeft: sizes.screenWidth * 0.01,
     borderRadius: sizes.screenWidth * 0.07,
-    height: sizes.screenHeight * 0.065,
-    backgroundColor: colors.btnBlue,
+    height: sizes.screenHeight * 0.06,
     width: sizes.screenHeight * 0.42,
+    backgroundColor: colors.btnBlue,
     justifyContent: 'center',
     alignSelf: 'center',
-    marginBottom: sizes.screenHeight * 0.1,
-    // alignSelf:'center'
+    marginBottom: sizes.screenHeight * 0.095,
   },
   bottomBtnText: {
     color: colors.white,
@@ -126,7 +124,14 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: sizes.screenHeight * 0.02
+    // marginBottom: sizes.screenHeight * 0.085,
+  },
+  loaderViewIOS: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: sizes.screenHeight * 0.08,
+    alignSelf:'center'
   },
   errorTest:{
    width: sizes.screenWidth * 0.75,
