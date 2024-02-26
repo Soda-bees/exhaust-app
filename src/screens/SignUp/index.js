@@ -94,7 +94,7 @@ export default function SignUp({navigation}) {
   };
 
   const handleGoogle = async () => {
-    if (Platform.OS === 'android') {
+    // if (Platform.OS === 'android') {
       try {
         await GoogleSignin.hasPlayServices({
           showPlayServicesUpdateDialog: true,
@@ -110,7 +110,7 @@ export default function SignUp({navigation}) {
         setError(error.message);
         throw error;
       }
-    }
+    // }
   };
 
   const handleFacebook = async () => {

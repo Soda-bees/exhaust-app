@@ -130,7 +130,7 @@ export default function SignIn({ navigation }) {
   }
 
   const handleGoogle = async () => {
-    if (Platform.OS === 'android') {
+    // if (Platform.OS === 'android') {
       try {
         await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
         const { idToken } = await GoogleSignin.signIn();
@@ -144,7 +144,7 @@ export default function SignIn({ navigation }) {
         setError(error.message)
         throw error;
       }
-    }
+    // }
   };
 
   const handleGoogleSignin = async () => {
