@@ -1,5 +1,6 @@
 import axios from "axios"
 import apiInstance from "../../utilities/ApiInstance"
+import { baseURL } from "../../utilities/ApiInstance"
 
 
 export const checkServerConnection = async () => {
@@ -82,7 +83,7 @@ export const checkExistingEmail = async (body) => {
 export const uploadProfile = async (formData) => {
     const axiosConfig = {
         method: 'post',
-        url: 'https://exhaust-backend.netlify.app/.netlify/functions/api/uploadProfile',
+        url: `${baseURL}/uploadProfile`,
         data: formData,
         headers: {
             'Content-Type': 'multipart/form-data',

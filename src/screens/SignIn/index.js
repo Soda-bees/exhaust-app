@@ -181,7 +181,6 @@ export default function SignIn({ navigation }) {
     try {
       await auth().signOut();
       await GoogleSignin.revokeAccess();
-      alert('log out')
     } catch (error) {
       console.error(error);
     }
